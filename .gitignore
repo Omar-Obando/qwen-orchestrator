@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+mcp-server/node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Orchestrator state (project-specific)
+.qwen-orchestrator/
+
+# Logs
+*.log
+npm-debug.log*

@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install & Build MCP Server
+        run: |
+          cd mcp-server
+          npm install
+          npm run build
+
+      - name: Create release archive
+        run: |
+          mkdir -p /tmp/qwen-orchestrator
+          # Copy extension files
+          cp qwen-extension.json /tmp/qwen-orchestrator/
+          cp README.md /tmp/qwen-orchestrator/
+          cp LICENSE /tmp/qwen-orchestrator/
+          cp AGENTS.md /tmp/qwen-orchestrator/
+          cp package.json /tmp/qwen-orchestrator/
+          # Copy directories
+          cp -r agents /tmp/qwen-orchestrator/
+          cp -r skills /tmp/qwen-orchestrator/
+          cp -r commands /tmp/qwen-orchestrator/
+          cp -r context /tmp/qwen-orchestrator/
+          cp -r docs /tmp/qwen-orchestrator/
+          # Copy MCP server with built dist (no node_modules)
+          mkdir -p /tmp/qwen-orchestrator/mcp-server/src /tmp/qwen-orchestrator/mcp-server/dist
+          cp mcp-server/package.json /tmp/qwen-orchestrator/mcp-server/
+          cp mcp-server/tsconfig.json /tmp/qwen-orchestrator/mcp-server/
+          cp mcp-server/src/index.ts /tmp/qwen-orchestrator/mcp-server/src/
+          cp -r mcp-server/dist/* /tmp/qwen-orchestrator/mcp-server/dist/
+          # Create archive
+          cd /tmp
+          tar -czf qwen-orchestrator.tar.gz qwen-orchestrator/
+          mv qwen-orchestrator.tar.gz $GITHUB_WORKSPACE/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: qwen-orchestrator.tar.gz
+          generate_release_notes: true
+          body: |
+            ## Qwen Orchestrator ${{ github.ref_name }}
+
+            ### Install
+            ```
+            qwen extensions install Omar-Obando/qwen-orchestrator
+            ```
+
+            Or from release archive:
+            ```
+            qwen extensions install https://github.com/Omar-Obando/qwen-orchestrator/releases/download/${{ github.ref_name }}/qwen-orchestrator.tar.gz
+            ```
+
+            ### What's Included
+            - 22 specialized AI agents
+            - 21 professional skills
+            - 6 slash commands
+            - MCP server (7 tools)
+            - MCP Memory server (Knowledge Graph)

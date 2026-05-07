@@ -1,0 +1,30 @@
+{
+  "name": "qwen-orchestrator",
+  "version": "0.0.1",
+  "description": "Enterprise-grade multi-agent orchestration extension for Qwen Code CLI — 22 agents, 21 skills, 6 commands, MCP Memory server",
+  "type": "module",
+  "author": "Omar-Obando",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Omar-Obando/qwen-orchestrator"
+  },
+  "scripts": {
+    "install:mcp": "cd mcp-server && npm install",
+    "build:mcp": "cd mcp-server && npm run build",
+    "dev:mcp": "cd mcp-server && npx tsx src/index.ts",
+    "setup": "npm run install:mcp && npm run build:mcp",
+    "clean": "rm -rf mcp-server/node_modules mcp-server/dist"
+  },
+  "keywords": [
+    "qwen-code",
+    "qwen-code-extension",
+    "multi-agent",
+    "orchestration",
+    "ai",
+    "development",
+    "tdd",
+    "code-review",
+    "devops"
+  ]
+}
