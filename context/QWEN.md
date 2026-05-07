@@ -69,7 +69,7 @@ This document is injected into every Qwen Orchestrator session. It provides the 
 │  │  Native Apps      │  │  i18n · L10n     │                          │
 │  └──────────────────┘  └──────────────────┘                          │
 │                                                                         │
-│  Skills: 21 | Agents: 22 | Commands: 6 | MCP Tools: 7 + Memory       │
+│  Skills: 22 | Agents: 22 | Commands: 6 | MCP Tools: 7 + Memory       │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -504,6 +504,115 @@ The **Frontend Developer** agent is aware of external UI/UX skill collections th
 - **taste-skill** — Anti-slop frontend patterns: stronger layout, typography, motion, spacing
 
 When these skills are installed, the Frontend Developer agent can reference them via the `Skill` tool for design reviews and UI implementation. They are **optional** — the agent works fully without them.
+
+---
+
+## Design System Skill (MANDATORY for Website Projects)
+
+The `design-system` skill (`skills/design-system/SKILL.md`) is loaded automatically for website projects. It provides:
+
+### Multi-Page Website Mandate
+
+When the user asks for "a website", "a site", or "a page for X business" — create a FULL multi-page website. NEVER a single landing page.
+
+**Minimum pages**: Home, About, Services (listing + detail pages per service), Contact, Products/Portfolio (listing + detail pages per product).
+
+**Exception**: Only when the user EXPLICITLY says "landing page" or "one-page site".
+
+### Service & Product Detail Pages (MANDATORY)
+
+- **Services**: `/services` listing page → individual detail pages: `/services/web-design`, `/services/seo`, etc.
+  - Each detail: description (3-5 paragraphs), process steps, deliverables, pricing, FAQ, CTA
+- **Products**: `/products` listing page → individual detail pages: `/products/[slug]`
+  - Each detail: image gallery, full specs, pricing, reviews, related products
+- **NEVER** list services/products on one page without individual detail pages
+
+### Zero Emoji Policy (MANDATORY)
+
+- **NEVER use emojis** anywhere in websites (headings, buttons, nav, content, meta)
+- **ALWAYS use SVG icons**: Lucide (recommended), Heroicons, or Phosphor
+- Pick ONE icon library and use it consistently
+
+### Section Spacing (MANDATORY)
+
+- **Section padding**: minimum 80px top + bottom (`clamp(4rem, 8vw, 6rem)`)
+- **Hero**: minimum 96px, target 70vh
+- **Footer**: 128px top padding MINIMUM — never stuck to section above
+- **Alternating backgrounds**: `--color-bg` / `--color-surface` for visual separation
+- **Mobile**: minimum 48px section padding
+
+### Navigation Limits (MANDATORY)
+
+- **Max 7 items** in main navigation bar
+- Group related pages under **dropdown menus**
+- Put secondary links (Privacy, Terms, Sitemap) in **footer navigation**
+- **ONE primary CTA button** in nav (different style from links)
+
+### Recommended Framework: Astro + Cloudflare Pages
+
+For marketing sites, agency sites, portfolios, restaurants, blogs — **recommend Astro**:
+
+| Project Type     | Framework            | Deploy To            |
+| ---------------- | -------------------- | -------------------- |
+| Marketing/Agency | **Astro + Tailwind** | **Cloudflare Pages** |
+| Restaurant/Local | **Astro + Tailwind** | **Cloudflare Pages** |
+| Portfolio/Blog   | **Astro + Tailwind** | **Cloudflare Pages** |
+| SaaS App         | Next.js + React      | Vercel               |
+| E-commerce       | Next.js + React      | Vercel               |
+
+### 6-Color Professional Palette
+
+Every website MUST use a 6-color professional palette:
+
+1. **Primary** (`--color-primary`) — Brand identity, CTAs, links
+2. **Secondary** (`--color-secondary`) — Supporting elements, secondary buttons
+3. **Accent** (`--color-accent`) — Highlights, badges, notifications
+4. **Background** (`--color-bg`) — Page background
+5. **Surface** (`--color-surface`) — Cards, modals, elevated containers
+6. **Text** (`--color-text`, `--color-text-muted`) — Primary and secondary text
+
+**Color rules**: 60-30-10 distribution, WCAG AA contrast (4.5:1 for text), max 3 brand colors, never pure black (#000) for text.
+
+**Industry palettes** (10 pre-built): Tech, Health, Finance, Restaurant, Creative, Education, Real Estate, Legal, E-commerce, Non-profit.
+
+### Typography System
+
+- Industry-specific font pairings (Google Fonts)
+- Fluid typography with CSS `clamp()`
+- 8px spacing grid with CSS variables
+- Responsive breakpoints: Mobile (≤640px), Tablet (641-1024px), Desktop (≥1024px)
+
+### Before Building a Website
+
+The Frontend Developer MUST use `AskUserQuestion` to ask about:
+
+1. **Framework** (Astro recommended for marketing/content, Next.js for apps, HTML for simple)
+2. **Pages needed** (minimum table + business-specific + service/product detail pages)
+3. **Color preferences** (industry palette or custom)
+4. **Design style** (modern, classic, minimal, bold)
+
+### SEO & JSON-LD Structured Data (MANDATORY for Websites)
+
+Every website MUST include JSON-LD structured data on EVERY page. The SEO Specialist agent enforces this.
+
+**Schema hierarchy** (use `@graph` to combine):
+
+```
+Root (every page): Organization + WebSite + WebPage
+├── Home: + LocalBusiness (if physical), SearchAction
+├── About: + BreadcrumbList + Person[] (team)
+├── Services: + BreadcrumbList + Service[]
+├── Products: + BreadcrumbList + Product[] + Offer[]
+├── Contact: + BreadcrumbList + LocalBusiness + GeoCoordinates
+├── Blog: + BreadcrumbList + Article + Author + Publisher
+├── FAQ: + BreadcrumbList + FAQPage (Question→Answer)
+├── Pricing: + BreadcrumbList + SoftwareApp + Offer[]
+└── 404: WebPage only (minimal)
+```
+
+**Rules**: Use `@id` references (no duplicate blocks), BreadcrumbList on all non-home pages, validate with Google Rich Results Test.
+
+**Required files**: `robots.txt` (with sitemap reference), `sitemap.xml` (all indexable URLs with lastmod), `favicon.ico`, `404.html`.
 
 ---
 

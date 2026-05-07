@@ -81,19 +81,292 @@ Grep({ pattern: "<title>|<meta.*description|<link.*canonical", include: "*.html,
 <meta name="twitter:card" content="summary_large_image" />
 ```
 
-### 3. Structured Data (JSON-LD)
+### 3. Structured Data (JSON-LD) — MANDATORY Hierarchy
 
-Every page type should have appropriate schema:
+**Every page MUST include JSON-LD structured data.** Structured data creates a machine-readable knowledge graph that search engines use for rich results (stars, breadcrumbs, FAQs, sitelinks).
 
-| Page Type      | Schema (schema.org)            |
-| -------------- | ------------------------------ |
-| Homepage       | WebSite + Organization         |
-| Article/Blog   | Article + Author + Publisher   |
-| Product        | Product + Offer + Review       |
-| FAQ            | FAQPage                        |
-| Breadcrumbs    | BreadcrumbList                 |
-| Local Business | LocalBusiness + GeoCoordinates |
-| Person         | Person                         |
+#### JSON-LD Schema Hierarchy (Tree)
+
+```
+Website Root Level (sits on EVERY page)
+├── Organization          ← Company identity (logo, name, url, social links)
+│   ├── ContactPoint      ← Phone, email, address
+│   └── SameAs            ← Social media profiles
+├── WebSite               ← Site-wide search action
+│   └── SearchAction      ← "site:search" capability
+│
+├── WebPage               ← Base for every individual page
+│   └── BreadcrumbList    ← Navigation path (on EVERY page except home)
+│
+├── ── PAGE-SPECIFIC SCHEMAS (add to the WebPage above) ──
+│
+├── Home Page
+│   ├── Organization      ← (already in root)
+│   ├── WebSite           ← (already in root)
+│   └── LocalBusiness     ← If physical location exists
+│       ├── GeoCoordinates
+│       ├── OpeningHoursSpecification
+│       └── AggregateRating
+│
+├── About Page
+│   ├── WebPage
+│   ├── BreadcrumbList
+│   ├── Organization      ← Company details, founding date, mission
+│   └── Person[]          ← Team members with jobTitle, image, sameAs
+│
+├── Services Page
+│   ├── WebPage
+│   ├── BreadcrumbList
+│   └── Service[]         ← Each service: name, description, provider, areaServed
+│       └── Offer         ← Pricing if public
+│
+├── Products/Portfolio Page
+│   ├── WebPage
+│   ├── BreadcrumbList
+│   ├── Product[]         ← Each product/item
+│   │   ├── Offer         ← Price, availability, priceCurrency
+│   │   ├── AggregateRating
+│   │   └── Review[]
+│   └── ItemList          ← For portfolio grids/collections
+│
+├── Contact Page
+│   ├── WebPage
+│   ├── BreadcrumbList
+│   ├── ContactPage
+│   └── LocalBusiness     ← Full address, map, phone, hours
+│       ├── GeoCoordinates
+│       └── OpeningHoursSpecification[]
+│
+├── Blog/Article Page
+│   ├── WebPage
+│   ├── BreadcrumbList
+│   ├── Article           ← OR NewsArticle / BlogPosting
+│   │   ├── Author (Person)
+│   │   ├── Publisher (Organization)
+│   │   ├── ImageObject
+│   │   └── datePublished, dateModified
+│   └── CollectionPage    ← For blog listing/index
+│
+├── FAQ Page
+│   ├── WebPage
+│   ├── BreadcrumbList
+│   └── FAQPage
+│       └── Question[] → Answer[]  ← Each Q&A pair
+│
+├── Pricing Page
+│   ├── WebPage
+│   ├── BreadcrumbList
+│   └── SoftwareApp / Service
+│       └── Offer[]       ← Each pricing tier
+│
+└── 404 Page
+    ├── WebPage
+    └── (minimal — no Organization/WebSite schema)
+```
+
+#### Complete JSON-LD Example — Home Page
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://example.com/#organization",
+      "name": "Company Name",
+      "url": "https://example.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://example.com/logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://facebook.com/company",
+        "https://instagram.com/company",
+        "https://linkedin.com/company",
+        "https://twitter.com/company"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-555-123-4567",
+        "contactType": "customer service",
+        "email": "info@example.com"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://example.com/#website",
+      "url": "https://example.com",
+      "name": "Company Name",
+      "publisher": { "@id": "https://example.com/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://example.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://example.com/#webpage",
+      "url": "https://example.com",
+      "name": "Company Name — Professional Services",
+      "isPartOf": { "@id": "https://example.com/#website" },
+      "about": { "@id": "https://example.com/#organization" }
+    }
+  ]
+}
+```
+
+#### Complete JSON-LD Example — Service Page
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://example.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://example.com/services"
+        },
+        { "@type": "ListItem", "position": 3, "name": "Web Development" }
+      ]
+    },
+    {
+      "@type": "Service",
+      "name": "Web Development",
+      "description": "Custom web applications built with modern frameworks",
+      "provider": { "@id": "https://example.com/#organization" },
+      "areaServed": "Panama",
+      "serviceType": "Web Development"
+    },
+    {
+      "@type": "WebPage",
+      "url": "https://example.com/services/web-development",
+      "name": "Web Development Services — Company Name",
+      "breadcrumb": { "@id": "#breadcrumb" }
+    }
+  ]
+}
+```
+
+#### Complete JSON-LD Example — Blog Article
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "10 Tips for Better SEO in 2026",
+  "image": "https://example.com/blog/images/seo-tips-2026.jpg",
+  "datePublished": "2026-05-07T08:00:00+00:00",
+  "dateModified": "2026-05-07T10:30:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "John Doe",
+    "url": "https://example.com/team/john-doe"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Company Name",
+    "logo": { "@type": "ImageObject", "url": "https://example.com/logo.png" }
+  },
+  "mainEntityOfPage": "https://example.com/blog/seo-tips-2026"
+}
+```
+
+#### Complete JSON-LD Example — FAQ Page
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What services do you offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We offer web development, SEO optimization, digital marketing, and branding services."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does a website cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our websites start at $2,000 for a standard business site. Custom projects are quoted individually."
+      }
+    }
+  ]
+}
+```
+
+#### Complete JSON-LD Example — Local Business
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://example.com/#localbusiness",
+  "name": "Company Name",
+  "image": "https://example.com/storefront.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 Main Street",
+    "addressLocality": "Panama City",
+    "addressRegion": "Panama",
+    "postalCode": "0801",
+    "addressCountry": "PA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 8.9824,
+    "longitude": -79.5199
+  },
+  "telephone": "+507-123-4567",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "14:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "127"
+  }
+}
+```
+
+#### JSON-LD Implementation Rules (MANDATORY)
+
+1. **Use `@graph`** to combine multiple schemas on one page (Organization + WebSite + WebPage)
+2. **Use `@id` references** to link schemas together (e.g., `"publisher": { "@id": "https://example.com/#organization" }`)
+3. **BreadcrumbList on EVERY page** except the homepage
+4. **Organization + WebSite on every page** (via `@graph`, shared from a component)
+5. **Never duplicate** — reference with `@id`, don't copy-paste the same Organization block on every page
+6. **Validate** all JSON-LD with Google Rich Results Test (https://search.google.com/test/rich-results)
+7. **Use absolute URLs** for all `url`, `@id`, and image fields
+8. **Include `datePublished` and `dateModified`** on all Article/BlogPosting schemas
+9. **One `<script type="application/ld+json">`** block per page — merge multiple schemas into one `@graph`
 
 ### 4. Semantic HTML
 
@@ -188,18 +461,30 @@ When activated for a project:
 # 1. Find all page templates
 Glob({ pattern: "**/*.{html,tsx,jsx,vue,php,blade.php}" })
 
-# 2. Check meta tags
+# 2. Check meta tags on EVERY page
 Grep({ pattern: "<title>|<meta.*description|<meta.*viewport|<link.*canonical", include: "*.html,*.tsx,*.jsx,*.vue,*.php" })
 
-# 3. Check structured data
-Grep({ pattern: "application/ld\\+json|schema\\.org", include: "*.html,*.tsx,*.jsx,*.vue,*.php" })
+# 3. Check structured data — JSON-LD scripts
+Grep({ pattern: "application/ld\\+json|schema\\.org|@graph|@type", include: "*.html,*.tsx,*.jsx,*.vue,*.php" })
 
-# 4. Check image alt tags
+# 4. Check for @graph usage (proper JSON-LD hierarchy)
+Grep({ pattern: "@graph", include: "*.html,*.tsx,*.jsx,*.vue,*.php" })
+
+# 5. Check for BreadcrumbList (required on all non-home pages)
+Grep({ pattern: "BreadcrumbList", include: "*.html,*.tsx,*.jsx,*.vue,*.php" })
+
+# 6. Check for Organization schema (required on all pages)
+Grep({ pattern: '"@type".*"Organization"', include: "*.html,*.tsx,*.jsx,*.vue,*.php" })
+
+# 7. Check image alt tags
 Grep({ pattern: "<img(?![^>]*alt=)", include: "*.html,*.tsx,*.jsx,*.vue,*.php" })
 
-# 5. Check robots.txt and sitemap
+# 8. Check robots.txt and sitemap
 Glob({ pattern: "**/robots.txt" })
 Glob({ pattern: "**/sitemap*.xml" })
+
+# 9. Check Open Graph tags
+Grep({ pattern: "og:title|og:description|og:image", include: "*.html,*.tsx,*.jsx,*.vue,*.php" })
 ```
 
 ### Step 2: Ask Clarifying Questions
@@ -326,18 +611,54 @@ Delegate fixes to Frontend Developer agent with specific instructions:
 - ❌ **Link farms** — participating in link exchange schemes
 - ❌ **Auto-generated content** — gibberish with keywords
 - ❌ **Buying backlinks** — paid links violate Google guidelines
+- ❌ **Missing JSON-LD** — page without structured data loses rich results
+- ❌ **Copy-pasted schema** — duplicate Organization block instead of `@id` references
+- ❌ **No BreadcrumbList** — missing navigation breadcrumbs on non-home pages
+- ❌ **Generic schema** — using only `WebPage` when specific schemas exist (Article, Product, Service, FAQPage)
+- ❌ **No sitemap** — search engines can't discover all pages efficiently
 
 ## Completion Requirements
 
 Before declaring SEO work complete:
 
-- [ ] All pages have unique `<title>` and `<meta description>`
-- [ ] Canonical URLs set on all pages
-- [ ] Structured data validates (test with Google Rich Results Test)
-- [ ] All images have descriptive `alt` text
-- [ ] `robots.txt` exists and is correct
-- [ ] `sitemap.xml` exists and lists all indexable pages
-- [ ] Heading hierarchy is correct (single H1, no skipped levels)
-- [ ] Core Web Vitals targets met (or plan to meet them)
+### Meta & Tags
+
+- [ ] All pages have unique `<title>` (50-60 chars, keyword near start)
+- [ ] All pages have unique `<meta name="description">` (150-160 chars)
+- [ ] Canonical URLs set on all pages (absolute, no trailing slash ambiguity)
+- [ ] Open Graph tags on all public pages (og:title, og:description, og:image, og:url, og:type)
+- [ ] Twitter Card meta tags on all public pages
+- [ ] `<html lang="xx">` set correctly
+
+### JSON-LD Structured Data
+
+- [ ] **Organization** schema with logo, url, sameAs (social links) on ALL pages
+- [ ] **WebSite** schema with SearchAction on ALL pages
+- [ ] **WebPage** schema on every page
+- [ ] **BreadcrumbList** on every page EXCEPT home
+- [ ] **Page-specific schemas**: Article, Product, Service, FAQPage, LocalBusiness as appropriate
+- [ ] All schemas use `@graph` for combining multiple types
+- [ ] All schemas use `@id` references (no duplicate blocks)
+- [ ] All JSON-LD validates with Google Rich Results Test
+
+### Technical SEO
+
+- [ ] `robots.txt` exists with sitemap reference and correct directives
+- [ ] `sitemap.xml` exists with ALL indexable pages, `<lastmod>` dates, `<priority>` values
+- [ ] `favicon.ico` + apple-touch-icon exist
+- [ ] `404.html` custom page with navigation back
 - [ ] No mixed content (HTTP resources on HTTPS page)
+- [ ] Heading hierarchy correct (single H1 per page, no skipped levels)
+
+### Performance & Accessibility
+
+- [ ] All images have descriptive `alt` text (keyword-relevant)
+- [ ] Core Web Vitals targets met (LCP < 2.5s, INP < 100ms, CLS < 0.1)
+- [ ] Color contrast ≥ 4.5:1 for all text
+- [ ] All images have `width` and `height` attributes
+- [ ] Lazy loading on below-fold images
+
+### Deliverables
+
 - [ ] SEO report generated at `.qwen-orchestrator/seo-report.md`
+- [ ] JSON-LD schema map documented (which schemas on which pages)

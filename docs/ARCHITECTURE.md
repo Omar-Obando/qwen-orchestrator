@@ -10,7 +10,7 @@
 │                                                                         │
 │  qwen-extension.json                                                    │
 │  ├── Registers 22 agents (agents/*.md)                                  │
-│  ├── Registers 21 skills (skills/*/SKILL.md)                            │
+│  ├── Registers 22 skills (skills/*/SKILL.md)                            │
 │  ├── Registers 6 commands (commands/*.md)                               │
 │  ├── Injects context (context/QWEN.md)                                  │
 │  └── Starts MCP Server (mcp-server/) — 7 tools                          │

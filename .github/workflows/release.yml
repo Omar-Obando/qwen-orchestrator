@@ -28,25 +28,21 @@ jobs:
       - name: Create release archive
         run: |
           mkdir -p /tmp/qwen-orchestrator
-          # Copy extension files
           cp qwen-extension.json /tmp/qwen-orchestrator/
           cp README.md /tmp/qwen-orchestrator/
           cp LICENSE /tmp/qwen-orchestrator/
           cp AGENTS.md /tmp/qwen-orchestrator/
           cp package.json /tmp/qwen-orchestrator/
-          # Copy directories
           cp -r agents /tmp/qwen-orchestrator/
           cp -r skills /tmp/qwen-orchestrator/
           cp -r commands /tmp/qwen-orchestrator/
           cp -r context /tmp/qwen-orchestrator/
           cp -r docs /tmp/qwen-orchestrator/
-          # Copy MCP server with built dist (no node_modules)
           mkdir -p /tmp/qwen-orchestrator/mcp-server/src /tmp/qwen-orchestrator/mcp-server/dist
           cp mcp-server/package.json /tmp/qwen-orchestrator/mcp-server/
           cp mcp-server/tsconfig.json /tmp/qwen-orchestrator/mcp-server/
           cp mcp-server/src/index.ts /tmp/qwen-orchestrator/mcp-server/src/
           cp -r mcp-server/dist/* /tmp/qwen-orchestrator/mcp-server/dist/
-          # Create archive
           cd /tmp
           tar -czf qwen-orchestrator.tar.gz qwen-orchestrator/
           mv qwen-orchestrator.tar.gz $GITHUB_WORKSPACE/
@@ -71,7 +67,7 @@ jobs:
 
             ### What's Included
             - 22 specialized AI agents
-            - 21 professional skills
+            - 22 professional skills
             - 6 slash commands
             - MCP server (7 tools)
             - MCP Memory server (Knowledge Graph)

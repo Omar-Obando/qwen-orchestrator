@@ -2,7 +2,7 @@
   "name": "qwen-orchestrator",
   "version": "0.0.1",
   "displayName": "Qwen Orchestrator — Professional AI Dev Team",
-  "description": "Multi-agent orchestration for Qwen Code. 22 agents (Frontend, Backend, Cybersecurity, Performance, Release, API, Mobile, Localization + 14 more), 21 skills, 6 commands, anti-pattern enforcement, no-mockup guarantee, N+1 prevention, multi-language support, Context7 optional. By Omar-Obando.",
+  "description": "Multi-agent orchestration for Qwen Code. 22 agents, 22 skills (design-system, code-review, anti-pattern + 19 more), 6 commands, multi-page website enforcement, professional color palettes, read-before-write rule, no-mockup guarantee, N+1 prevention, multi-language support. By Omar-Obando.",
   "author": "Omar-Obando",
   "license": "MIT",
   "repository": {
