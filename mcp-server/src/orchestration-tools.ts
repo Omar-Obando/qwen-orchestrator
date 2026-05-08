@@ -19,7 +19,6 @@
 
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-
 import { z } from 'zod';
 
 import { getSessionDir, readCurrentSessionId } from './session-manager.js';
@@ -231,6 +230,7 @@ function detectCycles(tasks: DependencyTask[]): string[][] {
 // Tool Registration
 // ---------------------------------------------------------------------------
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function registerOrchestrationTools(server: any): void {
   // -------------------------------------------------------------------------
   // Tool 1: report_progress (heartbeat)

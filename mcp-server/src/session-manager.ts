@@ -240,7 +240,7 @@ export function archiveSession(sessionId: string): boolean {
       rename(sessionDir, archivedSessionDir, (err) => {
         if (err) {
           // Fall back to copy+delete
-          console.log('Rename failed, using copy+delete fallback');
+          console.warn('Rename failed, using copy+delete fallback');
           // Implementation would continue here
         }
       });
@@ -300,8 +300,8 @@ export function initializeSession(
     writeSessionState(sessionId, state);
     writeCurrentSessionId(sessionId);
 
-    console.log(`Created new session: ${sessionId}`);
-    console.log(`Session directory: ${sessionDirs.root}`);
+    console.warn(`Created new session: ${sessionId}`);
+    console.warn(`Session directory: ${sessionDirs.root}`);
   }
 
   const state = getSessionState(sessionId);

@@ -13,8 +13,8 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 
-import { registerSessionTools } from './session-tools.js';
 import { registerOrchestrationTools } from './orchestration-tools.js';
+import { registerSessionTools } from './session-tools.js';
 
 const server = new McpServer({
   name: 'qwen-orchestrator',
