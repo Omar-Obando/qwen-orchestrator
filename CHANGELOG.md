@@ -4,12 +4,18 @@ All notable changes to Qwen Orchestrator will be documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased](https://github.com/your-org/qwen-orchestrator/compare/v0.0.2...HEAD)
+## [Unreleased](https://github.com/your-org/qwen-orchestrator/compare/v0.0.3...HEAD)
 
-### Added
+### Changed
 
 - **Qwen Code Patterns documentation** - Comprehensive guide to MCP servers, hooks, and session management patterns
 - **QWEN_CODE_PATTERNS.md** - Documentation covering MCP architecture, hook system, and best practices
+
+## [0.0.3] - 2025-01-10
+
+### Changed
+
+- **GSD_LEARNINGS.md removed** - Replaced with Qwen Code patterns documentation
 
 ## [0.0.2] - 2025-01-10
 
