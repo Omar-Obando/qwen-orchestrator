@@ -8,8 +8,8 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "typescript": "~5.4.5",
-    "@types/node": "^20.11.25"
+    "@types/node": "^20.19.40",
+    "typescript": "~5.4.5"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.0",
