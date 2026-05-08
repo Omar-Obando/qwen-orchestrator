@@ -84,6 +84,116 @@ Use the `design-system` skill for full page architecture, color palettes, and ty
 
 ---
 
+## ⚠️ MANDATORY RULE #4: TODO TRACKING + QUALITY GATES
+
+**Every task MUST be tracked via TodoWrite. Every deliverable MUST pass quality checks.**
+
+```
+❌ BANNED:
+- Completing a task without updating TodoWrite to status: "completed"
+- Delivering code without running lint/syntax/type checks
+- Skipping quality gates to "save time"
+- Setting status: "completed" without verification evidence
+
+✅ REQUIRED:
+- Read current TodoWrite state before starting work
+- Set task to status: "in_progress" when starting (include ALL tasks in the call)
+- Run framework-specific quality checks BEFORE setting status: "completed"
+- Set status: "completed" ONLY after all checks pass
+- If checks fail, FIX issues then re-run checks before updating TodoWrite
+- ALWAYS send the FULL todos array to TodoWrite (it replaces, not merges)
+```
+
+**TodoWrite API**:
+
+```
+TodoWrite({
+  todos: [
+    { id: "t1", content: "Task description", status: "pending" },
+    { id: "t2", content: "Another task", status: "in_progress" },
+    { id: "t3", content: "Completed task", status: "completed" }
+  ]
+})
+```
+
+**Status values**: `"pending"` (not started), `"in_progress"` (working), `"completed"` (done)
+
+**CRITICAL**: Every TodoWrite call must include ALL tasks (not just changed ones). The tool REPLACES the entire array — it does not merge.
+
+### Pre-Delivery Quality Gate (MANDATORY)
+
+Before ANY task can be set to `status: "completed"`, the Code Quality Guard or the implementing agent MUST run the appropriate checks:
+
+| Framework        | Syntax Check           | Lint                       | Type Check                     | Build/Test          |
+| ---------------- | ---------------------- | -------------------------- | ------------------------------ | ------------------- |
+| **Astro**        | `astro check`          | `eslint .`                 | `tsc --noEmit`                 | `astro build`       |
+| **Next.js**      | `next lint`            | `eslint .`                 | `tsc --noEmit`                 | `next build`        |
+| **TypeScript**   | `tsc --noEmit`         | `eslint .`                 | `tsc --strict`                 | `npm run build`     |
+| **Flutter**      | `dart analyze`         | `dart analyze`             | `dart analyze`                 | `flutter build web` |
+| **Laravel/PHP**  | `php -l app/**/*.php`  | `./vendor/bin/pint --test` | `./vendor/bin/phpstan analyse` | `php artisan test`  |
+| **Supabase/SQL** | SQL syntax check       | Schema validation          | Migration check                | `supabase db lint`  |
+| **React**        | `tsc --noEmit`         | `eslint .`                 | `tsc --noEmit`                 | `npm run build`     |
+| **NestJS**       | `tsc --noEmit`         | `eslint .`                 | `tsc --strict`                 | `npm run build`     |
+| **Python**       | `python -m py_compile` | `ruff check .`             | `mypy src/`                    | `pytest`            |
+| **Rust**         | `cargo check`          | `cargo clippy`             | `cargo check`                  | `cargo test`        |
+| **Go**           | `go vet`               | `golangci-lint`            | `go build`                     | `go test ./...`     |
+
+**If the project has `package.json` scripts for these, use them instead.** Always read `package.json`, `pubspec.yaml`, `composer.json`, etc. first to discover the project's existing check commands.
+
+---
+
+## ⚠️ MANDATORY RULE #5: MCP REPORTING PROTOCOL
+
+**Every agent MUST use MCP reporting tools for task progress. No silent work.**
+
+```
+❌ BANNED:
+- Completing a task without calling report_completion
+- Starting a task without calling report_progress
+- Being stuck without calling report_blockage
+- Making major decisions without calling log_event
+
+✅ REQUIRED:
+- report_progress when starting ANY task (progress_percent: 0)
+- report_progress at key milestones (every 20-30% progress)
+- report_completion when done (include files_changed + test_results)
+- report_blockage when stuck (include reason + suggested_fix)
+- log_event for all major decisions
+```
+
+### Task State Machine
+
+| State         | Meaning         | Who Sets It       | When                   |
+| ------------- | --------------- | ----------------- | ---------------------- |
+| `pending`     | Not started     | Planner           | Initial plan creation  |
+| `in_progress` | Working         | Agent             | report_progress call   |
+| `blocked`     | Stuck           | Agent             | report_blockage call   |
+| `completed`   | Done + verified | Agent + Commander | report_completion call |
+| `failed`      | Cannot complete | Agent             | Terminal state         |
+
+### State Transitions
+
+```
+pending ──→ in_progress ──→ completed
+               │    ↑
+               │    └── (unblocked)
+               └──→ blocked
+               └──→ failed (terminal)
+```
+
+### MCP Reporting Tools
+
+| Tool                 | When to Use            | Required Fields                       |
+| -------------------- | ---------------------- | ------------------------------------- |
+| `report_progress`    | Starting + milestones  | taskId, agent, summary                |
+| `report_completion`  | Task done + verified   | taskId, agent, summary, files_changed |
+| `report_blockage`    | Stuck or blocked       | taskId, agent, reason                 |
+| `log_event`          | Major decisions        | agent, event_type, description        |
+| `check_dependencies` | Before parallel launch | tasks array with id + dependsOn       |
+| `get_task_state`     | Check task status      | taskId (optional — returns all)       |
+
+---
+
 ## Purpose
 
 This file defines the mandatory operational rules for all agent work in this repository.
@@ -440,7 +550,11 @@ Before completion, run this audit:
 
 ## Session Memory
 
-Update `.qwen-orchestrator/memory.md` at session end with:
+Each `/orchestrator` invocation creates a new isolated session. State is stored in session-specific directories under `.qwen-orchestrator/sessions/<session-id>/`.
+
+**Shorthand**: `$SESSION_DIR` = `.qwen-orchestrator/sessions/$(cat .qwen-orchestrator/current-session)/`
+
+Update `$SESSION_DIR/memory.md` at session end with:
 
 - Current task, last completed step, next exact step
 - Incomplete items and reasons
@@ -449,10 +563,18 @@ Update `.qwen-orchestrator/memory.md` at session end with:
 
 At next session start:
 
-1. Open `memory.md`
-2. Read the latest snapshot
-3. Open files in the restore list, in order
-4. Resume from the recorded next step
+1. Read `.qwen-orchestrator/current-session` to find the active session ID
+2. Open `$SESSION_DIR/memory.md`
+3. Read the latest snapshot
+4. Open files in the restore list, in order
+5. Resume from the recorded next step
+
+**Session Isolation Rules**:
+
+- ALL state writes go to `$SESSION_DIR/` (never the flat `.qwen-orchestrator/` root)
+- NEVER modify files from archived sessions
+- NEVER delete session directories
+- Previous sessions are IMMUTABLE after they end
 
 ---
 
@@ -507,6 +629,224 @@ api-specialist, backend-developer, commander, cybersecurity-engineer, doc-resear
 1. **Session start**: Call `read_graph` to load relevant context
 2. **During work**: Call `create_entities` when significant decisions are made
 3. **Session end**: Call `create_relations` to link related entities
+
+---
+
+## Agent Delegation & Subagent Monitoring
+
+### Delegation Best Practices
+
+When delegating work to subagents, follow these patterns:
+
+#### 1. Use Agent Roster for Delegation
+
+```
+Commander → [Planner] → [Frontend Dev] → [Backend Dev] → [Reviewer]
+              ↓                 ↓                 ↓
+           [QA Engineer] → [DevOps Eng] → [Monitor]
+```
+
+#### 2. Delegate with Clear Context
+
+```typescript
+Agent({
+  description: 'Implement user auth',
+  prompt: `Implement user authentication for ${project}. 
+
+Context:
+- Project: ${project}
+- Framework: ${framework}
+- Requirements: [list requirements]
+- Files to modify: [list files]
+- Constraints: [list constraints]
+
+Please implement and return a summary of changes.`,
+  subagent_type: 'backend-developer',
+});
+```
+
+#### 3. Monitor Subagent Progress
+
+```typescript
+// Commander can use SendMessage to check status
+SendMessage({
+  task_id: 'subagent-123',
+  message: 'What is your current progress? Any blockers?',
+});
+
+// Use TaskStop to cancel stuck subagents
+TaskStop({ task_id: 'subagent-stuck' });
+```
+
+### Subagent Status Tracking
+
+#### Problem: Long-Running Subagents
+
+Sometimes subagents run for hours and you can't see what they're doing.
+
+#### Solutions:
+
+**1. Use Monitor Tool for Long Processes**
+
+```typescript
+Monitor({
+  command: 'npm run dev',
+  description: 'Watch dev server output',
+  max_events: 1000,
+  idle_timeout_ms: 300000, // 5 minutes
+});
+```
+
+**2. Use SendMessage for Status Updates**
+
+```typescript
+// Subagent sends status updates to parent
+SendMessage({
+  task_id: 'worker-auth',
+  message: 'Starting authentication flow...',
+});
+
+SendMessage({
+  task_id: 'worker-auth',
+  message: 'Checking user credentials...',
+});
+
+SendMessage({
+  task_id: 'worker-auth',
+  message: 'Authentication successful!',
+});
+```
+
+**3. Use CronCreate for Periodic Reports**
+
+```typescript
+// Schedule recurring status reports
+CronCreate({
+  cron: '*/15 * * * *', // Every 15 minutes
+  prompt: 'Send a status update on your current task progress',
+  recurring: true,
+});
+```
+
+**4. Use TaskStop to Cancel Runaway Tasks**
+
+```typescript
+// Cancel a stuck subagent
+TaskStop({
+  task_id: 'worker-stuck',
+});
+```
+
+### Monitor Agent Role
+
+The `monitor` agent is the dedicated watchdog for detecting and breaking LLM loops:
+
+**Loop Detection Patterns:**
+
+| Pattern           | Description                        | Solution                             |
+| ----------------- | ---------------------------------- | ------------------------------------ |
+| Tool Call Loop    | Same tool call fails repeatedly    | SendMessage with fix suggestion      |
+| Reasoning Loop    | Same approach tried multiple times | SendMessage with new approach        |
+| Error-Bounce Loop | Fix doesn't resolve error          | SendMessage with different fix       |
+| Context Loop      | No progress on understanding       | SendMessage with clarifying question |
+| Apology Loop      | Repeated apologies without action  | SendMessage with clear task          |
+
+**Monitor Agent Tools:**
+
+- `SendMessage` - Break loops with escape routes
+- `TaskStop` - Cancel runaway tasks
+- `Monitor` - Watch long-running processes
+- `CronCreate` - Schedule recurring checks
+
+### Hooks vs Rules Configuration
+
+**All new extensions should use HOOKS, not RULES.**
+
+#### Hook Events Available
+
+| Event                | Triggered When                  | Use Case                                  |
+| -------------------- | ------------------------------- | ----------------------------------------- |
+| `PreToolUse`         | Before tool execution           | Validate, modify, or block tool calls     |
+| `PostToolUse`        | After successful tool execution | Log, transform, or enhance responses      |
+| `PostToolUseFailure` | After tool execution fails      | Handle errors, retry, or fallback         |
+| `UserPromptSubmit`   | After user submits prompt       | Process, analyze, or transform prompts    |
+| `SessionStart`       | When session starts/resumes     | Initialize state, create directories      |
+| `SessionEnd`         | When session ends               | Cleanup, save state, send notifications   |
+| `Stop`               | Before Qwen concludes response  | Add final messages, save checkpoints      |
+| `SubagentStart`      | When subagent starts            | Initialize subagent state, track progress |
+| `SubagentStop`       | When subagent stops             | Cleanup, save results, notify parent      |
+| `PreCompact`         | Before conversation compaction  | Save critical state, create checkpoints   |
+| `PostCompact`        | After conversation compaction   | Restore state, recover context            |
+
+#### Hook Configuration Location
+
+**Hooks must be configured in `~/.qwen/settings.json`, NOT in `qwen-extension.json`.**
+
+#### Windows Hook Configuration
+
+On Windows, use `cmd.exe` with `/c` flag to avoid "\_R no se reconoce" error:
+
+```json
+{
+  "hooks": {
+    "session:start": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd.exe",
+            "args": [
+              "/c",
+              "node",
+              "${extensionPath}\\mcp-server\\dist\\hooks\\session-handler.js"
+            ],
+            "cwd": "${extensionPath}",
+            "shell": "cmd.exe",
+            "name": "Session Handler",
+            "description": "Initialize session directory structure"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### Hook Best Practices
+
+- [ ] Always use `cmd.exe` on Windows
+- [ ] Set timeouts to prevent hanging (default: 60s)
+- [ ] Return valid JSON from all hooks
+- [ ] Use async for non-blocking operations
+- [ ] Log to session directory
+- [ ] Validate hook outputs
+- [ ] Test hooks manually before deployment
+
+### Agent Delegation Checklist
+
+Before delegating to a subagent:
+
+- [ ] **Clear context**: Provide full context about the task
+- [ ] **Specific instructions**: What exactly to implement/analyze
+- [ ] **File ownership**: Which files to modify/create
+- [ ] **Constraints**: Any limitations or requirements
+- [ ] **Success criteria**: How to know when it's done
+- [ ] **Status updates**: How to report progress (SendMessage)
+- [ ] **Error handling**: What to do if stuck
+
+### Agent Completion Checklist
+
+Before declaring completion:
+
+- [ ] All files changed and re-read
+- [ ] Commands executed with observed results
+- [ ] Side effects reviewed
+- [ ] Artifacts synchronized
+- [ ] Post-work audit completed
+- [ ] Session memory updated
+- [ ] Subagents reported completion
+- [ ] Monitor agent confirmed no loops
 
 ---
 

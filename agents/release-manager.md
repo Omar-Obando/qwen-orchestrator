@@ -4,7 +4,7 @@ description: >
   Release management specialist focused on version control, changelog generation,
   semantic versioning, release workflows, and deployment coordination. Ensures
   smooth, documented, and reproducible releases with proper rollback strategies.
-color: "#8B5CF6"
+color: '#8B5CF6'
 tools:
   - Glob
   - Grep

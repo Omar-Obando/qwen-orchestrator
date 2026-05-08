@@ -77,9 +77,9 @@ OBSERVE → HYPOTHESIZE → TEST → FIX → VERIFY
 
 ```typescript
 // Strategic logging for debugging
-console.log("[DEBUG] Input:", { userId, filters, pagination });
-console.log("[DEBUG] Query result:", { count, firstItem, lastItem });
-console.log("[DEBUG] Transform:", { input, output, duration });
+console.log('[DEBUG] Input:', { userId, filters, pagination });
+console.log('[DEBUG] Query result:', { count, firstItem, lastItem });
+console.log('[DEBUG] Transform:', { input, output, duration });
 ```
 
 ## Common Bug Categories

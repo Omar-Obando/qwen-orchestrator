@@ -76,17 +76,30 @@ Use `/orchestrate` when you already know exactly what you want and need fast exe
 
 ## Shared State Files
 
-The orchestrator creates a `.qwen-orchestrator/` directory in your project:
+The orchestrator creates a `.qwen-orchestrator/` directory in your project with session isolation:
 
-| File                | Purpose                | Who Writes                   |
-| ------------------- | ---------------------- | ---------------------------- |
-| `todo.md`           | Mission task breakdown | Planner (Commander approves) |
-| `context.md`        | Project context        | Commander                    |
-| `memory.md`         | Session state          | All agents                   |
-| `work-log.md`       | Real-time status       | Developers                   |
-| `qa-report.md`      | Test results           | QA Engineer                  |
-| `project-status.md` | Progress metrics       | Project Manager              |
-| `sync-issues.md`    | Cross-file issues      | Reviewer                     |
+```
+.qwen-orchestrator/
+├── current-session          # Active session ID (single line: YYYY-MM-DDTHH-MM-SS)
+├── sessions/
+│   ├── 2026-05-07T14-30-00/   # Archived session (IMMUTABLE)
+│   │   ├── context.md         ← Project context (<150 lines)
+│   │   ├── memory.md          ← Session memory & restore points
+│   │   ├── sync-issues.md     ← Cross-file synchronization issues
+│   │   ├── qa-report.md       ← Quality assurance reports
+│   │   ├── project-status.md  ← Progress tracking & metrics
+│   │   └── work-log.md        ← Real-time work status
+│   └── 2026-05-07T16-45-00/   # Active session (current)
+│       ├── context.md         ← Project context (<150 lines)
+│       ├── memory.md          ← Session memory & restore points
+│       ├── sync-issues.md     ← Cross-file synchronization issues
+│       ├── qa-report.md       ← Quality assurance reports
+│       ├── project-status.md  ← Progress tracking & metrics
+│       └── work-log.md        ← Real-time work status
+└── shared/                    # Cross-session data (future use)
+```
+
+Each session has its own isolated state. The active session is pointed to by `.qwen-orchestrator/current-session`.
 
 ## Best Practices
 

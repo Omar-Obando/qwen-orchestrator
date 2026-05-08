@@ -137,26 +137,36 @@
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                         │
 │   .qwen-orchestrator/                                                   │
-│   ├── todo.md            ← Hierarchical mission tasks                   │
-│   ├── context.md         ← Project context (<150 lines)                 │
-│   ├── memory.md          ← Session memory & restore points              │
-│   ├── sync-issues.md     ← Cross-file synchronization issues            │
-│   ├── qa-report.md       ← Quality assurance reports                    │
-│   ├── project-status.md  ← Progress tracking & metrics                  │
-│   └── work-log.md        ← Real-time work status                        │
+│   ├── current-session          # Active session ID                       │
+│   ├── sessions/                                                        │
+│   │   ├── 2026-05-07T14-30-00/   # Archived session (IMMUTABLE)         │
+│   │   │   ├── context.md         ← Project context (<150 lines)         │
+│   │   │   ├── memory.md          ← Session memory & restore points      │
+│   │   │   ├── sync-issues.md     ← Cross-file synchronization issues    │
+│   │   │   ├── qa-report.md       ← Quality assurance reports            │
+│   │   │   ├── project-status.md  ← Progress tracking & metrics          │
+│   │   │   └── work-log.md        ← Real-time work status                │
+│   │   └── 2026-05-07T16-45-00/   # Active session (current)            │
+│   │       ├── context.md         ← Project context (<150 lines)         │
+│   │       ├── memory.md          ← Session memory & restore points      │
+│   │       ├── sync-issues.md     ← Cross-file synchronization issues    │
+│   │       ├── qa-report.md       ← Quality assurance reports            │
+│   │       ├── project-status.md  ← Progress tracking & metrics          │
+│   │       └── work-log.md        ← Real-time work status                │
+└── shared/                    # Cross-session data (future use)             │
 │                                                                         │
 │   Reading Protocol:                                                     │
 │   • Commander reads ALL files at loop start                             │
 │   • Planner reads context.md before planning                            │
-│   • Developers read todo.md for assignments                             │
+│   • Developers check TodoWrite state for assignments                    │
 │   • Reviewer reads work-log.md for completed units                      │
-│   • QA reads todo.md for verification targets                           │
+│   • QA checks TodoWrite for verification targets                        │
 │   • PM reads project-status.md for tracking                             │
 │                                                                         │
 │   Writing Protocol:                                                     │
 │   • Only Commander writes context.md                                    │
-│   • Only Planner writes todo.md (Commander approves)                    │
-│   • Only Reviewer marks [x] in todo.md                                 │
+│   • Only Planner creates TodoWrite tasks (Commander approves)            │
+│   • Only Reviewer sets status: "completed" in TodoWrite                  │
 │   • Only Developers update work-log.md                                  │
 │   • QA updates qa-report.md                                             │
 │   • PM updates project-status.md                                        │
@@ -199,7 +209,7 @@ User ──▶ /orchestrator "Build auth system"
               │
               ├──▶ Planner: "Research auth patterns, create plan"
               │         │
-              │         └──▶ .qwen-orchestrator/todo.md created
+               │         └──▶ TodoWrite populated with execution plan
               │
               ├──▶ Frontend Dev: "Implement login UI" (parallel)
               ├──▶ Backend Dev: "Implement JWT service" (parallel)
@@ -209,7 +219,7 @@ User ──▶ /orchestrator "Build auth system"
               ├──▶ Reviewer: "Verify auth implementation"
               ├──▶ QA Engineer: "Test auth edge cases"
               │
-              │    [Reviewer marks [x] in todo.md]
+               │    [Reviewer sets status: "completed" in TodoWrite]
               │    [QA updates qa-report.md]
               │
               └──▶ PM: "Track progress, report status"

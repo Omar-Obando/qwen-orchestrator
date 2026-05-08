@@ -24,9 +24,9 @@ This skill provides systematic refactoring guidance ensuring behavior preservati
 // BEFORE
 function printOwing(invoice) {
   // Print banner
-  console.log("*******************");
-  console.log("*** Customer Owes ***");
-  console.log("*******************");
+  console.log('*******************');
+  console.log('*** Customer Owes ***');
+  console.log('*******************');
 
   // Calculate outstanding
   let outstanding = 0;
@@ -52,9 +52,9 @@ function printOwing(invoice: Invoice): void {
 ```typescript
 // BEFORE
 function getDiscount(customerType: string): number {
-  if (customerType === "premium") return 0.2;
-  if (customerType === "gold") return 0.15;
-  if (customerType === "silver") return 0.1;
+  if (customerType === 'premium') return 0.2;
+  if (customerType === 'gold') return 0.15;
+  if (customerType === 'silver') return 0.1;
   return 0;
 }
 

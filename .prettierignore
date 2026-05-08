@@ -1,0 +1,43 @@
+# Dependencies
+node_modules
+mcp-server/node_modules
+
+# Build outputs
+dist
+mcp-server/dist
+*.tsbuildinfo
+
+# Generated files
+*.tar.gz
+
+# IDE
+.qwen-orchestrator
+.vscode
+.idea
+
+# Git
+.git
+.gitignore
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage
+
+# Public assets (usually not formatted)
+public
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+
+# Cache
+.cache

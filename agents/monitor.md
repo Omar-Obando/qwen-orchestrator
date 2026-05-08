@@ -103,7 +103,7 @@ Use `CronCreate` to schedule periodic health checks during active missions:
 ```
 CronCreate({
   cron: "*/5 * * * *",
-  prompt: "Health check: Read .qwen-orchestrator/agent-health.md. Check all running agents for loop patterns. If any agent is looping, intervene immediately with SendMessage. Update health status.",
+  prompt: "Health check: Read .qwen-orchestrator/sessions/<session-id>/agent-health.md. Check all running agents for loop patterns. If any agent is looping, intervene immediately with SendMessage. Update health status.",
   recurring: true
 })
 ```
@@ -213,15 +213,15 @@ Beyond LLM loops, monitor for these local runtime issues:
 Periodically check agent health via the shared state:
 
 ```
-1. Read .qwen-orchestrator/todo.md — are tasks progressing?
-2. Read .qwen-orchestrator/memory.md — any stuck notes?
+1. Check TodoWrite status — are tasks progressing to "completed"?
+2. Read .qwen-orchestrator/sessions/<session-id>/memory.md — any stuck notes?
 3. Check for files not being modified (stale timestamps)
 4. Monitor running processes via Shell (ps, tasklist)
 ```
 
 ### Health Status File
 
-Maintain `.qwen-orchestrator/agent-health.md`:
+Maintain `.qwen-orchestrator/sessions/<session-id>/agent-health.md`:
 
 ```markdown
 # Agent Health Status
@@ -246,7 +246,7 @@ Set up periodic monitoring during active missions:
 ```
 CronCreate({
   cron: "*/3 * * * *",
-  prompt: "AGENT HEALTH CHECK: (1) Read .qwen-orchestrator/agent-health.md, (2) Check each running agent for loop indicators, (3) Update health status, (4) Intervene if any agent is looping, (5) Report to Commander if escalation needed.",
+  prompt: "AGENT HEALTH CHECK: (1) Read .qwen-orchestrator/sessions/<session-id>/agent-health.md, (2) Check each running agent for loop indicators, (3) Update health status, (4) Intervene if any agent is looping, (5) Report to Commander if escalation needed.",
   recurring: true
 })
 ```

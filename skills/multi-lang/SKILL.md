@@ -24,14 +24,14 @@ interface UserRepository {
   findById(id: string): Promise<User | null>;
   findMany(
     filters: UserFilters,
-    pagination: Pagination,
+    pagination: Pagination
   ): Promise<PaginatedResult<User>>;
 }
 
 // Error handling: typed errors
 class NotFoundError extends AppError {
   constructor(resource: string, id: string) {
-    super(`${resource} with id ${id} not found`, 404, "NOT_FOUND");
+    super(`${resource} with id ${id} not found`, 404, 'NOT_FOUND');
   }
 }
 ```
@@ -164,7 +164,7 @@ pub fn find_many(
 ### WITHOUT Context7 (Fallback)
 
 ```
-1. Check .qwen-orchestrator/docs/ for cached docs
+1. Check $SESSION_DIR/docs/ for cached docs
 2. Use built-in language knowledge (this skill)
 3. Read node_modules/vendor source code if available
 4. Clearly state: "Without Context7, confidence: MEDIUM"

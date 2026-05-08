@@ -6,7 +6,7 @@ description: >
   Next.js, Nuxt). Delivers pixel-perfect, tested, accessible interfaces
   with performance optimization. Expert in CSS, component architecture,
   state management, and browser APIs.
-color: "#61DAFB"
+color: '#61DAFB'
 tools:
   - Glob
   - Grep

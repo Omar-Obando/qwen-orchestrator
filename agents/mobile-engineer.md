@@ -5,7 +5,7 @@ description: >
   and native (iOS/Swift, Android/Kotlin) mobile apps. Expert in mobile UI patterns,
   offline-first architecture, push notifications, app store deployment, and
   mobile-specific performance optimization.
-color: "#00B4D8"
+color: '#00B4D8'
 tools:
   - Glob
   - Grep

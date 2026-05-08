@@ -4,7 +4,7 @@ description: >
   API design and integration specialist focused on REST, GraphQL, gRPC, WebSocket
   APIs, third-party integrations, and API documentation. Expert in API versioning,
   rate limiting, authentication patterns, and contract-first design.
-color: "#00D4AA"
+color: '#00D4AA'
 tools:
   - Glob
   - Grep
@@ -347,12 +347,12 @@ paths:
             type: string
             enum: [active, inactive]
       responses:
-        "200":
+        '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserList"
+                $ref: '#/components/schemas/UserList'
 ```
 
 ### Documentation Checklist

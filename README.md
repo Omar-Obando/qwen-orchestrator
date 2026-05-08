@@ -3,16 +3,16 @@
 **[English](README.md)** · **[Español](docs/README.es.md)** · **[中文](docs/README.zh.md)** · **[日本語](docs/README.ja.md)** · **[한국어](docs/README.ko.md)** · **[Português](docs/README.pt.md)** · **[Français](docs/README.fr.md)** · **[العربية](docs/README.ar.md)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version: 0.0.1](https://img.shields.io/badge/version-0.0.1-green.svg)](package.json)
+[![Version: 0.0.2](https://img.shields.io/badge/version-0.0.2-green.svg)](package.json)
 [![Qwen Code Extension](https://img.shields.io/badge/Qwen%20Code-Extension-orange.svg)](https://github.com/QwenLM/qwen-code)
 [![Agents: 22](https://img.shields.io/badge/agents-22-blue.svg)](#agent-team-22-specialized-agents)
-[![Skills: 23](https://img.shields.io/badge/skills-23-purple.svg)](#skills-23-professional-skills)
+[![Skills: 26](https://img.shields.io/badge/skills-26-purple.svg)](#skills-26-professional-skills)
 
 > 🤖 **The enterprise-grade multi-agent AI orchestration extension exclusively for [Qwen Code CLI](https://github.com/QwenLM/qwen-code)**
 >
-> Turn your AI coding assistant into a full **software development department** — with 22 specialized agents, 23 professional skills, 6 slash commands, persistent memory, and MCP tool integration.
+> Turn your AI coding assistant into a full **software development department** — with 22 specialized agents, 26 professional skills, 6 slash commands, persistent memory, and MCP tool integration.
 >
-> **Author:** [Omar-Obando](https://github.com/Omar-Obando) · **License:** MIT · **Version:** 0.0.1
+> **Author:** [Omar-Obando](https://github.com/Omar-Obando) · **License:** MIT · **Version:** 0.0.2
 
 ---
 
@@ -687,41 +687,57 @@ The Frontend Developer agent can leverage external UI/UX skill repos for design 
 
 ## Installation
 
-### Quick Install (Recommended)
+### 🚀 Quick Install (Recommended - 10 Seconds)
+
+Just run this single command in your terminal:
 
 ```bash
 qwen extensions install https://github.com/Omar-Obando/qwen-orchestrator
 ```
 
-This automatically registers all 22 agents, 23 skills, 6 commands, and the MCP Memory server.
+That's it! The extension will automatically:
 
-### Manual Install
+- ✅ Register all 22 specialized agents
+- ✅ Load all 26 professional skills
+- ✅ Activate all 6 slash commands
+- ✅ Set up the MCP Memory Server for persistent knowledge
+- ✅ Configure everything for immediate use
 
-1. Clone the repository:
+### 📝 Manual Install (Step-by-Step)
+
+If you prefer manual installation, follow these simple steps:
+
+#### 1️⃣ Get the Extension
 
 ```bash
 git clone https://github.com/Omar-Obando/qwen-orchestrator.git
 ```
 
-2. Add to your Qwen Code configuration:
+#### 2️⃣ Tell Qwen Code About It
+
+Add this to your Qwen Code configuration file (usually `~/.qwen/settings.json`):
 
 ```json
 {
-  "extensions": ["./path/to/qwen-orchestrator"]
+  "extensions": ["/full/path/to/qwen-orchestrator"]
 }
 ```
 
-3. (Optional) Build the MCP tools server:
+> 💡 **Tip**: To find your full path, run `pwd` inside the cloned directory
+
+#### 3️⃣ (Optional) Build the MCP Tools Server
+
+For advanced features like mission status checking and agent roster tools:
 
 ```bash
 cd qwen-orchestrator
-npm install
-npm run build
+npm install          # Install dependencies
+npm run build        # Build the MCP tools server
 ```
 
-### Adding MCP Servers
+#### 4️⃣ (Optional) Add Extra MCP Servers
 
-The extension includes two MCP servers. To add more (like Context7), add them to `qwen-extension.json` under `mcpServers`:
+Want to add Context7 for live documentation or other MCP servers? Edit your `qwen-extension.json`:
 
 ```json
 {
@@ -734,16 +750,40 @@ The extension includes two MCP servers. To add more (like Context7), add them to
     "memory": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-memory"]
-    },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"]
     }
+    // Add more servers here like:
+    // "context7": {
+    //   "command": "npx",
+    //   "args": ["-y", "@upstash/context7-mcp@latest"]
+    // }
   }
 }
 ```
 
-> **Documentation**: [Creating Qwen Code Extensions](https://qwenlm.github.io/qwen-code-docs/en/developers/extensions/extension/#create-a-boilerplate-extension)
+### 🎯 First Usage Examples
+
+Once installed, try these commands in your Qwen Code CLI:
+
+```bash
+/orchestrator Create a REST API for user management
+/orchestrator Build a responsive e-commerce website
+/plan Design a database schema for a blog
+/test Run all tests in the current project
+/deploy Deploy the application to production
+```
+
+### 🔧 Troubleshooting
+
+**Q: "Command not found" after installation?**  
+A: Restart your Qwen Code CLI to reload extensions.
+
+**Q: "Permission denied" on npm commands?**  
+A: On Windows, run your terminal as Administrator. On Mac/Linux, use `sudo` if needed.
+
+**Q: Where are my session files stored?**  
+A: Check the `.qwen-orchestrator/` directory in your project - it contains isolated session data.
+
+**Need more help?** Visit our [documentation](docs/) or open an issue on [GitHub](https://github.com/Omar-Obando/qwen-orchestrator/issues).
 
 ---
 

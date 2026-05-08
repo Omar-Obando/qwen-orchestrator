@@ -30,6 +30,201 @@ Activate this skill when the user says any of:
 
 ---
 
+## Site Types & Context
+
+Different website types require different redesign approaches. Understand the **site type** first to provide appropriate improvements.
+
+### Site Type Categories
+
+| Type                   | Purpose                              | Key Elements                          | Redesign Focus                    |
+| ---------------------- | ------------------------------------ | ------------------------------------- | --------------------------------- |
+| **Business/Corporate** | Company info, services, contact      | About, services, contact, team        | Professional, trust-focused       |
+| **E-commerce**         | Products, shopping cart, checkout    | Product grid, cart, checkout          | Conversion-focused, product-first |
+| **Portfolio/Personal** | Showcase work, resume, contact       | Projects, skills, about               | Creative, visual-first            |
+| **Blog/Content**       | Articles, news, updates              | Article grid, categories, comments    | Readable, engaging                |
+| **Landing Page**       | Single goal, conversion-focused      | Hero, CTA, value props                | Minimal, direct                   |
+| **Catalog**            | Product/service catalog with details | Category grid, product cards, filters | Browse-first, search-friendly     |
+| **Community/Forum**    | User discussions, posts              | Thread list, replies, user profiles   | Interactive, engagement-focused   |
+| **Educational**        | Courses, tutorials, resources        | Lesson grid, progress tracking        | Learning-focused, structured      |
+| **SaaS/App**           | Software service, login, dashboard   | Login, dashboard, features            | User-centric, functional          |
+
+### Catalog-Specific Redesign Guidelines
+
+**Catalog sites** (product/service catalogs) need special attention to:
+
+| Area                 | Best Practice                                                      |
+| -------------------- | ------------------------------------------------------------------ |
+| **Search & Filter**  | Advanced filters (price, category, tags), search with autocomplete |
+| **Product Cards**    | Image, title, price, short description, "View Details" CTA         |
+| **Category Grid**    | Icons, counts, subcategories, hierarchical navigation              |
+| **Pagination**       | Load more button or numbered pagination                            |
+| **Sorting**          | Price (low-high/high-low), newest, popularity, rating              |
+| **Quick View**       | Modal/lightbox for product details without page load               |
+| **Related Products** | "You might also like" section                                      |
+| **Compare Feature**  | Compare 2-3 products side-by-side                                  |
+
+---
+
+## Design System Integration
+
+When redesigning a website, you MUST analyze and preserve the original site's **design system** (color palette, typography, spacing) while applying professional improvements.
+
+### Extract Original Design Tokens
+
+Before redesigning, extract these design tokens from the original site:
+
+```bash
+# Step 1: Extract CSS/custom properties (BEST METHOD)
+WebFetch(url="https://example.com", prompt="Extract ALL CSS custom properties (CSS variables) and color definitions from the site's styles: 1) All :root variables (e.g., --primary-color, --color-primary), 2) Any inline styles or CSS classes that define colors, 3) Color palettes used in the design system, 4) Background colors, text colors, accent colors with their hex/rgb values")
+
+# Step 2: Extract visual colors from page content
+WebFetch(url="https://example.com", prompt="Identify all visible colors in the design: 1) Background colors (header, main, footer), 2) Text colors (headings, body, links), 3) Accent colors (buttons, highlights), 4) Border colors, 5) Any brand-specific colors")
+
+# Step 3: Extract typography and spacing
+WebFetch(url="https://example.com", prompt="Extract typography and spacing system: 1) Font families and weights, 2) Font sizes (h1-h6, body), 3) Line heights, 4) Spacing tokens (padding/margin patterns), 5) Border radius values")
+```
+
+### Design Token Extraction Methods
+
+**Method 1: CSS Custom Properties (BEST)**
+
+```
+If the site uses CSS variables (e.g., :root { --primary-color: #1a73e8; }):
+- Extract ALL :root variables
+- Map them to their purposes (primary, secondary, accent, etc.)
+- Keep the same variable names for consistency
+```
+
+**Method 2: Inline Styles & Classes**
+
+```
+If colors are defined inline or in classes:
+- Look for classes like .bg-primary, .text-secondary, .btn-accent
+- Extract hex/rgb values from style attributes
+- Group by purpose (background, text, border, etc.)
+```
+
+**Method 3: Visual Analysis (Fallback)**
+
+```
+If CSS extraction isn't possible:
+- Analyze the visible page for color patterns
+- Note dominant colors in header, main content, footer
+- Identify accent colors in buttons, links, highlights
+- Estimate color relationships (light/dark, warm/cool)
+```
+
+### Design Token Categories
+
+| Category        | What to Extract                                             | Example                     |
+| --------------- | ----------------------------------------------------------- | --------------------------- |
+| **Colors**      | Primary, secondary, accent, background, text, border colors | `#1a73e8`, `#ffffff`        |
+| **Typography**  | Font families, sizes, weights, line heights                 | `Inter`, `16px`, `400`      |
+| **Spacing**     | Padding, margin, gap values                                 | `8px`, `16px`, `24px`       |
+| **Borders**     | Radius, width, styles                                       | `4px`, `1px solid #ddd`     |
+| **Shadows**     | Elevation levels                                            | `0 2px 4px rgba(0,0,0,0.1)` |
+| **Breakpoints** | Mobile, tablet, desktop                                     | `480px`, `768px`, `1024px`  |
+
+### Preserve Color Mood
+
+**CRITICAL**: Preserve the **color mood** of the original site:
+
+| Original Site                                  | What to Keep                         | What to Improve                        |
+| ---------------------------------------------- | ------------------------------------ | -------------------------------------- |
+| **Blue corporate** (banks, enterprises)        | Blue family (`#1a73e8` → `#1a5bb8`)  | Professional 6-color palette, contrast |
+| **Green natural** (eco, health, outdoors)      | Green family (`#2e7d32` → `#1b5e20`) | Professional tones, accessibility      |
+| **Orange/Red energetic** (food, entertainment) | Warm family (`#f4511e` → `#e64a19`)  | Professional balance, readability      |
+| **Dark modern** (tech, SaaS, apps)             | Dark background (`#121212`)          | Contrast, text readability             |
+| **Minimalist** (design, creative)              | Neutral palette                      | Professional spacing, typography       |
+
+**Never change the color mood without asking the user!**
+
+---
+
+## Context-Aware Redesign
+
+When redesigning a website, you MUST understand the **context** of the original site to provide appropriate improvements.
+
+### Context Analysis Checklist
+
+Before starting the redesign, analyze these context factors:
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "What is the primary purpose of this website?",
+      header: "Purpose",
+      options: [
+        { label: "Business/Corporate", description: "Company info, services, contact (professional, trust-focused)" },
+        { label: "E-commerce", description: "Products, shopping cart, checkout (conversion-focused)" },
+        { label: "Portfolio/Personal", description: "Showcase work, resume, contact (creative, personal)" },
+        { label: "Blog/Content", description: "Articles, news, updates (readable, engaging)" },
+        { label: "Landing Page", description: "Single goal, conversion-focused (minimal, direct)" },
+        { label: "Other", description: "Describe the specific purpose" }
+      ]
+    },
+    {
+      question: "What industry does this business operate in?",
+      header: "Industry",
+      options: [
+        { label: "Technology/SaaS", description: "Modern, clean, data-focused design" },
+        { label: "Healthcare/Medical", description: "Trustworthy, clean, professional" },
+        { label: "Finance/Banking", description: "Professional, conservative, trustworthy" },
+        { label: "Food/Restaurant", description: "Appetizing, warm, inviting" },
+        { label: "Real Estate", description: "Clean, spacious, image-focused" },
+        { label: "E-commerce/Retail", description: "Product-focused, clear CTAs" },
+        { label: "Creative/Design", description: "Bold, creative, visual-first" },
+        { label: "Other", description: "Describe the industry" }
+      ]
+    },
+    {
+      question: "Who is the target audience?",
+      header: "Audience",
+      options: [
+        { label: "Businesses (B2B)", description: "Professional, decision-makers, ROI-focused" },
+        { label: "Consumers (B2C)", description: "General public, emotional appeal" },
+        { label: "Developers/Technical", description: "Code-focused, documentation-heavy" },
+        { label: "Creative/Artistic", description: "Visual-first, expressive" },
+        { label: "General Public", description: "Broad audience, accessible design" }
+      ]
+    }
+  ]
+})
+```
+
+### Context-Based Design Guidelines
+
+| Context                | Color Palette             | Typography                       | Layout                           | CTAs                             |
+| ---------------------- | ------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
+| **B2B Technology**     | Professional blues/greys  | Clean sans-serif (Inter, Roboto) | Grid-based, data visualization   | "Request Demo", "Contact Sales"  |
+| **Healthcare**         | Calming blues/greens      | Trustworthy serif/sans-serif     | Clean, spacious, clear hierarchy | "Book Appointment", "Learn More" |
+| **Finance**            | Conservative blues/browns | Professional serif/sans-serif    | Traditional, trustworthy         | "Open Account", "Apply Now"      |
+| **Food/Restaurant**    | Warm oranges/reds         | Appetizing serif/sans-serif      | Image-focused, inviting          | "Order Now", "View Menu"         |
+| **E-commerce**         | Vibrant accent colors     | Clear, readable sans-serif       | Product-grid focused             | "Add to Cart", "Buy Now"         |
+| **Creative Portfolio** | Bold, unique colors       | Expressive typography            | Visual-first, creative           | "View Work", "Contact"           |
+| **Landing Page**       | High-contrast colors      | Direct, readable                 | Minimal, focused                 | "Get Started", "Sign Up"         |
+
+### Industry-Specific Best Practices
+
+Use Context7 to get industry-specific guidance:
+
+```typescript
+// B2B SaaS best practices
+// Context7 query: "SaaS landing page design patterns conversion optimization"
+
+// Healthcare website accessibility
+// Context7 query: "Healthcare website accessibility WCAG compliance"
+
+// Restaurant website food photography
+// Context7 query: "Restaurant website design food photography"
+
+// E-commerce product pages
+// Context7 query: "E-commerce product page design conversion optimization"
+```
+
+---
+
 ## Redesign Workflow
 
 ### Method 1: URL-Based Redesign (WebFetch)
@@ -204,7 +399,7 @@ Many original sites are incomplete. ALWAYS add these if missing:
 
 ## Design Analysis Report
 
-After fetching and analyzing the original site, create a `.qwen-orchestrator/redesign-analysis.md`:
+After fetching and analyzing the original site, create a `$SESSION_DIR/redesign-analysis.md`:
 
 ```markdown
 # Redesign Analysis: [Website Name]

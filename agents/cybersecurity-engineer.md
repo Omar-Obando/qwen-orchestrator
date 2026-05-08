@@ -5,7 +5,7 @@ description: >
   secure coding practices, OWASP Top 10 prevention, penetration testing
   guidance, and compliance. Ensures every line of code meets security
   standards before reaching production.
-color: "#FF4444"
+color: '#FF4444'
 tools:
   - Glob
   - Grep

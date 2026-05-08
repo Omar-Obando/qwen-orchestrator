@@ -5,7 +5,7 @@ description: >
   multi-language support, RTL/LTR layouts, cultural adaptation, date/number
   formatting, pluralization rules, and translation management. Ensures
   applications work seamlessly across all locales.
-color: "#F59E0B"
+color: '#F59E0B'
 tools:
   - Glob
   - Grep
@@ -126,18 +126,18 @@ User locale: pt-BR
 ### React Example (react-i18next)
 
 ```tsx
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 function LoginForm() {
-  const { t } = useTranslation("auth");
+  const { t } = useTranslation('auth');
 
   return (
     <form>
-      <h1>{t("login.title")}</h1>
-      <label>{t("login.email")}</label>
-      <input type="email" placeholder={t("login.email_placeholder")} />
-      <button>{t("login.submit")}</button>
-      <p>{t("login.errors.account_locked", { minutes: 15 })}</p>
+      <h1>{t('login.title')}</h1>
+      <label>{t('login.email')}</label>
+      <input type="email" placeholder={t('login.email_placeholder')} />
+      <button>{t('login.submit')}</button>
+      <p>{t('login.errors.account_locked', { minutes: 15 })}</p>
     </form>
   );
 }
@@ -239,9 +239,9 @@ Use native `Intl.DateTimeFormat` (JS) or platform equivalents:
 
 ```javascript
 // ✅ CORRECT: Locale-aware
-new Intl.DateTimeFormat("ar-SA").format(date); // ٧ محرم ١٤٤٨
-new Intl.DateTimeFormat("de-DE").format(date); // 7.1.2026
-new Intl.DateTimeFormat("ja-JP").format(date) // 2026/1/7
+new Intl.DateTimeFormat('ar-SA').format(date); // ٧ محرم ١٤٤٨
+new Intl.DateTimeFormat('de-DE').format(date); // 7.1.2026
+new Intl.DateTimeFormat('ja-JP').format(date) // 2026/1/7
 // ❌ WRONG: Hardcoded format
 `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 ```
@@ -249,36 +249,36 @@ new Intl.DateTimeFormat("ja-JP").format(date) // 2026/1/7
 ### Number Formatting
 
 ```javascript
-new Intl.NumberFormat("de-DE").format(1234.56); // 1.234,56
-new Intl.NumberFormat("ar-SA").format(1234.56); // ١٬٢٣٤٫٥٦
-new Intl.NumberFormat("hi-IN").format(1234.56); // 1,234.56
+new Intl.NumberFormat('de-DE').format(1234.56); // 1.234,56
+new Intl.NumberFormat('ar-SA').format(1234.56); // ١٬٢٣٤٫٥٦
+new Intl.NumberFormat('hi-IN').format(1234.56); // 1,234.56
 ```
 
 ### Currency Formatting
 
 ```javascript
-new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
+new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
 }).format(99.99); // $99.99
 
-new Intl.NumberFormat("de-DE", {
-  style: "currency",
-  currency: "EUR",
+new Intl.NumberFormat('de-DE', {
+  style: 'currency',
+  currency: 'EUR',
 }).format(99.99); // 99,99 €
 
-new Intl.NumberFormat("ja-JP", {
-  style: "currency",
-  currency: "JPY",
+new Intl.NumberFormat('ja-JP', {
+  style: 'currency',
+  currency: 'JPY',
 }).format(9999); // ￥9,999
 ```
 
 ### Relative Time
 
 ```javascript
-new Intl.RelativeTimeFormat("en").format(-1, "day"); // "1 day ago"
-new Intl.RelativeTimeFormat("es").format(-1, "day"); // "hace 1 día"
-new Intl.RelativeTimeFormat("ar").format(-1, "day"); // "قبل يوم واحد"
+new Intl.RelativeTimeFormat('en').format(-1, 'day'); // "1 day ago"
+new Intl.RelativeTimeFormat('es').format(-1, 'day'); // "hace 1 día"
+new Intl.RelativeTimeFormat('ar').format(-1, 'day'); // "قبل يوم واحد"
 ```
 
 ### Use Native APIs

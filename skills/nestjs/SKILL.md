@@ -24,12 +24,12 @@ This skill provides comprehensive NestJS development patterns for building scala
 ### Feature Module
 
 ```typescript
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ProductsController } from "./products.controller";
-import { ProductsService } from "./products.service";
-import { Product } from "./entities/product.entity";
-import { ProductRepository } from "./repositories/product.repository";
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductsController } from './products.controller';
+import { ProductsService } from './products.service';
+import { Product } from './entities/product.entity';
+import { ProductRepository } from './repositories/product.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Product])],
@@ -69,7 +69,7 @@ export class OrdersModule {}
 ### Global Module
 
 ```typescript
-import { Global, Module } from "@nestjs/common";
+import { Global, Module } from '@nestjs/common';
 
 @Global()
 @Module({
@@ -98,13 +98,13 @@ import {
   HttpCode,
   HttpStatus,
   Res,
-} from "@nestjs/common";
-import { ProductsService } from "./products.service";
-import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product.dto";
-import { PaginationQueryDto } from "../common/dto/pagination-query.dto";
+} from '@nestjs/common';
+import { ProductsService } from './products.service';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 
-@Controller("products")
+@Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -119,27 +119,27 @@ export class ProductsController {
     return this.productsService.findAll(query);
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
+  @Get(':id')
+  findOne(@Param('id') id: string) {
     return this.productsService.findOne(id);
   }
 
-  @Put(":id")
-  update(@Param("id") id: string, @Body() dto: UpdateProductDto) {
+  @Put(':id')
+  update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
     return this.productsService.update(id, dto);
   }
 
-  @Patch(":id")
+  @Patch(':id')
   partialUpdate(
-    @Param("id") id: string,
-    @Body() dto: Partial<UpdateProductDto>,
+    @Param('id') id: string,
+    @Body() dto: Partial<UpdateProductDto>
   ) {
     return this.productsService.partialUpdate(id, dto);
   }
 
-  @Delete(":id")
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param("id") id: string) {
+  remove(@Param('id') id: string) {
     return this.productsService.remove(id);
   }
 }
@@ -158,8 +158,8 @@ import {
   Max,
   MaxLength,
   IsUUID,
-} from "class-validator";
-import { Type } from "class-transformer";
+} from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateProductDto {
   @IsString()
@@ -207,7 +207,7 @@ export class PaginationQueryDto {
 
   @IsOptional()
   @IsString()
-  sort?: string = "createdAt:DESC";
+  sort?: string = 'createdAt:DESC';
 }
 ```
 
@@ -216,17 +216,17 @@ export class PaginationQueryDto {
 ### Injectable Service
 
 ```typescript
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Product } from "./entities/product.entity";
-import { CreateProductDto } from "./dto/create-product.dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Product } from './entities/product.entity';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
-    private readonly productRepo: Repository<Product>,
+    private readonly productRepo: Repository<Product>
   ) {}
 
   async create(dto: CreateProductDto): Promise<Product> {
@@ -236,20 +236,20 @@ export class ProductsService {
 
   async findAll(query: PaginationQueryDto): Promise<[Product[], number]> {
     const { page, limit, sort } = query;
-    const [field, order] = sort.split(":");
+    const [field, order] = sort.split(':');
 
     return this.productRepo.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
-      order: { [field]: order === "ASC" ? "ASC" : "DESC" },
-      relations: ["category"],
+      order: { [field]: order === 'ASC' ? 'ASC' : 'DESC' },
+      relations: ['category'],
     });
   }
 
   async findOne(id: string): Promise<Product> {
     const product = await this.productRepo.findOne({
       where: { id },
-      relations: ["category", "reviews"],
+      relations: ['category', 'reviews'],
     });
     if (!product) {
       throw new NotFoundException(`Product ${id} not found`);
@@ -314,9 +314,9 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
-} from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { Request } from "express";
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -327,22 +327,22 @@ export class JwtAuthGuard implements CanActivate {
     const token = this.extractToken(request);
 
     if (!token) {
-      throw new UnauthorizedException("Missing authentication token");
+      throw new UnauthorizedException('Missing authentication token');
     }
 
     try {
       const payload = await this.jwtService.verifyAsync(token);
-      request["user"] = payload;
+      request['user'] = payload;
     } catch {
-      throw new UnauthorizedException("Invalid or expired token");
+      throw new UnauthorizedException('Invalid or expired token');
     }
 
     return true;
   }
 
   private extractToken(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(" ") ?? [];
-    return type === "Bearer" ? token : undefined;
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }
 ```
@@ -409,7 +409,7 @@ remove(@Param('id') id: string) {
 
 ```typescript
 // main.ts
-import { ValidationPipe } from "@nestjs/common";
+import { ValidationPipe } from '@nestjs/common';
 
 app.useGlobalPipes(
   new ValidationPipe({
@@ -420,14 +420,14 @@ app.useGlobalPipes(
       enableImplicitConversion: true,
     },
     disableErrorMessages: false,
-  }),
+  })
 );
 ```
 
 ### Custom Pipe
 
 ```typescript
-import { PipeTransform, Injectable, BadRequestException } from "@nestjs/common";
+import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class ParseIntPipe implements PipeTransform<string, number> {
@@ -452,13 +452,13 @@ import {
   ExecutionContext,
   CallHandler,
   Logger,
-} from "@nestjs/common";
-import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+} from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
-  private readonly logger = new Logger("HTTP");
+  private readonly logger = new Logger('HTTP');
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
@@ -469,7 +469,7 @@ export class LoggingInterceptor implements NestInterceptor {
       tap(() => {
         const duration = Date.now() - startTime;
         this.logger.log(`${method} ${url} — ${duration}ms`);
-      }),
+      })
     );
   }
 }
@@ -483,8 +483,8 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
-} from "@nestjs/common";
-import { Observable, map } from "rxjs";
+} from '@nestjs/common';
+import { Observable, map } from 'rxjs';
 
 export interface ApiResponse<T> {
   success: true;
@@ -499,14 +499,14 @@ export class TransformInterceptor<T> implements NestInterceptor<
 > {
   intercept(
     context: ExecutionContext,
-    next: CallHandler,
+    next: CallHandler
   ): Observable<ApiResponse<T>> {
     return next.handle().pipe(
       map((data) => ({
         success: true as const,
         data,
         timestamp: new Date().toISOString(),
-      })),
+      }))
     );
   }
 }
@@ -569,13 +569,13 @@ nest g resource products
 ### Unit Testing with Jest
 
 ```typescript
-import { Test, TestingModule } from "@nestjs/testing";
-import { ProductsService } from "./products.service";
-import { getRepositoryToken } from "@nestjs/typeorm";
-import { Product } from "./entities/product.entity";
-import { NotFoundException } from "@nestjs/common";
+import { Test, TestingModule } from '@nestjs/testing';
+import { ProductsService } from './products.service';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Product } from './entities/product.entity';
+import { NotFoundException } from '@nestjs/common';
 
-describe("ProductsService", () => {
+describe('ProductsService', () => {
   let service: ProductsService;
   let mockRepo: any;
 
@@ -601,22 +601,22 @@ describe("ProductsService", () => {
     service = module.get<ProductsService>(ProductsService);
   });
 
-  it("should return a product by id", async () => {
-    const product = { id: "1", name: "Test" };
+  it('should return a product by id', async () => {
+    const product = { id: '1', name: 'Test' };
     mockRepo.findOne.mockResolvedValue(product);
 
-    const result = await service.findOne("1");
+    const result = await service.findOne('1');
     expect(result).toEqual(product);
     expect(mockRepo.findOne).toHaveBeenCalledWith({
-      where: { id: "1" },
-      relations: ["category", "reviews"],
+      where: { id: '1' },
+      relations: ['category', 'reviews'],
     });
   });
 
-  it("should throw NotFoundException for missing product", async () => {
+  it('should throw NotFoundException for missing product', async () => {
     mockRepo.findOne.mockResolvedValue(null);
 
-    await expect(service.findOne("999")).rejects.toThrow(NotFoundException);
+    await expect(service.findOne('999')).rejects.toThrow(NotFoundException);
   });
 });
 ```
@@ -624,12 +624,12 @@ describe("ProductsService", () => {
 ### E2E Testing
 
 ```typescript
-import * as request from "supertest";
-import { Test } from "@nestjs/testing";
-import { AppModule } from "../app.module";
-import { INestApplication, ValidationPipe } from "@nestjs/common";
+import * as request from 'supertest';
+import { Test } from '@nestjs/testing';
+import { AppModule } from '../app.module';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 
-describe("Products (e2e)", () => {
+describe('Products (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -642,17 +642,17 @@ describe("Products (e2e)", () => {
     await app.init();
   });
 
-  it("POST /products — should create a product", () => {
+  it('POST /products — should create a product', () => {
     return request(app.getHttpServer())
-      .post("/products")
-      .send({ name: "Widget", price: 9.99, categoryId: "cat-1" })
+      .post('/products')
+      .send({ name: 'Widget', price: 9.99, categoryId: 'cat-1' })
       .expect(201);
   });
 
-  it("POST /products — should reject invalid data", () => {
+  it('POST /products — should reject invalid data', () => {
     return request(app.getHttpServer())
-      .post("/products")
-      .send({ name: 123, price: "not-a-number" })
+      .post('/products')
+      .send({ name: 123, price: 'not-a-number' })
       .expect(400);
   });
 

@@ -119,7 +119,7 @@ describe('Feature: [description]', () => {
 - ALWAYS verify test isolation (no shared mutable state)
 - ALWAYS run the full test suite before approving
 - ALWAYS report coverage gaps with specific file:line references
-- ALWAYS update `.qwen-orchestrator/qa-report.md`
+- ALWAYS update `.qwen-orchestrator/sessions/<session-id>/qa-report.md`
 
 ## Bug Report Format
 

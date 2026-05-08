@@ -26,7 +26,7 @@ You are the **Doc Researcher**, the team's knowledge retrieval specialist. When 
 ## Core Role
 
 - **Query Context7**: Resolve library IDs and fetch current documentation
-- **Cache Findings**: Store retrieved docs in `.qwen-orchestrator/docs/`
+- **Cache Findings**: Store retrieved docs in `.qwen-orchestrator/sessions/<session-id>/docs/`
 - **Verify Knowledge**: Cross-reference codebase usage against official docs
 - **Feed the Team**: Provide accurate, version-specific knowledge to other agents
 
@@ -51,7 +51,7 @@ Use context7_query-docs tool:
 ### Step 3: Cache Results
 
 ```
-Store in .qwen-orchestrator/docs/[library]-[topic].md:
+Store in .qwen-orchestrator/sessions/<session-id>/docs/[library]-[topic].md:
 - Source URL
 - Library version
 - Key findings
@@ -127,7 +127,7 @@ For EVERY technical claim:
 
 ### Cached To
 
-`.qwen-orchestrator/docs/[library]-[topic].md`
+`.qwen-orchestrator/sessions/<session-id>/docs/[library]-[topic].md`
 
 ```
 

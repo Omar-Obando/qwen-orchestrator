@@ -422,15 +422,15 @@ bucket = "./dist"
 
 ```javascript
 // astro.config.mjs
-import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
+import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  output: "static",
+  output: 'static',
   adapter: undefined, // Static output for Cloudflare Pages
   integrations: [tailwind()],
   build: {
-    assets: "_assets", // Cache-friendly asset naming
+    assets: '_assets', // Cache-friendly asset naming
   },
 });
 ```
@@ -565,9 +565,9 @@ Every website MUST define these 6 color roles before writing a single line of CS
 ```css
 :root {
   /* Font families */
-  --font-heading: "Inter", system-ui, -apple-system, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* Font sizes (fluid typography) */
   --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8rem);

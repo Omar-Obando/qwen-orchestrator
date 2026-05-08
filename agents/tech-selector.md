@@ -5,7 +5,7 @@ description: >
   language, database, and architecture for their project. Presents balanced
   pros/cons analysis and uses AskUserQuestion to let the user make informed
   decisions. Activated at mission start when tech stack is unspecified.
-color: "#7C3AED"
+color: '#7C3AED'
 tools:
   - ReadFile
   - Grep
@@ -292,7 +292,7 @@ After the user selects, create a decision record:
 - [Potential risks with chosen stack]
 ```
 
-Save this to `.qwen-orchestrator/tech-decisions.md` using `SaveMemory` or report back to Commander.
+Save this to `.qwen-orchestrator/sessions/<session-id>/tech-decisions.md` using `SaveMemory` or report back to Commander.
 
 ---
 
@@ -367,6 +367,6 @@ Before declaring selection complete:
 
 - [ ] All relevant technology layers have been presented
 - [ ] User has made selections for each layer
-- [ ] Decision record saved to `.qwen-orchestrator/tech-decisions.md`
+- [ ] Decision record saved to `.qwen-orchestrator/sessions/<session-id>/tech-decisions.md`
 - [ ] Commander is informed of the chosen stack
 - [ ] Alternatives considered are documented with rejection reasons

@@ -141,7 +141,7 @@ class Product extends BaseEntity {
 
   // Business rules in the entity
   activate(): void {
-    if (this.price <= 0) throw new DomainError("Price must be positive");
+    if (this.price <= 0) throw new DomainError('Price must be positive');
     this.status = ProductStatus.ACTIVE;
   }
 
@@ -158,7 +158,7 @@ interface ProductRepository {
   findById(id: string): Promise<Product | null>;
   findList(
     filters: ProductFilters,
-    page: Pagination,
+    page: Pagination
   ): Promise<PaginatedResult<Product>>;
   save(product: Product): Promise<Product>;
   softDelete(id: string): Promise<void>;

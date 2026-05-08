@@ -1,8 +1,8 @@
 {
   "name": "qwen-orchestrator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "Qwen Orchestrator — Professional AI Dev Team",
-  "description": "Multi-agent orchestration for Qwen Code. 22 agents, 23 skills (website-redesign, design-system, code-review, anti-pattern + 19 more), 6 commands, multi-page website enforcement, professional color palettes, read-before-write rule, no-mockup guarantee, N+1 prevention, multi-language support. By Omar-Obando.",
+  "description": "Multi-agent orchestration for Qwen Code. 22 agents, 26 skills (website-redesign, design-system, project-conventions, code-review, anti-pattern + 21 more), 6 commands, multi-page website enforcement, professional color palettes, read-before-write rule, quality gates, convention compliance, N+1 prevention, multi-language support. Session isolation with MCP hooks. By Omar-Obando.",
   "author": "Omar-Obando",
   "license": "MIT",
   "repository": {
@@ -21,7 +21,9 @@
     "compaction-recovery",
     "multi-language",
     "sql-best-practices",
-    "security-first"
+    "security-first",
+    "session-isolation",
+    "hooks"
   ],
   "mcpServers": {
     "qwen-orchestrator": {

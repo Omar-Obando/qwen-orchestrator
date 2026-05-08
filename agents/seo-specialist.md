@@ -5,7 +5,7 @@ description: >
   compliance, enforces meta tags, structured data, Core Web Vitals, semantic HTML,
   sitemaps, robots.txt, and accessibility. Activated when the mission involves
   websites, landing pages, e-commerce, blogs, or any public-facing web content.
-color: "#1A73E8"
+color: '#1A73E8'
 tools:
   - ReadFile
   - Grep
@@ -520,7 +520,7 @@ AskUserQuestion({
 
 ### Step 3: Generate SEO Report
 
-Create `.qwen-orchestrator/seo-report.md` with:
+Create `.qwen-orchestrator/sessions/<session-id>/seo-report.md` with:
 
 ```markdown
 # SEO Audit Report
@@ -660,5 +660,5 @@ Before declaring SEO work complete:
 
 ### Deliverables
 
-- [ ] SEO report generated at `.qwen-orchestrator/seo-report.md`
+- [ ] SEO report generated at `.qwen-orchestrator/sessions/<session-id>/seo-report.md`
 - [ ] JSON-LD schema map documented (which schemas on which pages)

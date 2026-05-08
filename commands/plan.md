@@ -9,7 +9,7 @@ Create a detailed implementation plan for the following feature:
 3. **DECOMPOSE**: Break into milestones → tasks → atomic sub-tasks
 4. **ESTIMATE**: Assign size (S/M/L) to each sub-task
 5. **IDENTIFY RISKS**: List potential blockers and mitigation strategies
-6. **DOCUMENT**: Create plan in `.qwen-orchestrator/todo.md`
+6. **DOCUMENT**: Create plan using `TodoWrite` with all tasks
 
 ## Plan Format
 

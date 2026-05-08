@@ -48,7 +48,7 @@ Output:
 
 ### 3. Cache Results
 
-Save to `.qwen-orchestrator/docs/` for future sessions:
+Save to `$SESSION_DIR/docs/` for future sessions:
 
 ```markdown
 # [Library] — [Topic]

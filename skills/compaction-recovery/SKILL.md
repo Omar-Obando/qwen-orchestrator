@@ -25,20 +25,40 @@ When context is compacted:
 
 ### Write Everything Important to Files
 
-NEVER rely on conversation context for critical information. ALWAYS persist to:
+NEVER rely on conversation context for critical information. ALWAYS persist to the **active session directory**.
+
+Each `/orchestrator` invocation creates a new isolated session. The active session ID is stored in `.qwen-orchestrator/current-session`. All state writes go to `.qwen-orchestrator/sessions/<session-id>/`.
 
 ```
 .qwen-orchestrator/
-├── todo.md              # Full TODO with ALL details
-├── context.md           # Project context (<150 lines)
-├── memory.md            # Session state for recovery
-├── progress/
-│   ├── mission-state.md # Current mission snapshot
-│   ├── active-files.md  # Files being worked on + status
-│   └── decisions.md     # Architecture decisions made
-└── checkpoints/
-    ├── cp-[timestamp].md  # Periodic checkpoint snapshots
+├── current-session                  # Active session ID (single line: YYYY-MM-DDTHH-MM-SS)
+├── sessions/
+│   ├── 2026-05-07T14-30-00/         # Archived session (IMMUTABLE — never modify)
+│   │   ├── context.md
+│   │   ├── memory.md
+│   │   └── ...
+│   └── 2026-05-07T16-45-00/         # Active session (pointed to by current-session)
+│       ├── context.md               # Project context (<150 lines)
+│       ├── memory.md                # Session state for recovery
+│       ├── redesign-analysis.md     # Redesign analysis (if applicable)
+│       ├── tech-decisions.md        # Technology decisions
+│       ├── seo-report.md            # SEO audit results
+│       ├── sync-issues.md           # Cross-file sync issues
+│       ├── project-status.md        # Progress tracking
+│       ├── qa-report.md             # Quality reports
+│       ├── agent-health.md          # Agent status tracking
+│       ├── progress/
+│       │   ├── mission-state.md     # Current mission snapshot
+│       │   ├── active-files.md      # Files being worked on + status
+│       │   └── decisions.md         # Architecture decisions made
+│       ├── checkpoints/
+│       │   └── cp-[timestamp].md    # Periodic checkpoint snapshots
+│       └── docs/                    # Cached documentation
+│           └── *.md
+└── shared/                          # Cross-session persistent data (future use)
 ```
+
+**Shorthand**: `$SESSION_DIR` = `.qwen-orchestrator/sessions/$(cat .qwen-orchestrator/current-session)/`
 
 ### TODO Format for Compaction Survival
 
@@ -122,10 +142,13 @@ Write checkpoints at these moments:
 ### When Compaction is Detected
 
 1. **STOP** current operation
-2. **READ** `.qwen-orchestrator/memory.md` for session state
-3. **READ** `.qwen-orchestrator/todo.md` for task status
-4. **READ** latest checkpoint in `.qwen-orchestrator/checkpoints/`
-5. **RESUME** from the exact point recorded
+2. **READ** `.qwen-orchestrator/current-session` to find the active session ID
+3. **READ** `$SESSION_DIR/memory.md` for session state
+4. **READ** current TodoWrite state for task status
+5. **READ** latest checkpoint in `$SESSION_DIR/checkpoints/`
+6. **RESUME** from the exact point recorded
+
+Where `$SESSION_DIR` = `.qwen-orchestrator/sessions/<active-session-id>/`
 
 ### Recovery Checklist
 
@@ -168,3 +191,6 @@ Must persist: Scope changes, risk register, progress metrics
 - ALWAYS create checkpoints at regular intervals
 - ALWAYS verify file state matches recorded state after recovery
 - NEVER rely on conversation memory for mission-critical information
+- NEVER modify files from archived sessions — each session's data is IMMUTABLE after that session ends
+- ALWAYS read `.qwen-orchestrator/current-session` first to determine the active session directory
+- ALWAYS write state to `$SESSION_DIR/` (not the flat `.qwen-orchestrator/` root)

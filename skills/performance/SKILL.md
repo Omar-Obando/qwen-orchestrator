@@ -97,8 +97,8 @@ Layer 4: CDN (static assets, TTL: hours)
 ## Performance Testing
 
 ```typescript
-describe("Performance", () => {
-  it("should process 10k records in under 100ms", async () => {
+describe('Performance', () => {
+  it('should process 10k records in under 100ms', async () => {
     const data = generateTestData(10_000);
     const start = performance.now();
     const result = processRecords(data);

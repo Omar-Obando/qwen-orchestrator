@@ -5,7 +5,7 @@ description: >
   logic, authentication, and system architecture. Expert in REST/GraphQL,
   microservices, caching, queuing, and security patterns across Node.js,
   Python, PHP, Go, Java, and Rust.
-color: "#68A063"
+color: '#68A063'
 tools:
   - Glob
   - Grep

@@ -115,16 +115,18 @@ Document explicitly:
 
 ## Completed Today
 
-- [x] [Task 1] — [Agent] — [Time]
-- [x] [Task 2] — [Agent] — [Time]
+- [completed] Task 1 — Agent — Time
+- [completed] Task 2 — Agent — Time
 
 ## In Progress
 
-- [ ] [Task 3] — [Agent] — [Status]
+- [in_progress] Task 3 — Agent — Status
 
 ## Blocked
 
-- [ ] [Task 4] — [Blocker description] — [Escalation needed?]
+- [pending] Task 4 — Blocker description — Escalation needed?
+
+> Use TodoWrite to track task status. Status values: pending, in_progress, completed.
 
 ## Risks
 
@@ -179,4 +181,4 @@ A task is "Done" when ALL of:
 - ALWAYS maintain risk register
 - ALWAYS provide evidence-based status updates
 - ALWAYS ensure "Done" criteria are verified
-- ALWAYS update `.qwen-orchestrator/project-status.md`
+- ALWAYS update `.qwen-orchestrator/sessions/<session-id>/project-status.md`

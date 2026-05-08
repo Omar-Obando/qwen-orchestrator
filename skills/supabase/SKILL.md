@@ -25,8 +25,8 @@ This skill provides comprehensive Supabase development patterns for building sec
 ### TypeScript Client
 
 ```typescript
-import { createClient } from "@supabase/supabase-js";
-import type { Database } from "./database.types"; // Auto-generated types
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from './database.types'; // Auto-generated types
 
 const supabase = createClient<Database>(
   process.env.SUPABASE_URL!,
@@ -42,7 +42,7 @@ const supabase = createClient<Database>(
       autoRefreshToken: true,
       persistSession: true,
     },
-  },
+  }
 );
 ```
 
@@ -145,15 +145,15 @@ auth.jwt() ->> 'email'   -- user email
 
 ```typescript
 // Server-side admin operations ONLY
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from '@supabase/supabase-js';
 
 const supabaseAdmin = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!, // NEVER in client code
+  process.env.SUPABASE_SERVICE_ROLE_KEY! // NEVER in client code
 );
 
 // This bypasses ALL RLS policies — use with extreme caution
-const { data } = await supabaseAdmin.from("users").select("*"); // Sees ALL rows regardless of policies
+const { data } = await supabaseAdmin.from('users').select('*'); // Sees ALL rows regardless of policies
 ```
 
 ## Authentication
@@ -163,27 +163,27 @@ const { data } = await supabaseAdmin.from("users").select("*"); // Sees ALL rows
 ```typescript
 // Sign up with email
 const { data, error } = await supabase.auth.signUp({
-  email: "user@example.com",
-  password: "secure-password-123",
+  email: 'user@example.com',
+  password: 'secure-password-123',
   options: {
     data: {
-      full_name: "John Doe",
-      role: "user",
+      full_name: 'John Doe',
+      role: 'user',
     },
   },
 });
 
 // Sign in with password
 const { data, error } = await supabase.auth.signInWithPassword({
-  email: "user@example.com",
-  password: "secure-password-123",
+  email: 'user@example.com',
+  password: 'secure-password-123',
 });
 
 // Sign in with OAuth (Google, GitHub, etc.)
 const { data, error } = await supabase.auth.signInWithOAuth({
-  provider: "google",
+  provider: 'google',
   options: {
-    redirectTo: "https://your-app.com/auth/callback",
+    redirectTo: 'https://your-app.com/auth/callback',
   },
 });
 
@@ -207,17 +207,17 @@ const {
 // Listen for auth state changes
 supabase.auth.onAuthStateChange((event, session) => {
   switch (event) {
-    case "SIGNED_IN":
-      console.log("User signed in:", session?.user.email);
+    case 'SIGNED_IN':
+      console.log('User signed in:', session?.user.email);
       break;
-    case "SIGNED_OUT":
-      console.log("User signed out");
+    case 'SIGNED_OUT':
+      console.log('User signed out');
       break;
-    case "TOKEN_REFRESHED":
-      console.log("Token refreshed");
+    case 'TOKEN_REFRESHED':
+      console.log('Token refreshed');
       break;
-    case "USER_UPDATED":
-      console.log("User data updated");
+    case 'USER_UPDATED':
+      console.log('User data updated');
       break;
   }
 });
@@ -245,42 +245,42 @@ Payload: {
 ```typescript
 // SELECT with filters
 const { data, error } = await supabase
-  .from("products")
-  .select("id, name, price, category(name)")
-  .eq("is_active", true)
-  .gte("price", 10)
-  .lte("price", 100)
-  .order("price", { ascending: true })
+  .from('products')
+  .select('id, name, price, category(name)')
+  .eq('is_active', true)
+  .gte('price', 10)
+  .lte('price', 100)
+  .order('price', { ascending: true })
   .range(0, 19); // Pagination: offset 0, limit 20
 
 // INSERT
 const { data, error } = await supabase
-  .from("products")
+  .from('products')
   .insert({
-    name: "Widget",
+    name: 'Widget',
     price: 29.99,
-    category_id: "cat-123",
+    category_id: 'cat-123',
   })
   .select()
   .single();
 
 // UPDATE
 const { data, error } = await supabase
-  .from("products")
+  .from('products')
   .update({ price: 24.99, is_active: true })
-  .eq("id", "prod-123")
+  .eq('id', 'prod-123')
   .select()
   .single();
 
 // DELETE
-const { error } = await supabase.from("products").delete().eq("id", "prod-123");
+const { error } = await supabase.from('products').delete().eq('id', 'prod-123');
 
 // UPSERT (insert or update)
 const { data, error } = await supabase
-  .from("products")
+  .from('products')
   .upsert(
-    { id: "prod-123", name: "Widget", price: 24.99 },
-    { onConflict: "id" },
+    { id: 'prod-123', name: 'Widget', price: 24.99 },
+    { onConflict: 'id' }
   )
   .select()
   .single();
@@ -291,7 +291,7 @@ const { data, error } = await supabase
 ```typescript
 // One-to-many: products with reviews
 const { data } = await supabase
-  .from("products")
+  .from('products')
   .select(
     `
     id,
@@ -303,12 +303,12 @@ const { data } = await supabase
       comment,
       user:profiles (full_name)
     )
-  `,
+  `
   )
-  .eq("id", "prod-123");
+  .eq('id', 'prod-123');
 
 // Many-to-many through junction table
-const { data } = await supabase.from("products").select(`
+const { data } = await supabase.from('products').select(`
     id,
     name,
     categories (id, name)
@@ -319,10 +319,10 @@ const { data } = await supabase.from("products").select(`
 
 ```typescript
 // Call a PostgreSQL function
-const { data, error } = await supabase.rpc("get_product_stats", {
-  product_id: "prod-123",
-  date_from: "2024-01-01",
-  date_to: "2024-12-31",
+const { data, error } = await supabase.rpc('get_product_stats', {
+  product_id: 'prod-123',
+  date_from: '2024-01-01',
+  date_to: '2024-12-31',
 });
 ```
 
@@ -359,35 +359,35 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 ```typescript
 // supabase/functions/process-order/index.ts
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 serve(async (req: Request) => {
   // Handle CORS
-  if (req.method === "OPTIONS") {
-    return new Response("ok", {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', {
       headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "authorization, content-type",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'authorization, content-type',
       },
     });
   }
 
   try {
     // Get auth context from Authorization header
-    const authHeader = req.headers.get("Authorization")!;
-    const token = authHeader.replace("Bearer ", "");
+    const authHeader = req.headers.get('Authorization')!;
+    const token = authHeader.replace('Bearer ', '');
 
     // Create client with user's token (respects RLS)
     const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_ANON_KEY")!,
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_ANON_KEY')!,
       {
         global: {
           headers: { Authorization: authHeader },
         },
-      },
+      }
     );
 
     // Verify the user
@@ -396,7 +396,7 @@ serve(async (req: Request) => {
       error: authError,
     } = await supabase.auth.getUser(token);
     if (authError || !user) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
       });
     }
@@ -405,10 +405,10 @@ serve(async (req: Request) => {
     const { orderId } = await req.json();
 
     const { data, error } = await supabase
-      .from("orders")
-      .update({ status: "processing" })
-      .eq("id", orderId)
-      .eq("user_id", user.id)
+      .from('orders')
+      .update({ status: 'processing' })
+      .eq('id', orderId)
+      .eq('user_id', user.id)
       .select()
       .single();
 
@@ -416,16 +416,16 @@ serve(async (req: Request) => {
 
     return new Response(JSON.stringify({ data }), {
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
       },
     });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
       },
     });
   }
@@ -439,7 +439,7 @@ serve(async (req: Request) => {
 supabase functions deploy process-order
 
 # Deploy with secrets
-supabase secrets set STRIPE_SECRET_KEY=sk_live_xxx
+supabase secrets set STRIPE_SECRET_KEY=<your-stripe-live-key>
 
 # Test locally
 supabase functions serve process-order --env-file .env.local
@@ -452,30 +452,30 @@ supabase functions serve process-order --env-file .env.local
 ```typescript
 // Listen to INSERT events on a table
 supabase
-  .channel("public:orders")
+  .channel('public:orders')
   .on(
-    "postgres_changes",
+    'postgres_changes',
     {
-      event: "INSERT",
-      schema: "public",
-      table: "orders",
+      event: 'INSERT',
+      schema: 'public',
+      table: 'orders',
       filter: `user_id=eq.${userId}`,
     },
     (payload) => {
-      console.log("New order:", payload.new);
-    },
+      console.log('New order:', payload.new);
+    }
   )
   .on(
-    "postgres_changes",
+    'postgres_changes',
     {
-      event: "UPDATE",
-      schema: "public",
-      table: "orders",
+      event: 'UPDATE',
+      schema: 'public',
+      table: 'orders',
       filter: `user_id=eq.${userId}`,
     },
     (payload) => {
-      console.log("Order updated:", payload.new);
-    },
+      console.log('Order updated:', payload.new);
+    }
   )
   .subscribe();
 
@@ -486,17 +486,17 @@ supabase.removeAllChannels();
 ### Presence (User State)
 
 ```typescript
-const channel = supabase.channel("room:lobby", {
+const channel = supabase.channel('room:lobby', {
   config: { presence: { key: userId } },
 });
 
 channel
-  .on("presence", { event: "sync" }, () => {
+  .on('presence', { event: 'sync' }, () => {
     const state = channel.presenceState();
-    console.log("Online users:", Object.keys(state).length);
+    console.log('Online users:', Object.keys(state).length);
   })
   .subscribe(async (status) => {
-    if (status === "SUBSCRIBED") {
+    if (status === 'SUBSCRIBED') {
       await channel.track({
         user: userId,
         online_at: new Date().toISOString(),
@@ -512,32 +512,32 @@ channel
 ```typescript
 // Upload a file
 const { data, error } = await supabase.storage
-  .from("avatars")
+  .from('avatars')
   .upload(`${userId}/avatar.png`, file, {
-    cacheControl: "3600",
+    cacheControl: '3600',
     upsert: true,
-    contentType: "image/png",
+    contentType: 'image/png',
   });
 
 // Get public URL
 const { data } = supabase.storage
-  .from("avatars")
+  .from('avatars')
   .getPublicUrl(`${userId}/avatar.png`);
 
 // Get signed URL (for private buckets)
 const { data } = await supabase.storage
-  .from("private-documents")
+  .from('private-documents')
   .createSignedUrl(`${userId}/contract.pdf`, 3600); // 1 hour
 
 // List files
-const { data } = await supabase.storage.from("avatars").list(userId, {
+const { data } = await supabase.storage.from('avatars').list(userId, {
   limit: 100,
-  sortBy: { column: "created_at", order: "desc" },
+  sortBy: { column: 'created_at', order: 'desc' },
 });
 
 // Delete files
 const { error } = await supabase.storage
-  .from("avatars")
+  .from('avatars')
   .remove([`${userId}/old-avatar.png`]);
 ```
 

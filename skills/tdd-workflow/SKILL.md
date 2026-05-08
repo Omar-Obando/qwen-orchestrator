@@ -37,17 +37,17 @@ This skill enforces a strict Test-Driven Development workflow ensuring every lin
 - No file system, network, or database access
 
 ```typescript
-describe("calculateTotal", () => {
-  it("should sum all item prices", () => {
+describe('calculateTotal', () => {
+  it('should sum all item prices', () => {
     const items = [{ price: 10 }, { price: 20 }, { price: 30 }];
     expect(calculateTotal(items)).toBe(60);
   });
 
-  it("should return 0 for empty array", () => {
+  it('should return 0 for empty array', () => {
     expect(calculateTotal([])).toBe(0);
   });
 
-  it("should handle negative prices with absolute value", () => {
+  it('should handle negative prices with absolute value', () => {
     const items = [{ price: -10 }];
     expect(calculateTotal(items)).toBe(10);
   });

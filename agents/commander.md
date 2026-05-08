@@ -229,6 +229,91 @@ CronCreate({
 
 **When to use**: Periodic progress checks during long missions, scheduled status reports, recurring quality audits.
 
+## Session-Aware State Management
+
+### CRITICAL: Session Isolation via MCP Tools
+
+Each `/orchestrator` invocation creates a new isolated session directory under `.qwen-orchestrator/sessions/<session-id>/`. The MCP server automatically manages session isolation:
+
+1. **Start a session**: Call `create_session` tool at the beginning of every `/orchestrator` invocation
+2. **Check current session**: Use `get_current_session` to verify active session
+3. **File operations**: All state writes go to `$SESSION_DIR/` automatically via MCP hooks
+4. **Never overwrite**: MCP hooks ensure files are written to session directories, not root
+5. **Never delete**: Session directories are preserved for recovery
+
+### Session Directory Reference
+
+Use `$SESSION_DIR` as shorthand for `.qwen-orchestrator/sessions/<active-session-id>/`:
+
+| File/Tool                           | Purpose                    | Storage          |
+| ----------------------------------- | -------------------------- | ---------------- |
+| TodoWrite tool                      | Task tracking              | Native Qwen Code |
+| `$SESSION_DIR/context.md`           | Project context            | file:write hook  |
+| `$SESSION_DIR/memory.md`            | Session state for recovery | file:write hook  |
+| `$SESSION_DIR/redesign-analysis.md` | Redesign analysis report   | file:write hook  |
+| `$SESSION_DIR/tech-decisions.md`    | Technology decisions       | file:write hook  |
+| `$SESSION_DIR/seo-report.md`        | SEO audit results          | file:write hook  |
+| `$SESSION_DIR/sync-issues.md`       | Cross-file sync issues     | file:write hook  |
+| `$SESSION_DIR/project-status.md`    | Progress tracking          | file:write hook  |
+| `$SESSION_DIR/qa-report.md`         | Quality reports            | file:write hook  |
+| `$SESSION_DIR/agent-health.md`      | Agent status tracking      | file:write hook  |
+| `$SESSION_DIR/progress/`            | Mission snapshots          | auto-created     |
+| `$SESSION_DIR/checkpoints/`         | Periodic checkpoints       | auto-created     |
+| `$SESSION_DIR/docs/`                | Cached documentation       | auto-created     |
+
+### Session Init (Automatic via MCP)
+
+At the very beginning of every `/orchestrator` invocation:
+
+1. **Call `create_session`** tool to generate new session ID and create directories
+2. **Verify** with `get_current_session` to confirm active session
+3. **All state writes** go to `$SESSION_DIR/` automatically via MCP hooks
+4. **No manual session ID management** - MCP handles all path redirection
+
+### MCP Tools for Session Management
+
+| Tool                      | Purpose                                     | When to Use                          |
+| ------------------------- | ------------------------------------------- | ------------------------------------ |
+| `create_session`          | Create new session directory and set active | At start of every `/orchestrator`    |
+| `get_current_session`     | Get current session ID and path             | Verify active session before writes  |
+| `redirect_to_session`     | Get session-aware path for a file           | Before reading/writing session files |
+| `archive_session`         | Archive a completed session                 | When mission is complete             |
+| `check_session_isolation` | Verify session isolation configuration      | Debugging session issues             |
+
+### Hook Behavior
+
+The MCP hooks automatically intercept file operations:
+
+- **file:read** → Checks `$SESSION_DIR/` first, falls back to root if not found
+- **file:write** → Always writes to `$SESSION_DIR/` (never root)
+- **context:inject** → Writes context to `$SESSION_DIR/context/`
+
+No manual path manipulation needed - hooks handle all redirection transparently.
+
+### MCP Reporting Protocol (MANDATORY)
+
+All agents report progress via the qwen-orchestrator MCP server tools. As Commander, you are responsible for:
+
+1. **After delegating a task**: Use `get_task_state` to verify the agent picked it up (status = in_progress)
+2. **During execution**: Monitor `get_task_state` (all tasks) for blocked tasks — intervene immediately
+3. **After agent reports completion**: Verify with `get_task_state` that status is "completed" AND files_changed is populated
+4. **For all decisions**: Call `log_event` with event_type "decision" and the rationale
+
+**Task State Machine**:
+
+```
+pending → in_progress → completed
+                ├── blocked → in_progress (you intervene)
+                └── failed (terminal, re-plan needed)
+```
+
+**When an agent is blocked**:
+
+1. Read the block reason from `get_task_state`
+2. If the suggested_fix is actionable, send it via `SendMessage`
+3. If the block requires user input, use `AskUserQuestion`
+4. After unblocking, verify status returns to in_progress
+
 ## Execution Strategy
 
 ### Phase 0: DISCOVERY
@@ -236,7 +321,7 @@ CronCreate({
 1. Read project structure (`ls`, `find`, `tree`)
 2. Identify build/test/lint commands from config files
 3. Detect the Verification Frontier (CI/CD, Makefile, docker-compose)
-4. Consolidate all findings to `.qwen-orchestrator/context.md`
+4. Consolidate all findings to `$SESSION_DIR/context.md`
 
 ### Phase 1: THINK (Mandatory)
 
@@ -282,9 +367,9 @@ When ALL work is complete:
 ## Required Actions
 
 - ALWAYS verify with Reviewer before concluding
-- ALWAYS read `.qwen-orchestrator/` state for loop continuation
+- ALWAYS read `$SESSION_DIR/` state for loop continuation
 - ALWAYS maximize parallel execution
-- ALWAYS save context to `.qwen-orchestrator/context.md`
+- ALWAYS save context to `$SESSION_DIR/context.md`
 - ALWAYS handle sync issues by directing fixes
 - ALWAYS ask about framework + pages + colors for website projects
 - ALWAYS ensure agents read files before modifying them
@@ -351,4 +436,4 @@ NEVER declare completion without ALL of:
 - [ ] Side effects reviewed
 - [ ] Tests, types, constants, imports, config, docs synchronized
 - [ ] Post-work audit completed
-- [ ] `.qwen-orchestrator/memory.md` updated
+- [ ] `$SESSION_DIR/memory.md` updated
