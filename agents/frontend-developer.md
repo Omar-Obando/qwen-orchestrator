@@ -348,10 +348,10 @@ AskUserQuestion({
       question: "What color style do you prefer?",
       header: "Colors",
       options: [
-        { label: "Professional", description: "Blue/slate tones — trust, authority" },
-        { label: "Creative", description: "Vibrant violet/pink — bold, artistic" },
-        { label: "Warm", description: "Earth tones — friendly, organic" },
-        { label: "Minimal", description: "Black/white/gray — clean, elegant" }
+        { label: "Professional", description: "Blue/slate tones — trust, authority (uses extracted palette: #1a73e8, #ffffff, #f3f4f6, #1e293b)" },
+        { label: "Creative", description: "Vibrant violet/pink — bold, artistic (uses extracted palette: #7c3aed, #ec4899, #fbbf24, #0f172a)" },
+        { label: "Warm", description: "Earth tones — friendly, organic (uses extracted palette: #d97706, #92400e, #fde68a, #1e293b)" },
+        { label: "Minimal", description: "Black/white/gray — clean, elegant (uses extracted palette: #000000, #ffffff, #e5e7eb, #1f2937)" }
       ]
     },
     {

@@ -16,7 +16,7 @@
  *   $SESSION_DIR/events.json  — append-only event log
  *
  * Timeout constants (inspired by cubicleq, tuned for 5-min shell operations):
- *   - HEARTBEAT_STALE_TIMEOUT: 7 minutes — must exceed max shell timeout (5min) + buffer
+ *   - HEARTBEAT_STALE_TIMEOUT: 20 minutes — must exceed max shell timeout (5min) + buffer
  *   - LAUNCH_SILENCE_TIMEOUT: 90 seconds — agent considered stuck if no initial heartbeat
  *   - MCP_TOOL_TIMEOUT: 15 minutes — must exceed HEARTBEAT_STALE_TIMEOUT
  *
@@ -36,7 +36,7 @@ import { getSessionDir, readCurrentSessionId } from './session-manager.js';
 // ---------------------------------------------------------------------------
 
 /** How long before a task with no heartbeat is considered stale (7 minutes — must exceed max shell timeout of 5min) */
-export const HEARTBEAT_STALE_TIMEOUT_MS = 7 * 60 * 1000;
+export const HEARTBEAT_STALE_TIMEOUT_MS = 20 * 60 * 1000;
 
 /** How long before an agent that hasn't sent initial heartbeat is considered stuck (90 seconds) */
 export const LAUNCH_SILENCE_TIMEOUT_MS = 90 * 1000;
@@ -55,7 +55,8 @@ type TaskState =
   | 'in_progress'
   | 'completed'
   | 'blocked'
-  | 'failed';
+  | 'failed'
+  | 'cancelled';
 
 /** Task record stored in tasks.json */
 interface TaskRecord {
@@ -347,7 +348,7 @@ export function registerOrchestrationTools(server: any): void {
     'report_completion',
     {
       description:
-        'Report that a task has been completed. Updates the task status to "completed", records completion time, files changed, and test results. Appends a completion event to the session event log.',
+        'Report that a task has been completed. Updates the task status to "completed", records completion time, files changed, and test results. Appends a completion event to the session event log. Automatically runs validation commands if defined.',
       inputSchema: z.object({
         taskId: z.string().describe('Unique task identifier'),
         agent: z.string().describe('Agent completing the task'),
@@ -382,6 +383,44 @@ export function registerOrchestrationTools(server: any): void {
       const tasks = readTasks(sessionDir);
       const { task } = findOrCreateTask(tasks, taskId);
 
+      // Run validation commands if defined (QA/Audit enforcement)
+      let validationPassed = true;
+      if (task.validationCommands && task.validationCommands.length > 0) {
+        const { execSync } = require('child_process');
+        const results: Array<{ command: string; exitCode: number; stdout: string; stderr: string }> = [];
+        
+        for (const cmd of task.validationCommands) {
+          try {
+            const stdout = execSync(cmd, {
+              timeout: 5 * 60 * 1000, // 5 min timeout per command
+              encoding: 'utf8',
+              maxBuffer: 1024 * 1024,
+            }).trim();
+            results.push({ command: cmd, exitCode: 0, stdout, stderr: '' });
+          } catch (err: any) {
+            results.push({
+              command: cmd,
+              exitCode: err.status ?? 1,
+              stdout: (err.stdout ?? '').toString().trim(),
+              stderr: (err.stderr ?? '').toString().trim(),
+            });
+          }
+        }
+        
+        task.validationResults = results;
+        validationPassed = results.every((r) => r.exitCode === 0);
+        
+        if (!validationPassed) {
+          const failedCount = results.filter((r) => r.exitCode !== 0).length;
+          return makeResult({
+            success: false,
+            error: `Validation failed: ${failedCount}/${results.length} commands failed`,
+            results: results.map((r) => ({ command: r.command, passed: r.exitCode === 0, exitCode: r.exitCode, stdout: r.stdout.slice(0, 500), stderr: r.stderr.slice(0, 500) })),
+            recommendation: 'Fix validation issues before reporting completion',
+          });
+        }
+      }
+
       task.status = 'completed';
       task.agent = agent;
       task.summary = summary;
@@ -400,6 +439,7 @@ export function registerOrchestrationTools(server: any): void {
         metadata: {
           taskId,
           filesChanged: task.filesChanged.length,
+          validationPassed,
         },
       });
 
@@ -408,6 +448,60 @@ export function registerOrchestrationTools(server: any): void {
   );
 
   // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  // Tool 3b: report_failure (for cancelled/failed tasks)
+  // -------------------------------------------------------------------------
+  server.registerTool(
+    'report_failure',
+    {
+      description:
+        'Report that a task has failed or been cancelled. Updates the task status to "failed" or "cancelled" with the failure reason. Appends a failure event to the session event log. Use this when a task cannot complete due to errors, user cancellation, or external failures.',
+      inputSchema: z.object({
+        taskId: z.string().describe('Unique task identifier'),
+        agent: z.string().describe('Agent reporting the failure'),
+        reason: z.string().describe('Why the task failed or was cancelled'),
+        status: z
+          .enum(['failed', 'cancelled'])
+          .describe('Failure type: "failed" for errors, "cancelled" for user stop'),
+      }).shape,
+    },
+    async ({
+      taskId,
+      agent,
+      reason,
+      status,
+    }: {
+      taskId: string;
+      agent: string;
+      reason: string;
+      status: 'failed' | 'cancelled';
+    }) => {
+      const sessionResult = requireSession();
+      if ('error' in sessionResult) return sessionResult.error;
+
+      const { sessionDir } = sessionResult;
+      const tasks = readTasks(sessionDir);
+      const { task } = findOrCreateTask(tasks, taskId);
+
+      task.status = status;
+      task.agent = agent;
+      task.blockedAt = new Date().toISOString();
+      task.blockReason = reason;
+
+      writeTasks(sessionDir, tasks);
+
+      appendEvent(sessionDir, {
+        timestamp: new Date().toISOString(),
+        agent,
+        eventType: status,
+        description: reason,
+        metadata: { taskId, failureType: status },
+      });
+
+      return makeResult({ success: false, task, message: 'Task ' + taskId + ' marked as ' + status });
+    }
+  );
+
   // Tool 3: report_blockage
   // -------------------------------------------------------------------------
   server.registerTool(
@@ -794,7 +888,7 @@ export function registerOrchestrationTools(server: any): void {
           .number()
           .optional()
           .describe(
-            `Custom stale timeout in milliseconds (default: ${HEARTBEAT_STALE_TIMEOUT_MS} = 7 minutes)`
+            `Custom stale timeout in milliseconds (default: \${HEARTBEAT_STALE_TIMEOUT_MS} = 20 minutes)`
           ),
       }).shape,
     },
