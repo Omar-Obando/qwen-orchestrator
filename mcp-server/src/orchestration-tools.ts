@@ -627,14 +627,17 @@ export function registerOrchestrationTools(server: any): void {
   // =========================================================================
   // Tool 7: claim_task — Atomically claim a pending task
   // =========================================================================
-  server.tool(
+  server.registerTool(
     'claim_task',
-    `Atomically claim a pending task for an agent. Only one agent can claim a given task. ` +
-      `Sets status to 'claimed' and records the claiming agent and timestamp. ` +
-      `Returns the full task record with computed fields on success, or an error if already claimed.`,
     {
-      taskId: z.string().describe('ID of the task to claim'),
-      agent: z.string().describe('Name of the agent claiming this task'),
+      description:
+        `Atomically claim a pending task for an agent. Only one agent can claim a given task. ` +
+        `Sets status to 'claimed' and records the claiming agent and timestamp. ` +
+        `Returns the full task record with computed fields on success, or an error if already claimed.`,
+      inputSchema: z.object({
+        taskId: z.string().describe('ID of the task to claim'),
+        agent: z.string().describe('Name of the agent claiming this task'),
+      }).shape,
     },
     async ({ taskId, agent }: { taskId: string; agent: string }) => {
       const sessionResult = requireSession();
@@ -687,21 +690,24 @@ export function registerOrchestrationTools(server: any): void {
   // =========================================================================
   // Tool 8: heartbeat — Lightweight keep-alive signal
   // =========================================================================
-  server.tool(
+  server.registerTool(
     'heartbeat',
-    `Send a lightweight heartbeat to signal the agent is still alive and working. ` +
-      `Call this every 30-60 seconds during long-running operations to prevent being marked as stale. ` +
-      `If no heartbeat is received within ${HEARTBEAT_STALE_TIMEOUT_MS / 1000}s, the task is considered stale. ` +
-      `Optionally include a brief status message.`,
     {
-      taskId: z.string().describe('ID of the task to send heartbeat for'),
-      agent: z.string().describe('Name of the agent sending the heartbeat'),
-      message: z
-        .string()
-        .optional()
-        .describe(
-          'Optional brief status message (e.g., "still analyzing file", "writing tests")'
-        ),
+      description:
+        `Send a lightweight heartbeat to signal the agent is still alive and working. ` +
+        `Call this every 30-60 seconds during long-running operations to prevent being marked as stale. ` +
+        `If no heartbeat is received within ${HEARTBEAT_STALE_TIMEOUT_MS / 1000}s, the task is considered stale. ` +
+        `Optionally include a brief status message.`,
+      inputSchema: z.object({
+        taskId: z.string().describe('ID of the task to send heartbeat for'),
+        agent: z.string().describe('Name of the agent sending the heartbeat'),
+        message: z
+          .string()
+          .optional()
+          .describe(
+            'Optional brief status message (e.g., "still analyzing file", "writing tests")'
+          ),
+      }).shape,
     },
     async ({
       taskId,
@@ -775,19 +781,22 @@ export function registerOrchestrationTools(server: any): void {
   // =========================================================================
   // Tool 9: get_stale_tasks — Find tasks that haven't had a heartbeat
   // =========================================================================
-  server.tool(
+  server.registerTool(
     'get_stale_tasks',
-    `Find tasks whose last heartbeat is older than the stale timeout (${HEARTBEAT_STALE_TIMEOUT_MS / 1000}s). ` +
-      `These tasks may belong to agents that have stopped, timed out, or crashed. ` +
-      `The commander should use this to detect stuck agents and create continuation tasks. ` +
-      `Returns stale tasks with their computed durations since last heartbeat.`,
     {
-      staleTimeoutMs: z
-        .number()
-        .optional()
-        .describe(
-          `Custom stale timeout in milliseconds (default: ${HEARTBEAT_STALE_TIMEOUT_MS} = 7 minutes)`
-        ),
+      description:
+        `Find tasks whose last heartbeat is older than the stale timeout (${HEARTBEAT_STALE_TIMEOUT_MS / 1000}s). ` +
+        `These tasks may belong to agents that have stopped, timed out, or crashed. ` +
+        `The commander should use this to detect stuck agents and create continuation tasks. ` +  
+        `Returns stale tasks with their computed durations since last heartbeat.`,
+      inputSchema: z.object({
+        staleTimeoutMs: z
+          .number()
+          .optional()
+          .describe(
+            `Custom stale timeout in milliseconds (default: ${HEARTBEAT_STALE_TIMEOUT_MS} = 7 minutes)`
+          ),
+      }).shape,
     },
     async ({ staleTimeoutMs }: { staleTimeoutMs?: number }) => {
       const sessionResult = requireSession();
@@ -837,18 +846,21 @@ export function registerOrchestrationTools(server: any): void {
   // =========================================================================
   // Tool 10: set_validation_commands — Define validation commands for a task
   // =========================================================================
-  server.tool(
+  server.registerTool(
     'set_validation_commands',
-    `Set validation commands for a task. These commands will be run by validate_task ` +
-      `to verify the deliverable is complete. Example: ["ls src/styles/global.css", "npm run build"]. ` +
-      `Commands should be shell commands that return exit code 0 on success.`,
     {
-      taskId: z.string().describe('ID of the task'),
-      commands: z
-        .array(z.string())
-        .describe(
-          'Array of shell commands to run for validation. Each must return exit code 0.'
-        ),
+      description:
+        `Set validation commands for a task. These commands will be run by validate_task ` +
+        `to verify the deliverable is complete. Example: ["ls src/styles/global.css", "npm run build"]. ` +
+        `Commands should be shell commands that return exit code 0 on success.`,
+      inputSchema: z.object({
+        taskId: z.string().describe('ID of the task'),
+        commands: z
+          .array(z.string())
+          .describe(
+            'Array of shell commands to run for validation. Each must return exit code 0.'
+          ),
+      }).shape,
     },
     async ({ taskId, commands }: { taskId: string; commands: string[] }) => {
       const sessionResult = requireSession();
@@ -888,15 +900,18 @@ export function registerOrchestrationTools(server: any): void {
   // =========================================================================
   // Tool 11: validate_task — Run validation commands for a task
   // =========================================================================
-  server.tool(
+  server.registerTool(
     'validate_task',
-    `Run validation commands for a task and return results. ` +
-      `Each command runs with a 5-minute timeout. ` +
-      `All commands must pass (exit code 0) for validation to succeed. ` +
-      `Results are stored in task.validationResults. ` +
-      `Call this BEFORE report_completion to verify deliverables.`,
     {
-      taskId: z.string().describe('ID of the task to validate'),
+      description:
+        `Run validation commands for a task and return results. ` +
+        `Each command runs with a 5-minute timeout. ` +
+        `All commands must pass (exit code 0) for validation to succeed. ` +
+        `Results are stored in task.validationResults. ` +
+        `Call this BEFORE report_completion to verify deliverables.`,
+      inputSchema: z.object({
+        taskId: z.string().describe('ID of the task to validate'),
+      }).shape,
     },
     async ({ taskId }: { taskId: string }) => {
       const sessionResult = requireSession();
