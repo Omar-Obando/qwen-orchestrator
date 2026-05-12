@@ -54,6 +54,14 @@ Decompose into tasks, identify parallel work, create TodoWrite.
 
 Launch independent agents (`run_in_background: true`), wait for completions, update TodoWrite after each.
 
+**Background Agent Completion Protocol**:
+
+1. Launch all independent agents in parallel
+2. **Wait for completion notifications** — Qwen Code sends a notification when each background agent finishes
+3. **After EACH notification**: call `TodoWrite` to mark that task as `completed`
+4. Only proceed when ALL tasks are `completed`
+5. Handle failures: re-plan, retry, or take over directly
+
 **When an agent fails** (truncation, error, stuck):
 
 1. Do NOT re-launch with the same task

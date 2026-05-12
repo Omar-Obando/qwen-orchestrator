@@ -95,9 +95,10 @@ Ask 1-4 questions covering: scope, tech stack, acceptance criteria, constraints.
 ## Phase 3: EXECUTE
 
 1. Launch independent tasks as background agents (`run_in_background: true`)
-2. Wait for completion notifications
-3. After EACH agent completes: mark task `completed` in TodoWrite
-4. Handle failures: re-plan, retry, or reassign
+2. **Wait for completion notifications** — Qwen Code sends a notification when each background agent finishes
+3. **After EACH notification**: mark task `completed` in TodoWrite
+4. Only proceed when ALL tasks are `completed`
+5. Handle failures: re-plan, retry, or reassign
 
 ### When an Agent Gets Stuck (Truncation or Other Error)
 
