@@ -3,7 +3,7 @@
 **[English](README.md)** · **[Español](docs/README.es.md)** · **[中文](docs/README.zh.md)** · **[日本語](docs/README.ja.md)** · **[한국어](docs/README.ko.md)** · **[Português](docs/README.pt.md)** · **[Français](docs/README.fr.md)** · **[العربية](docs/README.ar.md)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version: 0.0.5](https://img.shields.io/badge/version-0.0.5-green.svg)](package.json)
+[![Version: 0.0.6](https://img.shields.io/badge/version-0.0.6-green.svg)](package.json)
 [![Qwen Code Extension](https://img.shields.io/badge/Qwen%20Code-Extension-orange.svg)](https://github.com/QwenLM/qwen-code)
 [![Agents: 24](https://img.shields.io/badge/agents-24-blue.svg)](#agent-team-24-specialized-agents)
 [![Skills: 82](https://img.shields.io/badge/skills-82-purple.svg)](#skills-82-professional-skills)
