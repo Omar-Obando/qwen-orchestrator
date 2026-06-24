@@ -124,231 +124,252 @@ El comando `/orchestrator` es el punto de entrada principal. Activa el equipo co
 
 ## 🌟 Características Principales
 
-| Característica | Descripción |
-|---|---|
-| **24 Agentes Especializados** | Commander, Planner, Desarrolladores Frontend/Backend, Reviewer, QA, PM, DevOps, Seguridad y más |
+| Característica                   | Descripción                                                                                              |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **24 Agentes Especializados**    | Commander, Planner, Desarrolladores Frontend/Backend, Reviewer, QA, PM, DevOps, Seguridad y más          |
 | **82 Habilidades Profesionales** | TDD, auditoría de seguridad, detección de anti-patrones, design system, SQL, Docker, Kubernetes y 75 más |
-| **6 Comandos Slash** | `/orchestrator`, `/orchestrate`, `/plan`, `/review`, `/test`, `/deploy` |
-| **Pregunta Antes de Construir** | Los agentes clarifican requisitos antes de escribir código |
-| **Ejecución Paralela** | El Commander delega tareas a múltiples agentes simultáneamente |
-| **Memoria Persistente** | Knowledge Graph vía MCP Memory Server almacena decisiones entre sesiones |
-| **Cero Bloqueo de Modelo** | Funciona con Qwen, DeepSeek, OpenAI, Anthropic o cualquier modelo local |
-| **Multi-Lenguaje** | TypeScript, PHP (Laravel), Python (Django), Dart (Flutter), Rust, Go, Java, C# |
-| **Protección contra Bucles** | El agente Monitor detecta y rompe bucles infinitos automáticamente |
-| **Puertas de Calidad** | El Reviewer es el ÚNICO agente que puede aprobar tareas |
-| **Seguridad Primero** | Cumplimiento OWASP Top 10 mediante habilidad de auditoría y agente Reviewer |
-| **Sin Mockups** | Los agentes tienen prohibido escribir stubs o placeholders |
-| **Recuperación de Compactación** | El estado persiste en `.qwen-orchestrator/` — sobrevive la compresión de contexto |
+| **6 Comandos Slash**             | `/orchestrator`, `/orchestrate`, `/plan`, `/review`, `/test`, `/deploy`                                  |
+| **Pregunta Antes de Construir**  | Los agentes clarifican requisitos antes de escribir código                                               |
+| **Ejecución Paralela**           | El Commander delega tareas a múltiples agentes simultáneamente                                           |
+| **Memoria Persistente**          | Knowledge Graph vía MCP Memory Server almacena decisiones entre sesiones                                 |
+| **Cero Bloqueo de Modelo**       | Funciona con Qwen, DeepSeek, OpenAI, Anthropic o cualquier modelo local                                  |
+| **Multi-Lenguaje**               | TypeScript, PHP (Laravel), Python (Django), Dart (Flutter), Rust, Go, Java, C#                           |
+| **Protección contra Bucles**     | El agente Monitor detecta y rompe bucles infinitos automáticamente                                       |
+| **Puertas de Calidad**           | El Reviewer es el ÚNICO agente que puede aprobar tareas                                                  |
+| **Seguridad Primero**            | Cumplimiento OWASP Top 10 mediante habilidad de auditoría y agente Reviewer                              |
+| **Sin Mockups**                  | Los agentes tienen prohibido escribir stubs o placeholders                                               |
+| **Recuperación de Compactación** | El estado persiste en `.qwen-orchestrator/` — sobrevive la compresión de contexto                        |
 
 ---
 
 ## 👥 Equipo de Agentes (24 Agentes Especializados)
 
-| # | Agente | Rol | Superpoder |
-|---|---|---|---|
-| 1 | **Commander** 🔴 | Orquestador Maestro | Delegación paralela, ejecución incansable |
-| 2 | **Planner** 🔵 | Investigación y Arquitectura | Planificación a nivel de archivos, decisiones de diseño |
-| 3 | **Frontend Developer** 🔵 | Implementación UI/UX | Componentes, responsivo, accesible, rápido |
-| 4 | **Backend Developer** 🟢 | Lógica del Servidor | APIs, autenticación, caché, operaciones de BD |
-| 5 | **Reviewer** 🟣 | Guardián de Calidad | ÚNICO agente que puede aprobar tareas |
-| 6 | **QA Engineer** 🟠 | Aseguramiento de Calidad | Estrategia de pruebas, descubrimiento de edge cases |
-| 7 | **Project Manager** 🔵 | Gestión de Entregas | Control de alcance, evaluación de riesgos |
-| 8 | **Doc Researcher** 🟣 | Conocimiento Context7 | Consulta de docs en vivo, anti-alucinación |
-| 9 | **Tech Lead** 🟡 | Estándares y Guía | Completitud de módulos, verificación CRUD |
-| 10 | **Database Architect** 🟢 | Especialista de Datos | Diseño de esquema, seguridad de migraciones |
-| 11 | **Product Owner** 🟡 | Valor de Negocio | Historias de usuario, criterios de aceptación |
-| 12 | **DevOps Engineer** 🔘 | Infraestructura | CI/CD, Docker, automatización de despliegue |
-| 13 | **Code Quality Guard** 🌹 | Centinela de Calidad | Verificación de sintaxis, lint, typecheck |
-| 14 | **Monitor** 🛡️ | Guardián de Bucles | Detectar/romper bucles LLM, watchdog |
-| 15 | **SEO Specialist** 🔵 | SEO y Rendimiento Web | Meta tags, datos estructurados, Core Web Vitals |
-| 16 | **Tech Selector** 🟣 | Asesor Tecnológico | Selección de framework/BD con pros y contras |
-| 17 | **Cybersecurity Eng.** 🔴 | Seguridad de Aplicaciones | OWASP, modelado de amenazas, auditoría de dependencias |
-| 18 | **Performance Eng.** ⚡ | Velocidad y Escala | Profiling, optimización de consultas, pruebas de carga |
-| 19 | **Release Manager** 🏷️ | Releases y Versionado | SemVer, changelogs, planificación de rollback |
-| 20 | **API Specialist** 🔗 | APIs e Integración | REST/GraphQL, versionado, APIs de terceros |
-| 21 | **Mobile Engineer** 📱 | Apps Móviles | Flutter, React Native, offline-first |
-| 22 | **Localization Eng.** 🌐 | i18n/L10n | Multi-lenguaje, RTL, adaptación cultural |
-| 23 | **Documenter** 📄 | Redacción Técnica | README, docs de API, ADRs, base de conocimiento |
-| 24 | **Skill Creator** 🛠️ | Creación de Habilidades | Autoría de habilidades, documentación, testing |
+| #   | Agente                    | Rol                          | Superpoder                                              |
+| --- | ------------------------- | ---------------------------- | ------------------------------------------------------- |
+| 1   | **Commander** 🔴          | Orquestador Maestro          | Delegación paralela, ejecución incansable               |
+| 2   | **Planner** 🔵            | Investigación y Arquitectura | Planificación a nivel de archivos, decisiones de diseño |
+| 3   | **Frontend Developer** 🔵 | Implementación UI/UX         | Componentes, responsivo, accesible, rápido              |
+| 4   | **Backend Developer** 🟢  | Lógica del Servidor          | APIs, autenticación, caché, operaciones de BD           |
+| 5   | **Reviewer** 🟣           | Guardián de Calidad          | ÚNICO agente que puede aprobar tareas                   |
+| 6   | **QA Engineer** 🟠        | Aseguramiento de Calidad     | Estrategia de pruebas, descubrimiento de edge cases     |
+| 7   | **Project Manager** 🔵    | Gestión de Entregas          | Control de alcance, evaluación de riesgos               |
+| 8   | **Doc Researcher** 🟣     | Conocimiento Context7        | Consulta de docs en vivo, anti-alucinación              |
+| 9   | **Tech Lead** 🟡          | Estándares y Guía            | Completitud de módulos, verificación CRUD               |
+| 10  | **Database Architect** 🟢 | Especialista de Datos        | Diseño de esquema, seguridad de migraciones             |
+| 11  | **Product Owner** 🟡      | Valor de Negocio             | Historias de usuario, criterios de aceptación           |
+| 12  | **DevOps Engineer** 🔘    | Infraestructura              | CI/CD, Docker, automatización de despliegue             |
+| 13  | **Code Quality Guard** 🌹 | Centinela de Calidad         | Verificación de sintaxis, lint, typecheck               |
+| 14  | **Monitor** 🛡️            | Guardián de Bucles           | Detectar/romper bucles LLM, watchdog                    |
+| 15  | **SEO Specialist** 🔵     | SEO y Rendimiento Web        | Meta tags, datos estructurados, Core Web Vitals         |
+| 16  | **Tech Selector** 🟣      | Asesor Tecnológico           | Selección de framework/BD con pros y contras            |
+| 17  | **Cybersecurity Eng.** 🔴 | Seguridad de Aplicaciones    | OWASP, modelado de amenazas, auditoría de dependencias  |
+| 18  | **Performance Eng.** ⚡   | Velocidad y Escala           | Profiling, optimización de consultas, pruebas de carga  |
+| 19  | **Release Manager** 🏷️    | Releases y Versionado        | SemVer, changelogs, planificación de rollback           |
+| 20  | **API Specialist** 🔗     | APIs e Integración           | REST/GraphQL, versionado, APIs de terceros              |
+| 21  | **Mobile Engineer** 📱    | Apps Móviles                 | Flutter, React Native, offline-first                    |
+| 22  | **Localization Eng.** 🌐  | i18n/L10n                    | Multi-lenguaje, RTL, adaptación cultural                |
+| 23  | **Documenter** 📄         | Redacción Técnica            | README, docs de API, ADRs, base de conocimiento         |
+| 24  | **Skill Creator** 🛠️      | Creación de Habilidades      | Autoría de habilidades, documentación, testing          |
 
 ---
 
 ## 🛠️ Habilidades (82 Habilidades Profesionales)
 
 ### Contenedores y Orquestación
-| Habilidad | Propósito |
-|---|---|
-| Docker Containerization | Builds multi-etapa, hardening de seguridad, optimización de imágenes, Docker Compose |
-| Kubernetes Orchestration | Deployments, HPA, service mesh, ingress, GitOps con ArgoCD/Flux |
+
+| Habilidad                | Propósito                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------ |
+| Docker Containerization  | Builds multi-etapa, hardening de seguridad, optimización de imágenes, Docker Compose |
+| Kubernetes Orchestration | Deployments, HPA, service mesh, ingress, GitOps con ArgoCD/Flux                      |
 
 ### Infraestructura como Código
-| Habilidad | Propósito |
-|---|---|
+
+| Habilidad     | Propósito                                                             |
+| ------------- | --------------------------------------------------------------------- |
 | Terraform IaC | Módulos, gestión de estado, workspaces, políticas Sentinel, Terratest |
 
 ### Automatización CI/CD
-| Habilidad | Propósito |
-|---|---|
+
+| Habilidad            | Propósito                                                           |
+| -------------------- | ------------------------------------------------------------------- |
 | GitHub Actions CI/CD | Workflows, matrices, entornos, caché, actions compuestas, seguridad |
 
 ### Caché y Rendimiento
-| Habilidad | Propósito |
-|---|---|
+
+| Habilidad     | Propósito                                                                            |
+| ------------- | ------------------------------------------------------------------------------------ |
 | Redis Caching | Estructuras de datos, patrones de caché, gestión de sesiones, pub/sub, Lua scripting |
 
 ### Diseño de APIs
-| Habilidad | Propósito |
-|---|---|
+
+| Habilidad          | Propósito                                                               |
+| ------------------ | ----------------------------------------------------------------------- |
 | GraphQL API Design | Diseño de esquema, resolvers, DataLoader, paginación, Apollo Federation |
 
 ### Multi-Plataforma
-| Habilidad | Propósito |
-|---|---|
+
+| Habilidad          | Propósito                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------- |
 | Multi-Platform Dev | Comandos multiplataforma, manejo de rutas, finales de línea, permisos, gestores de paquetes |
 
 ### LLM y Agentes
-| Habilidad | Propósito |
-|---|---|
-| LangGraph | Flujos de agentes, gestión de estado, sistemas multi-agente |
-| LangChain | Cadenas LLM, agentes, herramientas, memoria, RAG |
-| Qwen Agent | Desarrollo e integración de agentes específicos de Qwen |
+
+| Habilidad        | Propósito                                                         |
+| ---------------- | ----------------------------------------------------------------- |
+| LangGraph        | Flujos de agentes, gestión de estado, sistemas multi-agente       |
+| LangChain        | Cadenas LLM, agentes, herramientas, memoria, RAG                  |
+| Qwen Agent       | Desarrollo e integración de agentes específicos de Qwen           |
 | LLM Integrations | Integración multi-proveedor LLM (OpenAI, Anthropic, Google, etc.) |
 
 ### Plataformas Cloud
-| Habilidad | Propósito |
-|---|---|
-| Vercel Deployment | Funciones serverless, edge computing, optimización Next.js |
-| Cloudflare Pages | Edge functions, distribución global, caché |
-| Cloudflare Workers | Edge computing, manipulación request/response |
-| AWS Serverless | Lambda, API Gateway, SAM, arquitecturas event-driven |
+
+| Habilidad          | Propósito                                                  |
+| ------------------ | ---------------------------------------------------------- |
+| Vercel Deployment  | Funciones serverless, edge computing, optimización Next.js |
+| Cloudflare Pages   | Edge functions, distribución global, caché                 |
+| Cloudflare Workers | Edge computing, manipulación request/response              |
+| AWS Serverless     | Lambda, API Gateway, SAM, arquitecturas event-driven       |
 
 ### SEO
-| Habilidad | Propósito |
-|---|---|
-| SEO LLM | Optimización para ChatGPT, Perplexity, Gemini, Claude, Bing AI, Qwen |
+
+| Habilidad     | Propósito                                                                    |
+| ------------- | ---------------------------------------------------------------------------- |
+| SEO LLM       | Optimización para ChatGPT, Perplexity, Gemini, Claude, Bing AI, Qwen         |
 | Technical SEO | Velocidad de sitio, optimización móvil, datos estructurados, Core Web Vitals |
 
 ### Liderazgo y Arquitectura
-| Habilidad | Propósito |
-|---|---|
-| Strategic Leadership | Gestión de equipos, toma de decisiones, alineación con stakeholders |
-| Requirements Engineering | Casos de uso, historias de usuario, criterios de aceptación |
+
+| Habilidad                  | Propósito                                                            |
+| -------------------------- | -------------------------------------------------------------------- |
+| Strategic Leadership       | Gestión de equipos, toma de decisiones, alineación con stakeholders  |
+| Requirements Engineering   | Casos de uso, historias de usuario, criterios de aceptación          |
 | Microservices Architecture | Diseño domain-driven, límites de servicio, comunicación event-driven |
-| Technology Evaluation | Selección de framework/BD, análisis de pros/contras |
+| Technology Evaluation      | Selección de framework/BD, análisis de pros/contras                  |
 
 ### Producto y Equipo
-| Habilidad | Propósito |
-|---|---|
-| Product Owner | Gestión de backlog, historias de usuario, sprint planning |
-| Scrum Master | Facilitación de ceremonias, coaching de equipo, remoción de impedimentos |
+
+| Habilidad     | Propósito                                                                |
+| ------------- | ------------------------------------------------------------------------ |
+| Product Owner | Gestión de backlog, historias de usuario, sprint planning                |
+| Scrum Master  | Facilitación de ceremonias, coaching de equipo, remoción de impedimentos |
 
 ### Desarrollo de Software
-| Habilidad | Propósito |
-|---|---|
-| Testing Strategy | Pirámide de testing, objetivos de cobertura, automatización |
-| Security Auditor | OWASP Top 10, evaluación de vulnerabilidades, cumplimiento |
-| DevOps Pipeline | Diseño CI/CD, estrategias de despliegue, IaC |
-| Architecture Patterns | Capas, DDD, microservicios, event-driven, CQRS |
-| Documentation | README, docs de API, ADRs, base de conocimiento |
-| Debugging | Investigación sistemática, debugging basado en hipótesis |
-| Refactoring | Detección de code smells, transformaciones seguras |
+
+| Habilidad             | Propósito                                                   |
+| --------------------- | ----------------------------------------------------------- |
+| Testing Strategy      | Pirámide de testing, objetivos de cobertura, automatización |
+| Security Auditor      | OWASP Top 10, evaluación de vulnerabilidades, cumplimiento  |
+| DevOps Pipeline       | Diseño CI/CD, estrategias de despliegue, IaC                |
+| Architecture Patterns | Capas, DDD, microservicios, event-driven, CQRS              |
+| Documentation         | README, docs de API, ADRs, base de conocimiento             |
+| Debugging             | Investigación sistemática, debugging basado en hipótesis    |
+| Refactoring           | Detección de code smells, transformaciones seguras          |
 
 ### Seguridad y Calidad
-| Habilidad | Propósito |
-|---|---|
+
+| Habilidad            | Propósito                                                     |
+| -------------------- | ------------------------------------------------------------- |
 | Security Code Review | OWASP Top 10, patrones de vulnerabilidad, codificación segura |
-| Threat Modeling | STRIDE, DREAD, árboles de ataque, identificación de amenazas |
-| Test Automation | Diseño de framework, patrones page object, ejecución paralela |
-| Load Testing | Pruebas de carga, estrés, resistencia, pico |
-| Code Review | Revisión sistemática OWASP + SOLID + Clean Code |
+| Threat Modeling      | STRIDE, DREAD, árboles de ataque, identificación de amenazas  |
+| Test Automation      | Diseño de framework, patrones page object, ejecución paralela |
+| Load Testing         | Pruebas de carga, estrés, resistencia, pico                   |
+| Code Review          | Revisión sistemática OWASP + SOLID + Clean Code               |
 
 ### Base de Datos
-| Habilidad | Propósito |
-|---|---|
-| Database Design | Diseño de esquema, relaciones, estrategias de indexación |
-| Database Security | Encriptación, control de acceso, auditoría, cumplimiento |
-| SQL Best Practices | Optimización de consultas, indexación, prevención N+1 |
+
+| Habilidad           | Propósito                                                |
+| ------------------- | -------------------------------------------------------- |
+| Database Design     | Diseño de esquema, relaciones, estrategias de indexación |
+| Database Security   | Encriptación, control de acceso, auditoría, cumplimiento |
+| SQL Best Practices  | Optimización de consultas, indexación, prevención N+1    |
 | SQL Query Assistant | Asistencia en consultas, mejores prácticas, optimización |
 
 ### Frontend y Móvil
-| Habilidad | Propósito |
-|---|---|
-| Accessibility | WCAG 2.1 AA, HTML semántico, ARIA, navegación por teclado |
-| Design System | Paletas de colores, tipografía, espaciado, arquitectura de componentes |
-| Website Redesign | Rediseño basado en URL/screenshot, flujo de análisis |
-| Flutter Web | Layouts responsivos, widgets adaptativos, gestión de estado |
-| Mobile Performance | Optimización de apps, tiempo de inicio, uso de memoria |
-| Offline-First | Almacenamiento local, sincronización, resolución de conflictos |
+
+| Habilidad          | Propósito                                                              |
+| ------------------ | ---------------------------------------------------------------------- |
+| Accessibility      | WCAG 2.1 AA, HTML semántico, ARIA, navegación por teclado              |
+| Design System      | Paletas de colores, tipografía, espaciado, arquitectura de componentes |
+| Website Redesign   | Rediseño basado en URL/screenshot, flujo de análisis                   |
+| Flutter Web        | Layouts responsivos, widgets adaptativos, gestión de estado            |
+| Mobile Performance | Optimización de apps, tiempo de inicio, uso de memoria                 |
+| Offline-First      | Almacenamiento local, sincronización, resolución de conflictos         |
 
 ### Backend y APIs
-| Habilidad | Propósito |
-|---|---|
-| API Design | Estándares RESTful, envolturas de respuesta, paginación |
-| API Documentation | Especificación OpenAPI, Swagger, esquemas GraphQL |
-| Third-Party Integration | Stripe, PayPal, AWS, Google, Twilio |
-| Laravel | Eloquent ORM, Form Requests, colas, patrones de API |
-| NestJS | Módulos, guards, pipes, interceptors, ciclo de vida de requests |
-| Supabase | Políticas RLS, Edge Functions, auth, APIs auto-generadas |
+
+| Habilidad               | Propósito                                                       |
+| ----------------------- | --------------------------------------------------------------- |
+| API Design              | Estándares RESTful, envolturas de respuesta, paginación         |
+| API Documentation       | Especificación OpenAPI, Swagger, esquemas GraphQL               |
+| Third-Party Integration | Stripe, PayPal, AWS, Google, Twilio                             |
+| Laravel                 | Eloquent ORM, Form Requests, colas, patrones de API             |
+| NestJS                  | Módulos, guards, pipes, interceptors, ciclo de vida de requests |
+| Supabase                | Políticas RLS, Edge Functions, auth, APIs auto-generadas        |
 
 ### DevOps e Infraestructura
-| Habilidad | Propósito |
-|---|---|
+
+| Habilidad         | Propósito                                                                |
+| ----------------- | ------------------------------------------------------------------------ |
 | Disaster Recovery | Estrategias de backup, procedimientos de restauración, failover, RTO/RPO |
-| Release Workflow | SemVer, changelogs, staging, producción, rollback |
-| Git Workflow | Estrategias de branching, convenciones de commits, plantillas PR |
-| Deployment | CI/CD, Docker, gestión de releases |
+| Release Workflow  | SemVer, changelogs, staging, producción, rollback                        |
+| Git Workflow      | Estrategias de branching, convenciones de commits, plantillas PR         |
+| Deployment        | CI/CD, Docker, gestión de releases                                       |
 
 ### Específico de LLM
-| Habilidad | Propósito |
-|---|---|
-| Anti-Hallucination | Verificación de fuentes, afirmaciones basadas en evidencia, validación |
-| Loop Detection | Detección de bucles LLM, bucles de tool calls, rutas de escape |
-| Context7 Docs | Consulta de documentación en vivo vía Context7 MCP |
-| Compaction Recovery | Preservación de contexto durante la compactación de sesión |
+
+| Habilidad           | Propósito                                                              |
+| ------------------- | ---------------------------------------------------------------------- |
+| Anti-Hallucination  | Verificación de fuentes, afirmaciones basadas en evidencia, validación |
+| Loop Detection      | Detección de bucles LLM, bucles de tool calls, rutas de escape         |
+| Context7 Docs       | Consulta de documentación en vivo vía Context7 MCP                     |
+| Compaction Recovery | Preservación de contexto durante la compactación de sesión             |
 
 ### Proyecto y Equipo
-| Habilidad | Propósito |
-|---|---|
-| Agile Project Management | Ceremonias Scrum, refinamiento de backlog, sprint planning |
-| User Story Mapping | Mapeo de historias, desglose de épicas, visualización de timeline |
-| CRUD Completeness | Patrones Create, Read, Update, Delete, validación |
-| Project Conventions | Estructura de proyecto, estándares de código, convenciones |
-| ERP/SaaS Organization | Organización de proyectos grandes, estructura de módulos |
+
+| Habilidad                | Propósito                                                         |
+| ------------------------ | ----------------------------------------------------------------- |
+| Agile Project Management | Ceremonias Scrum, refinamiento de backlog, sprint planning        |
+| User Story Mapping       | Mapeo de historias, desglose de épicas, visualización de timeline |
+| CRUD Completeness        | Patrones Create, Read, Update, Delete, validación                 |
+| Project Conventions      | Estructura de proyecto, estándares de código, convenciones        |
+| ERP/SaaS Organization    | Organización de proyectos grandes, estructura de módulos          |
 
 ### Localización
-| Habilidad | Propósito |
-|---|---|
+
+| Habilidad            | Propósito                                         |
+| -------------------- | ------------------------------------------------- |
 | Translation Workflow | Memoria de traducción, traducción automática, TMS |
-| Multi-Language | Patrones i18n, l10n, soporte RTL |
+| Multi-Language       | Patrones i18n, l10n, soporte RTL                  |
 
 ### Habilidades Adicionales
-| Habilidad | Propósito |
-|---|---|
-| Domain-Driven | Patrones DDD, bounded contexts, agregados, value objects |
-| Performance | Profiling, optimización, benchmarks |
-| TDD Workflow | Desarrollo Guiado por Pruebas (Red/Green/Refactor) |
-| Security Audit | Detección de vulnerabilidades OWASP Top 10 |
-| Agent Task Coordinator | Coordinación de agentes, protocolo MCP |
-| Skill Creation | Autoría de habilidades, documentación, testing |
-| Multi-Channel Funnels | Embudos de marketing, optimización de conversión |
-| Architecture | Diseño de sistemas, patrones, trade-offs |
-| Code Quality | Linting, formateo, verificación de tipos |
-| Monitoring | Observabilidad, logging, alertas |
-| Compliance | GDPR, HIPAA, SOC 2, PCI-DSS |
-| Testing | Pruebas unitarias, integración, E2E |
+
+| Habilidad              | Propósito                                                |
+| ---------------------- | -------------------------------------------------------- |
+| Domain-Driven          | Patrones DDD, bounded contexts, agregados, value objects |
+| Performance            | Profiling, optimización, benchmarks                      |
+| TDD Workflow           | Desarrollo Guiado por Pruebas (Red/Green/Refactor)       |
+| Security Audit         | Detección de vulnerabilidades OWASP Top 10               |
+| Agent Task Coordinator | Coordinación de agentes, protocolo MCP                   |
+| Skill Creation         | Autoría de habilidades, documentación, testing           |
+| Multi-Channel Funnels  | Embudos de marketing, optimización de conversión         |
+| Architecture           | Diseño de sistemas, patrones, trade-offs                 |
+| Code Quality           | Linting, formateo, verificación de tipos                 |
+| Monitoring             | Observabilidad, logging, alertas                         |
+| Compliance             | GDPR, HIPAA, SOC 2, PCI-DSS                              |
+| Testing                | Pruebas unitarias, integración, E2E                      |
 
 ---
 
 ## ⌨️ Comandos (6 Comandos Slash)
 
-| Comando | Descripción |
-|---|---|
-| **`/orchestrator [objetivo]`** ⭐ | **Entrada principal** — Equipo completo con protocolo de claridad |
-| `/orchestrate [misión]` | Ejecución directa — sin preguntas, solo construye |
-| `/plan [funcionalidad]` | Solo crear plan de implementación — investigación + arquitectura |
-| `/review [objetivo]` | Revisión exhaustiva de código — seguridad, calidad, patrones |
-| `/test [objetivo]` | Ejecutar y analizar suite de pruebas — cobertura, brechas, edge cases |
-| `/deploy [objetivo]` | Desplegar con verificación pre/post — CI/CD, plan de rollback |
+| Comando                           | Descripción                                                           |
+| --------------------------------- | --------------------------------------------------------------------- |
+| **`/orchestrator [objetivo]`** ⭐ | **Entrada principal** — Equipo completo con protocolo de claridad     |
+| `/orchestrate [misión]`           | Ejecución directa — sin preguntas, solo construye                     |
+| `/plan [funcionalidad]`           | Solo crear plan de implementación — investigación + arquitectura      |
+| `/review [objetivo]`              | Revisión exhaustiva de código — seguridad, calidad, patrones          |
+| `/test [objetivo]`                | Ejecutar y analizar suite de pruebas — cobertura, brechas, edge cases |
+| `/deploy [objetivo]`              | Desplegar con verificación pre/post — CI/CD, plan de rollback         |
 
 > **¿Cuándo usar `/orchestrator` vs `/orchestrate`?**
 >
@@ -433,15 +454,15 @@ El orquestador **nunca asume** lo que quieres. Cuando empieza una misión, los a
 
 **Agentes que hacen preguntas:**
 
-| Agente | Cuándo Pregunta |
-|---|---|
-| Commander | Antes de cada misión — alcance, prioridades, restricciones |
-| Planner | Antes de decisiones de arquitectura — stack tecnológico, patrones |
-| Product Owner | Al definir historias de usuario — criterios de aceptación, edge cases |
-| QA Engineer | Al diseñar estrategia de pruebas — caminos críticos, umbrales |
-| Project Manager | Al definir alcance — plazos, tolerancia al riesgo, recursos |
-| Tech Selector | Cuando el stack no está especificado — presenta frameworks, BDs, lenguajes con pros/contras |
-| SEO Specialist | Al construir proyectos web — audiencia objetivo, tipo de contenido, región |
+| Agente          | Cuándo Pregunta                                                                             |
+| --------------- | ------------------------------------------------------------------------------------------- |
+| Commander       | Antes de cada misión — alcance, prioridades, restricciones                                  |
+| Planner         | Antes de decisiones de arquitectura — stack tecnológico, patrones                           |
+| Product Owner   | Al definir historias de usuario — criterios de aceptación, edge cases                       |
+| QA Engineer     | Al diseñar estrategia de pruebas — caminos críticos, umbrales                               |
+| Project Manager | Al definir alcance — plazos, tolerancia al riesgo, recursos                                 |
+| Tech Selector   | Cuando el stack no está especificado — presenta frameworks, BDs, lenguajes con pros/contras |
+| SEO Specialist  | Al construir proyectos web — audiencia objetivo, tipo de contenido, región                  |
 
 > **Consejo**: Puedes proporcionar todos los detalles desde el inicio y saltarte las preguntas. Los agentes solo preguntan cuando detectan ambigüedad.
 
@@ -498,6 +519,7 @@ qwen extensions install https://github.com/Omar-Obando/qwen-orchestrator
 ```
 
 La extensión automáticamente:
+
 - ✅ Registra los 24 agentes especializados
 - ✅ Carga las 82 habilidades profesionales
 - ✅ Activa los 6 comandos slash
@@ -547,24 +569,24 @@ Luego agrega a tu configuración MCP de Qwen Code:
 
 **Herramientas MCP disponibles:**
 
-| Herramienta | Propósito |
-|---|---|
-| `get_mission_status` | Obtener progreso actual de la misión |
-| `validate_project` | Validar estructura y salud del proyecto |
-| `generate_todo` | Generar TODO estructurado desde descripción de misión |
-| `get_agent_roster` | Listar los 24 agentes con capacidades |
-| `context7_resolve_library` | Resolver IDs de bibliotecas Context7 |
-| `check_crud_completeness` | Verificar CRUD completo para todas las entidades |
-| `create_checkpoint` | Crear checkpoint para recuperación de compactación |
+| Herramienta                | Propósito                                             |
+| -------------------------- | ----------------------------------------------------- |
+| `get_mission_status`       | Obtener progreso actual de la misión                  |
+| `validate_project`         | Validar estructura y salud del proyecto               |
+| `generate_todo`            | Generar TODO estructurado desde descripción de misión |
+| `get_agent_roster`         | Listar los 24 agentes con capacidades                 |
+| `context7_resolve_library` | Resolver IDs de bibliotecas Context7                  |
+| `check_crud_completeness`  | Verificar CRUD completo para todas las entidades      |
+| `create_checkpoint`        | Crear checkpoint para recuperación de compactación    |
 
 ### Solución de Problemas
 
-| Problema | Solución |
-|---|---|
-| "Comando no encontrado" tras instalar | Reinicia Qwen Code CLI para recargar extensiones |
-| "Permiso denegado" en comandos npm | Windows: ejecuta terminal como Administrador. Mac/Linux: usa `sudo` si es necesario |
-| ¿Dónde se guardan los archivos de sesión? | Directorio `.qwen-orchestrator/` en tu proyecto |
-| La extensión no carga | Verifica que la ruta en settings.json sea absoluta y correcta |
+| Problema                                  | Solución                                                                            |
+| ----------------------------------------- | ----------------------------------------------------------------------------------- |
+| "Comando no encontrado" tras instalar     | Reinicia Qwen Code CLI para recargar extensiones                                    |
+| "Permiso denegado" en comandos npm        | Windows: ejecuta terminal como Administrador. Mac/Linux: usa `sudo` si es necesario |
+| ¿Dónde se guardan los archivos de sesión? | Directorio `.qwen-orchestrator/` en tu proyecto                                     |
+| La extensión no carga                     | Verifica que la ruta en settings.json sea absoluta y correcta                       |
 
 > ¿Necesitas más ayuda? Abre un issue en [GitHub](https://github.com/Omar-Obando/qwen-orchestrator/issues).
 
@@ -593,16 +615,16 @@ model: qwen-max
 
 ### Modelos recomendados por rol
 
-| Agente | Modelo Recomendado | Por qué |
-|---|---|---|
-| Commander | `qwen-max` o `qwen-plus` | Necesita razonamiento fuerte para orquestación |
-| Planner | `qwen-max` o `qwen-plus` | Necesita análisis fuerte para arquitectura |
-| Frontend Developer | `qwen3-coder-plus` | Optimizado para generación de código |
-| Backend Developer | `qwen3-coder-plus` | Optimizado para generación de código |
-| Reviewer | `qwen-max` | Necesita comprensión profunda para calidad |
-| QA Engineer | `qwen-plus` | Equilibrado para estrategia de pruebas |
-| Code Quality Guard | `qwen-plus` | Rápido para verificaciones de sintaxis/lint |
-| Todos los demás | Modelo del usuario | Sin necesidades especiales |
+| Agente             | Modelo Recomendado       | Por qué                                        |
+| ------------------ | ------------------------ | ---------------------------------------------- |
+| Commander          | `qwen-max` o `qwen-plus` | Necesita razonamiento fuerte para orquestación |
+| Planner            | `qwen-max` o `qwen-plus` | Necesita análisis fuerte para arquitectura     |
+| Frontend Developer | `qwen3-coder-plus`       | Optimizado para generación de código           |
+| Backend Developer  | `qwen3-coder-plus`       | Optimizado para generación de código           |
+| Reviewer           | `qwen-max`               | Necesita comprensión profunda para calidad     |
+| QA Engineer        | `qwen-plus`              | Equilibrado para estrategia de pruebas         |
+| Code Quality Guard | `qwen-plus`              | Rápido para verificaciones de sintaxis/lint    |
+| Todos los demás    | Modelo del usuario       | Sin necesidades especiales                     |
 
 > Cualquier modelo soportado por tu instalación de Qwen Code funciona — incluyendo DeepSeek, OpenAI, Anthropic o modelos locales.
 
@@ -612,12 +634,12 @@ model: qwen-max
 
 Para máxima autonomía, configura tu modo CLI de Qwen Code **antes** de ejecutar `/orchestrator`:
 
-| Modo CLI | Configuración | Qué Sucede |
-|---|---|---|
-| **Auto-Edit** | `auto-edit` | Los agentes editan/escriben libremente. Usuario confirma shell. **Recomendado.** |
-| **YOLO** | `yolo` | Autonomía completa. Sin confirmaciones. Máxima velocidad. |
-| **Default** | `default` | Usuario confirma cada edición. Más lento pero máximo control. |
-| **Plan** | `plan` | Solo planificación — los agentes no pueden escribir archivos. |
+| Modo CLI      | Configuración | Qué Sucede                                                                       |
+| ------------- | ------------- | -------------------------------------------------------------------------------- |
+| **Auto-Edit** | `auto-edit`   | Los agentes editan/escriben libremente. Usuario confirma shell. **Recomendado.** |
+| **YOLO**      | `yolo`        | Autonomía completa. Sin confirmaciones. Máxima velocidad.                        |
+| **Default**   | `default`     | Usuario confirma cada edición. Más lento pero máximo control.                    |
+| **Plan**      | `plan`        | Solo planificación — los agentes no pueden escribir archivos.                    |
 
 > Los agentes intencionalmente **no** tienen campos `approvalMode`, `runConfig` o `background` — tú controlas la autonomía desde la CLI, no la extensión.
 
@@ -651,19 +673,19 @@ CronCreate({ cron: "0 6 * * 1-5", prompt: "Ejecutar auditoría de seguridad", re
 
 ### Matriz Agente-Herramienta
 
-| Herramienta | Cmd | Plan | FE | BE | Rev | QA | PM | Doc | TL | DB | PO | Dev | CQG | Mon | SEO | TSel |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| AskUserQuestion | ✅ | ✅ | ✅ | | | ✅ | ✅ | | | | ✅ | | | | ✅ | ✅ |
-| Agent (sub-agentes) | ✅ | ✅ | | | | | | | | | | | | | | |
-| Skill (cargar hab.) | | | ✅ | | | | | | | | | | | | | |
-| SendMessage | ✅ | ✅ | | | | | | | | | | | | ✅ | | |
-| Monitor (watchdog) | ✅ | | | | | | ✅ | | | | | | ✅ | | | |
-| TaskStop | ✅ | | | | | | | | | | | | ✅ | | | |
-| CronCreate/List | ✅ | | | | | ✅ | ✅ | | | | | | ✅ | | | |
-| ExitPlanMode | | ✅ | | | | | | | | | | | | | | |
-| SaveMemory | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅ | | | ✅ | ✅ | ✅ |
-| Lsp (diagnósticos) | ✅ | ✅ | ✅ | ✅ | ✅ | | | ✅ | ✅ | | | ✅ | ✅ | | | |
-| WebFetch | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅ | ✅ |
+| Herramienta         | Cmd | Plan | FE  | BE  | Rev | QA  | PM  | Doc | TL  | DB  | PO  | Dev | CQG | Mon | SEO | TSel |
+| ------------------- | --- | ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---- |
+| AskUserQuestion     | ✅  | ✅   | ✅  |     |     | ✅  | ✅  |     |     |     | ✅  |     |     |     | ✅  | ✅   |
+| Agent (sub-agentes) | ✅  | ✅   |     |     |     |     |     |     |     |     |     |     |     |     |     |      |
+| Skill (cargar hab.) |     |      | ✅  |     |     |     |     |     |     |     |     |     |     |     |     |      |
+| SendMessage         | ✅  | ✅   |     |     |     |     |     |     |     |     |     |     |     | ✅  |     |      |
+| Monitor (watchdog)  | ✅  |      |     |     |     |     | ✅  |     |     |     |     |     | ✅  |     |     |      |
+| TaskStop            | ✅  |      |     |     |     |     |     |     |     |     |     |     | ✅  |     |     |      |
+| CronCreate/List     | ✅  |      |     |     |     | ✅  | ✅  |     |     |     |     |     | ✅  |     |     |      |
+| ExitPlanMode        |     | ✅   |     |     |     |     |     |     |     |     |     |     |     |     |     |      |
+| SaveMemory          | ✅  | ✅   | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |     | ✅  |     |     | ✅  | ✅  | ✅   |
+| Lsp (diagnósticos)  | ✅  | ✅   | ✅  | ✅  | ✅  |     |     | ✅  | ✅  |     |     | ✅  | ✅  |     |     |      |
+| WebFetch            | ✅  | ✅   | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |     | ✅  | ✅   |
 
 ---
 
@@ -695,6 +717,7 @@ Para instalar, agrega a tu configuración MCP de Qwen Code:
 El servidor `@modelcontextprotocol/server-memory` proporciona un **Knowledge Graph** que persiste entre sesiones.
 
 **Qué almacena:**
+
 - **Decisiones del proyecto**: BD elegida, framework, patrones de arquitectura
 - **Preferencias del usuario**: Framework CSS, convenciones de nombres, modo dark/light
 - **Registros de arquitectura**: Jerarquía de componentes, convenciones de API, destinos de despliegue
@@ -717,11 +740,11 @@ El MCP Memory Server está configurado en `qwen-extension.json` y se ejecuta aut
 
 El Frontend Developer puede aprovechar repositorios externos de UI/UX:
 
-| Habilidad | Instalación | Qué Proporciona |
-|---|---|---|
-| **UI UX Pro Max** | `npx uipro-cli init` | 161 reglas de razonamiento, 67 estilos UI, generador de design system |
-| **Designer Skills** | `/plugin marketplace add Owl-Listener/designer-skills` | 87 habilidades, 27 comandos en 8 plugins de diseño |
-| **Taste Skill** | `npx skills add https://github.com/Leonxlnx/taste-skill` | Framework frontend anti-slop — layout premium, tipografía, motion, espaciado |
+| Habilidad           | Instalación                                              | Qué Proporciona                                                              |
+| ------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **UI UX Pro Max**   | `npx uipro-cli init`                                     | 161 reglas de razonamiento, 67 estilos UI, generador de design system        |
+| **Designer Skills** | `/plugin marketplace add Owl-Listener/designer-skills`   | 87 habilidades, 27 comandos en 8 plugins de diseño                           |
+| **Taste Skill**     | `npx skills add https://github.com/Leonxlnx/taste-skill` | Framework frontend anti-slop — layout premium, tipografía, motion, espaciado |
 
 ---
 
@@ -729,16 +752,16 @@ El Frontend Developer puede aprovechar repositorios externos de UI/UX:
 
 Cada línea de código producida por el orquestador cumple:
 
-| Estándar | Requisito |
-|---|---|
-| Complejidad | ≤ 10 ciclomática por función |
-| Tamaño | ≤ 40 líneas por función, ≤ 4 parámetros |
-| Tipos | Tipos estrictos, sin `any` |
-| Testing | TDD obligatorio, 80%+ cobertura |
-| Seguridad | Cumplimiento OWASP Top 10 |
-| SQL | Keywords en mayúsculas, una columna por línea, JOINs indentados, prevención N+1 |
-| Revisión | Revisión multidimensional antes de merge |
-| Lenguajes | No solo TypeScript — se adapta al stack del proyecto |
+| Estándar    | Requisito                                                                       |
+| ----------- | ------------------------------------------------------------------------------- |
+| Complejidad | ≤ 10 ciclomática por función                                                    |
+| Tamaño      | ≤ 40 líneas por función, ≤ 4 parámetros                                         |
+| Tipos       | Tipos estrictos, sin `any`                                                      |
+| Testing     | TDD obligatorio, 80%+ cobertura                                                 |
+| Seguridad   | Cumplimiento OWASP Top 10                                                       |
+| SQL         | Keywords en mayúsculas, una columna por línea, JOINs indentados, prevención N+1 |
+| Revisión    | Revisión multidimensional antes de merge                                        |
+| Lenguajes   | No solo TypeScript — se adapta al stack del proyecto                            |
 
 ---
 
@@ -833,17 +856,17 @@ Una vez instalado, prueba estos comandos en tu CLI de Qwen Code:
 
 ## 📚 Documentación
 
-| Documento | Descripción |
-|---|---|
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Arquitectura detallada y decisiones de diseño |
-| [QUICK-START.md](QUICK-START.md) | Guía de inicio rápido |
-| [INSTALLATION.md](INSTALLATION.md) | Instrucciones completas de instalación |
-| [HOOKS-BEST-PRACTICES.md](HOOKS-BEST-PRACTICES.md) | Guía de integración con hooks de Qwen Code |
-| [SUBAGENT-MONITORING.md](SUBAGENT-MONITORING.md) | Monitoreo y ciclo de vida de sub-agentes |
-| [QWEN_CODE_PATTERNS.md](../QWEN_CODE_PATTERNS.md) | Servidores MCP, hooks y gestión de sesiones |
-| [SECURITY.md](../SECURITY.md) | Política de seguridad |
-| [CHANGELOG.md](../CHANGELOG.md) | Historial de releases |
-| [AGENTS.md](../AGENTS.md) | Reglas operacionales de agentes |
+| Documento                                          | Descripción                                   |
+| -------------------------------------------------- | --------------------------------------------- |
+| [ARCHITECTURE.md](ARCHITECTURE.md)                 | Arquitectura detallada y decisiones de diseño |
+| [QUICK-START.md](QUICK-START.md)                   | Guía de inicio rápido                         |
+| [INSTALLATION.md](INSTALLATION.md)                 | Instrucciones completas de instalación        |
+| [HOOKS-BEST-PRACTICES.md](HOOKS-BEST-PRACTICES.md) | Guía de integración con hooks de Qwen Code    |
+| [SUBAGENT-MONITORING.md](SUBAGENT-MONITORING.md)   | Monitoreo y ciclo de vida de sub-agentes      |
+| [QWEN_CODE_PATTERNS.md](../QWEN_CODE_PATTERNS.md)  | Servidores MCP, hooks y gestión de sesiones   |
+| [SECURITY.md](../SECURITY.md)                      | Política de seguridad                         |
+| [CHANGELOG.md](../CHANGELOG.md)                    | Historial de releases                         |
+| [AGENTS.md](../AGENTS.md)                          | Reglas operacionales de agentes               |
 
 ---
 

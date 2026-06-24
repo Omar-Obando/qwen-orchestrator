@@ -122,231 +122,252 @@ qwen extensions install https://github.com/Omar-Obando/qwen-orchestrator
 
 ## 🌟 核心特性
 
-| 特性 | 描述 |
-|---|---|
-| **24 个专业 Agent** | Commander、Planner、前后端开发者、Reviewer、QA、PM、DevOps、安全等 |
-| **82 项专业技能** | TDD、安全审计、反模式检测、设计系统、SQL、Docker、Kubernetes 等 |
-| **6 个斜杠命令** | `/orchestrator`、`/orchestrate`、`/plan`、`/review`、`/test`、`/deploy` |
-| **先问后做** | Agent 在编写代码前通过 `AskUserQuestion` 澄清需求 |
-| **并行执行** | Commander 将任务同时委派给多个 Agent |
-| **持久化记忆** | Knowledge Graph 通过 MCP Memory Server 跨会话存储决策 |
-| **零模型锁定** | 支持 Qwen、DeepSeek、OpenAI、Anthropic 或本地模型 |
-| **多语言** | TypeScript、PHP（Laravel）、Python（Django）、Dart（Flutter）、Rust、Go、Java、C# |
-| **循环保护** | Monitor Agent 自动检测并中断 LLM 无限循环 |
-| **质量门控** | Reviewer 是唯一可以批准任务的 Agent |
-| **安全优先** | 通过安全审计技能和 Reviewer Agent 实现 OWASP Top 10 合规 |
-| **无模拟代码** | Agent 被禁止编写桩代码或占位符 |
-| **压缩恢复** | 状态持久化到 `.qwen-orchestrator/` — 上下文窗口压缩后仍可恢复 |
+| 特性                | 描述                                                                              |
+| ------------------- | --------------------------------------------------------------------------------- |
+| **24 个专业 Agent** | Commander、Planner、前后端开发者、Reviewer、QA、PM、DevOps、安全等                |
+| **82 项专业技能**   | TDD、安全审计、反模式检测、设计系统、SQL、Docker、Kubernetes 等                   |
+| **6 个斜杠命令**    | `/orchestrator`、`/orchestrate`、`/plan`、`/review`、`/test`、`/deploy`           |
+| **先问后做**        | Agent 在编写代码前通过 `AskUserQuestion` 澄清需求                                 |
+| **并行执行**        | Commander 将任务同时委派给多个 Agent                                              |
+| **持久化记忆**      | Knowledge Graph 通过 MCP Memory Server 跨会话存储决策                             |
+| **零模型锁定**      | 支持 Qwen、DeepSeek、OpenAI、Anthropic 或本地模型                                 |
+| **多语言**          | TypeScript、PHP（Laravel）、Python（Django）、Dart（Flutter）、Rust、Go、Java、C# |
+| **循环保护**        | Monitor Agent 自动检测并中断 LLM 无限循环                                         |
+| **质量门控**        | Reviewer 是唯一可以批准任务的 Agent                                               |
+| **安全优先**        | 通过安全审计技能和 Reviewer Agent 实现 OWASP Top 10 合规                          |
+| **无模拟代码**      | Agent 被禁止编写桩代码或占位符                                                    |
+| **压缩恢复**        | 状态持久化到 `.qwen-orchestrator/` — 上下文窗口压缩后仍可恢复                     |
 
 ---
 
 ## 👥 Agent 团队（24 个专业 Agent）
 
-| # | Agent | 角色 | 超能力 |
-|---|---|---|---|
-| 1 | **Commander** 🔴 | 编排大师 | 并行委派，不达目的不罢休 |
-| 2 | **Planner** 🔵 | 研究与架构 | 文件级规划，设计决策 |
-| 3 | **Frontend Developer** 🔵 | UI/UX 实现 | 组件化、响应式、无障碍、快速 |
-| 4 | **Backend Developer** 🟢 | 服务端逻辑 | API、认证、缓存、数据库操作 |
-| 5 | **Reviewer** 🟣 | 质量把关者 | 唯一可以批准任务的 Agent |
-| 6 | **QA Engineer** 🟠 | 质量保证 | 测试策略，边缘案例发现 |
-| 7 | **Project Manager** 🔵 | 交付管理 | 范围控制，风险评估 |
-| 8 | **Doc Researcher** 🟣 | Context7 知识 | 实时文档查询，防幻觉 |
-| 9 | **Tech Lead** 🟡 | 标准与指导 | 模块完整性，CRUD 验证 |
-| 10 | **Database Architect** 🟢 | 数据层专家 | 架构设计，迁移安全 |
-| 11 | **Product Owner** 🟡 | 业务价值 | 用户故事，验收标准 |
-| 12 | **DevOps Engineer** 🔘 | 基础设施 | CI/CD、Docker、部署自动化 |
-| 13 | **Code Quality Guard** 🌹 | 质量哨兵 | 语法检查、lint、类型检查 |
-| 14 | **Monitor** 🛡️ | 循环守护者 | 检测/中断 LLM 循环，运行时监控 |
-| 15 | **SEO Specialist** 🔵 | SEO 与 Web 性能 | Meta 标签、结构化数据、Core Web Vitals |
-| 16 | **Tech Selector** 🟣 | 技术顾问 | 框架/数据库选择与利弊分析 |
-| 17 | **Cybersecurity Eng.** 🔴 | 应用安全 | OWASP、威胁建模、依赖审计 |
-| 18 | **Performance Eng.** ⚡ | 速度与扩展 | 性能分析、查询优化、负载测试 |
-| 19 | **Release Manager** 🏷️ | 发布与版本管理 | SemVer、变更日志、回滚规划 |
-| 20 | **API Specialist** 🔗 | API 与集成 | REST/GraphQL、版本管理、第三方 API |
-| 21 | **Mobile Engineer** 📱 | 移动应用 | Flutter、React Native、离线优先 |
-| 22 | **Localization Eng.** 🌐 | i18n/L10n | 多语言、RTL、文化适配 |
-| 23 | **Documenter** 📄 | 技术写作 | README、API 文档、ADR、知识库 |
-| 24 | **Skill Creator** 🛠️ | 技能创作 | 技能创建、文档、测试 |
+| #   | Agent                     | 角色            | 超能力                                 |
+| --- | ------------------------- | --------------- | -------------------------------------- |
+| 1   | **Commander** 🔴          | 编排大师        | 并行委派，不达目的不罢休               |
+| 2   | **Planner** 🔵            | 研究与架构      | 文件级规划，设计决策                   |
+| 3   | **Frontend Developer** 🔵 | UI/UX 实现      | 组件化、响应式、无障碍、快速           |
+| 4   | **Backend Developer** 🟢  | 服务端逻辑      | API、认证、缓存、数据库操作            |
+| 5   | **Reviewer** 🟣           | 质量把关者      | 唯一可以批准任务的 Agent               |
+| 6   | **QA Engineer** 🟠        | 质量保证        | 测试策略，边缘案例发现                 |
+| 7   | **Project Manager** 🔵    | 交付管理        | 范围控制，风险评估                     |
+| 8   | **Doc Researcher** 🟣     | Context7 知识   | 实时文档查询，防幻觉                   |
+| 9   | **Tech Lead** 🟡          | 标准与指导      | 模块完整性，CRUD 验证                  |
+| 10  | **Database Architect** 🟢 | 数据层专家      | 架构设计，迁移安全                     |
+| 11  | **Product Owner** 🟡      | 业务价值        | 用户故事，验收标准                     |
+| 12  | **DevOps Engineer** 🔘    | 基础设施        | CI/CD、Docker、部署自动化              |
+| 13  | **Code Quality Guard** 🌹 | 质量哨兵        | 语法检查、lint、类型检查               |
+| 14  | **Monitor** 🛡️            | 循环守护者      | 检测/中断 LLM 循环，运行时监控         |
+| 15  | **SEO Specialist** 🔵     | SEO 与 Web 性能 | Meta 标签、结构化数据、Core Web Vitals |
+| 16  | **Tech Selector** 🟣      | 技术顾问        | 框架/数据库选择与利弊分析              |
+| 17  | **Cybersecurity Eng.** 🔴 | 应用安全        | OWASP、威胁建模、依赖审计              |
+| 18  | **Performance Eng.** ⚡   | 速度与扩展      | 性能分析、查询优化、负载测试           |
+| 19  | **Release Manager** 🏷️    | 发布与版本管理  | SemVer、变更日志、回滚规划             |
+| 20  | **API Specialist** 🔗     | API 与集成      | REST/GraphQL、版本管理、第三方 API     |
+| 21  | **Mobile Engineer** 📱    | 移动应用        | Flutter、React Native、离线优先        |
+| 22  | **Localization Eng.** 🌐  | i18n/L10n       | 多语言、RTL、文化适配                  |
+| 23  | **Documenter** 📄         | 技术写作        | README、API 文档、ADR、知识库          |
+| 24  | **Skill Creator** 🛠️      | 技能创作        | 技能创建、文档、测试                   |
 
 ---
 
 ## 🛠️ 技能（82 项专业技能）
 
 ### 容器化与编排
-| 技能 | 用途 |
-|---|---|
-| Docker Containerization | 多阶段构建、安全加固、镜像优化、Docker Compose |
+
+| 技能                     | 用途                                            |
+| ------------------------ | ----------------------------------------------- |
+| Docker Containerization  | 多阶段构建、安全加固、镜像优化、Docker Compose  |
 | Kubernetes Orchestration | Deployments、HPA、Service Mesh、Ingress、GitOps |
 
 ### 基础设施即代码
-| 技能 | 用途 |
-|---|---|
+
+| 技能          | 用途                                               |
+| ------------- | -------------------------------------------------- |
 | Terraform IaC | 模块、状态管理、工作空间、Sentinel 策略、Terratest |
 
 ### CI/CD 自动化
-| 技能 | 用途 |
-|---|---|
+
+| 技能                 | 用途                                            |
+| -------------------- | ----------------------------------------------- |
 | GitHub Actions CI/CD | Workflows、矩阵、环境、缓存、复合 Actions、安全 |
 
 ### 缓存与性能
-| 技能 | 用途 |
-|---|---|
+
+| 技能          | 用途                                              |
+| ------------- | ------------------------------------------------- |
 | Redis Caching | 数据结构、缓存模式、会话管理、发布/订阅、Lua 脚本 |
 
 ### API 设计
-| 技能 | 用途 |
-|---|---|
+
+| 技能               | 用途                                                        |
+| ------------------ | ----------------------------------------------------------- |
 | GraphQL API Design | Schema 设计、Resolvers、DataLoader、分页、Apollo Federation |
 
 ### 多平台
-| 技能 | 用途 |
-|---|---|
+
+| 技能               | 用途                                         |
+| ------------------ | -------------------------------------------- |
 | Multi-Platform Dev | 跨平台命令、路径处理、行尾符、权限、包管理器 |
 
 ### LLM 与 Agent
-| 技能 | 用途 |
-|---|---|
-| LangGraph | Agent 工作流、状态管理、多 Agent 系统 |
-| LangChain | LLM 链、Agent、工具、记忆、RAG |
-| Qwen Agent | Qwen 专用 Agent 开发与集成 |
-| LLM Integrations | 多提供商 LLM 集成 |
+
+| 技能             | 用途                                  |
+| ---------------- | ------------------------------------- |
+| LangGraph        | Agent 工作流、状态管理、多 Agent 系统 |
+| LangChain        | LLM 链、Agent、工具、记忆、RAG        |
+| Qwen Agent       | Qwen 专用 Agent 开发与集成            |
+| LLM Integrations | 多提供商 LLM 集成                     |
 
 ### 云平台
-| 技能 | 用途 |
-|---|---|
-| Vercel Deployment | Serverless 函数、边缘计算、Next.js 优化 |
-| Cloudflare Pages | Edge Functions、全球分发、缓存 |
-| Cloudflare Workers | 边缘计算、请求/响应处理 |
-| AWS Serverless | Lambda、API Gateway、SAM、事件驱动架构 |
+
+| 技能               | 用途                                    |
+| ------------------ | --------------------------------------- |
+| Vercel Deployment  | Serverless 函数、边缘计算、Next.js 优化 |
+| Cloudflare Pages   | Edge Functions、全球分发、缓存          |
+| Cloudflare Workers | 边缘计算、请求/响应处理                 |
+| AWS Serverless     | Lambda、API Gateway、SAM、事件驱动架构  |
 
 ### SEO
-| 技能 | 用途 |
-|---|---|
-| SEO LLM | ChatGPT/Perplexity/Gemini/Claude/Bing AI/Qwen 优化 |
-| Technical SEO | 网站速度、移动优化、结构化数据、Core Web Vitals |
+
+| 技能          | 用途                                               |
+| ------------- | -------------------------------------------------- |
+| SEO LLM       | ChatGPT/Perplexity/Gemini/Claude/Bing AI/Qwen 优化 |
+| Technical SEO | 网站速度、移动优化、结构化数据、Core Web Vitals    |
 
 ### 领导力与架构
-| 技能 | 用途 |
-|---|---|
-| Strategic Leadership | 团队管理、决策、利益相关者对齐 |
-| Requirements Engineering | 用例、用户故事、验收标准 |
+
+| 技能                       | 用途                                 |
+| -------------------------- | ------------------------------------ |
+| Strategic Leadership       | 团队管理、决策、利益相关者对齐       |
+| Requirements Engineering   | 用例、用户故事、验收标准             |
 | Microservices Architecture | 领域驱动设计、服务边界、事件驱动通信 |
-| Technology Evaluation | 框架/数据库选择、利弊分析 |
+| Technology Evaluation      | 框架/数据库选择、利弊分析            |
 
 ### 产品与团队
-| 技能 | 用途 |
-|---|---|
+
+| 技能          | 用途                                |
+| ------------- | ----------------------------------- |
 | Product Owner | 待办事项管理、用户故事、Sprint 规划 |
-| Scrum Master | 仪式引导、团队辅导、障碍消除 |
+| Scrum Master  | 仪式引导、团队辅导、障碍消除        |
 
 ### 软件开发
-| 技能 | 用途 |
-|---|---|
-| Testing Strategy | 测试金字塔、覆盖率目标、自动化 |
-| Security Auditor | OWASP Top 10、漏洞评估、合规 |
-| DevOps Pipeline | CI/CD 设计、部署策略、IaC |
+
+| 技能                  | 用途                              |
+| --------------------- | --------------------------------- |
+| Testing Strategy      | 测试金字塔、覆盖率目标、自动化    |
+| Security Auditor      | OWASP Top 10、漏洞评估、合规      |
+| DevOps Pipeline       | CI/CD 设计、部署策略、IaC         |
 | Architecture Patterns | 分层、DDD、微服务、事件驱动、CQRS |
-| Documentation | README、API 文档、ADR、知识库 |
-| Debugging | 系统化调查、假设驱动调试 |
-| Refactoring | 代码异味检测、安全转换 |
+| Documentation         | README、API 文档、ADR、知识库     |
+| Debugging             | 系统化调查、假设驱动调试          |
+| Refactoring           | 代码异味检测、安全转换            |
 
 ### 安全与质量
-| 技能 | 用途 |
-|---|---|
-| Security Code Review | OWASP Top 10、漏洞模式、安全编码 |
-| Threat Modeling | STRIDE、DREAD、攻击树、威胁识别 |
-| Test Automation | 框架设计、页面对象模式、并行执行 |
-| Load Testing | 负载、压力、耐久、峰值测试 |
-| Code Review | OWASP + SOLID + Clean Code 系统审查 |
+
+| 技能                 | 用途                                |
+| -------------------- | ----------------------------------- |
+| Security Code Review | OWASP Top 10、漏洞模式、安全编码    |
+| Threat Modeling      | STRIDE、DREAD、攻击树、威胁识别     |
+| Test Automation      | 框架设计、页面对象模式、并行执行    |
+| Load Testing         | 负载、压力、耐久、峰值测试          |
+| Code Review          | OWASP + SOLID + Clean Code 系统审查 |
 
 ### 数据库与数据
-| 技能 | 用途 |
-|---|---|
-| Database Design | 架构设计、关系、索引策略 |
-| Database Security | 加密、访问控制、审计日志、合规 |
-| SQL Best Practices | 查询优化、索引、N+1 防护 |
-| SQL Query Assistant | 查询辅助、最佳实践、优化 |
+
+| 技能                | 用途                           |
+| ------------------- | ------------------------------ |
+| Database Design     | 架构设计、关系、索引策略       |
+| Database Security   | 加密、访问控制、审计日志、合规 |
+| SQL Best Practices  | 查询优化、索引、N+1 防护       |
+| SQL Query Assistant | 查询辅助、最佳实践、优化       |
 
 ### 前端与移动端
-| 技能 | 用途 |
-|---|---|
-| Accessibility | WCAG 2.1 AA、语义 HTML、ARIA、键盘导航 |
-| Design System | 调色板、排版、间距、组件架构 |
-| Website Redesign | 基于 URL/截图的重新设计、分析工作流 |
-| Flutter Web | 响应式布局、自适应组件、状态管理 |
-| Mobile Performance | 应用优化、启动时间、内存使用 |
-| Offline-First | 本地存储、同步、冲突解决 |
+
+| 技能               | 用途                                   |
+| ------------------ | -------------------------------------- |
+| Accessibility      | WCAG 2.1 AA、语义 HTML、ARIA、键盘导航 |
+| Design System      | 调色板、排版、间距、组件架构           |
+| Website Redesign   | 基于 URL/截图的重新设计、分析工作流    |
+| Flutter Web        | 响应式布局、自适应组件、状态管理       |
+| Mobile Performance | 应用优化、启动时间、内存使用           |
+| Offline-First      | 本地存储、同步、冲突解决               |
 
 ### 后端与 API
-| 技能 | 用途 |
-|---|---|
-| API Design | RESTful 标准、响应封装、分页 |
-| API Documentation | OpenAPI 规范、Swagger、GraphQL Schema |
-| Third-Party Integration | Stripe、PayPal、AWS、Google、Twilio |
-| Laravel | Eloquent ORM、Form Requests、队列、API 模式 |
-| NestJS | 模块、Guards、Pipes、Interceptors、请求生命周期 |
-| Supabase | RLS 策略、Edge Functions、认证、自动生成 API |
+
+| 技能                    | 用途                                            |
+| ----------------------- | ----------------------------------------------- |
+| API Design              | RESTful 标准、响应封装、分页                    |
+| API Documentation       | OpenAPI 规范、Swagger、GraphQL Schema           |
+| Third-Party Integration | Stripe、PayPal、AWS、Google、Twilio             |
+| Laravel                 | Eloquent ORM、Form Requests、队列、API 模式     |
+| NestJS                  | 模块、Guards、Pipes、Interceptors、请求生命周期 |
+| Supabase                | RLS 策略、Edge Functions、认证、自动生成 API    |
 
 ### DevOps 与基础设施
-| 技能 | 用途 |
-|---|---|
+
+| 技能              | 用途                                  |
+| ----------------- | ------------------------------------- |
 | Disaster Recovery | 备份策略、恢复流程、故障转移、RTO/RPO |
-| Release Workflow | SemVer、变更日志、预发布、生产、回滚 |
-| Git Workflow | 分支策略、提交规范、PR 模板 |
-| Deployment | CI/CD、Docker、发布管理 |
+| Release Workflow  | SemVer、变更日志、预发布、生产、回滚  |
+| Git Workflow      | 分支策略、提交规范、PR 模板           |
+| Deployment        | CI/CD、Docker、发布管理               |
 
 ### LLM 专项
-| 技能 | 用途 |
-|---|---|
-| Anti-Hallucination | 来源验证、基于证据的声明、验证 |
-| Loop Detection | LLM 循环检测、工具调用循环、逃逸路径 |
-| Context7 Docs | 通过 Context7 MCP 实时文档查询 |
-| Compaction Recovery | 会话压缩期间的上下文保持 |
+
+| 技能                | 用途                                 |
+| ------------------- | ------------------------------------ |
+| Anti-Hallucination  | 来源验证、基于证据的声明、验证       |
+| Loop Detection      | LLM 循环检测、工具调用循环、逃逸路径 |
+| Context7 Docs       | 通过 Context7 MCP 实时文档查询       |
+| Compaction Recovery | 会话压缩期间的上下文保持             |
 
 ### 项目与团队
-| 技能 | 用途 |
-|---|---|
-| Agile Project Management | Scrum 仪式、待办事项梳理、Sprint 规划 |
-| User Story Mapping | 故事映射、史诗拆分、时间线可视化 |
-| CRUD Completeness | Create、Read、Update、Delete 模式、验证 |
-| Project Conventions | 项目结构、编码标准、约定 |
-| ERP/SaaS Organization | 大型项目组织、模块结构 |
+
+| 技能                     | 用途                                    |
+| ------------------------ | --------------------------------------- |
+| Agile Project Management | Scrum 仪式、待办事项梳理、Sprint 规划   |
+| User Story Mapping       | 故事映射、史诗拆分、时间线可视化        |
+| CRUD Completeness        | Create、Read、Update、Delete 模式、验证 |
+| Project Conventions      | 项目结构、编码标准、约定                |
+| ERP/SaaS Organization    | 大型项目组织、模块结构                  |
 
 ### 本地化
-| 技能 | 用途 |
-|---|---|
-| Translation Workflow | 翻译记忆、机器翻译、TMS |
-| Multi-Language | i18n、l10n 模式、RTL 支持 |
+
+| 技能                 | 用途                      |
+| -------------------- | ------------------------- |
+| Translation Workflow | 翻译记忆、机器翻译、TMS   |
+| Multi-Language       | i18n、l10n 模式、RTL 支持 |
 
 ### 其他技能
-| 技能 | 用途 |
-|---|---|
-| Domain-Driven | DDD 模式、限界上下文、聚合、值对象 |
-| Performance | 性能分析、优化、基准测试 |
-| TDD Workflow | 测试驱动开发（Red/Green/Refactor） |
-| Security Audit | OWASP Top 10 漏洞检测 |
-| Agent Task Coordinator | Agent 协调、MCP 协议 |
-| Skill Creation | 技能创作、文档、测试 |
-| Multi-Channel Funnels | 营销漏斗、转化优化 |
-| Architecture | 系统设计、模式、权衡 |
-| Code Quality | Linting、格式化、类型检查 |
-| Monitoring | 可观测性、日志、告警 |
-| Compliance | GDPR、HIPAA、SOC 2、PCI-DSS |
-| Testing | 单元、集成、E2E 测试 |
+
+| 技能                   | 用途                               |
+| ---------------------- | ---------------------------------- |
+| Domain-Driven          | DDD 模式、限界上下文、聚合、值对象 |
+| Performance            | 性能分析、优化、基准测试           |
+| TDD Workflow           | 测试驱动开发（Red/Green/Refactor） |
+| Security Audit         | OWASP Top 10 漏洞检测              |
+| Agent Task Coordinator | Agent 协调、MCP 协议               |
+| Skill Creation         | 技能创作、文档、测试               |
+| Multi-Channel Funnels  | 营销漏斗、转化优化                 |
+| Architecture           | 系统设计、模式、权衡               |
+| Code Quality           | Linting、格式化、类型检查          |
+| Monitoring             | 可观测性、日志、告警               |
+| Compliance             | GDPR、HIPAA、SOC 2、PCI-DSS        |
+| Testing                | 单元、集成、E2E 测试               |
 
 ---
 
 ## ⌨️ 命令（6 个斜杠命令）
 
-| 命令 | 描述 |
-|---|---|
+| 命令                          | 描述                                        |
+| ----------------------------- | ------------------------------------------- |
 | **`/orchestrator [目标]`** ⭐ | **主入口** — 完整团队与清晰度协议（先提问） |
-| `/orchestrate [任务]` | 直接任务执行 — 不提问，直接构建 |
-| `/plan [功能]` | 仅创建实施计划 — 调研 + 架构 |
-| `/review [目标]` | 全面代码审查 — 安全、质量、模式 |
-| `/test [目标]` | 执行并分析测试套件 — 覆盖率、漏洞、边缘案例 |
-| `/deploy [目标]` | 部署与前后验证 — CI/CD、回滚计划 |
+| `/orchestrate [任务]`         | 直接任务执行 — 不提问，直接构建             |
+| `/plan [功能]`                | 仅创建实施计划 — 调研 + 架构                |
+| `/review [目标]`              | 全面代码审查 — 安全、质量、模式             |
+| `/test [目标]`                | 执行并分析测试套件 — 覆盖率、漏洞、边缘案例 |
+| `/deploy [目标]`              | 部署与前后验证 — CI/CD、回滚计划            |
 
 > **何时使用 `/orchestrator` vs `/orchestrate`？**
 >
@@ -431,15 +452,15 @@ qwen extensions install https://github.com/Omar-Obando/qwen-orchestrator
 
 **会提问的 Agent：**
 
-| Agent | 何时提问 |
-|---|---|
-| Commander | 每次任务前 — 范围、优先级、约束 |
-| Planner | 架构决策前 — 技术栈、模式 |
-| Product Owner | 定义用户故事时 — 验收标准、边缘案例 |
-| QA Engineer | 设计测试策略时 — 关键路径、阈值 |
-| Project Manager | 范围界定时 — 截止日期、风险容忍度、资源 |
-| Tech Selector | 技术栈未指定时 — 展示框架、数据库、语言及利弊 |
-| SEO Specialist | 构建 Web 项目时 — 目标受众、内容类型、地区 |
+| Agent           | 何时提问                                      |
+| --------------- | --------------------------------------------- |
+| Commander       | 每次任务前 — 范围、优先级、约束               |
+| Planner         | 架构决策前 — 技术栈、模式                     |
+| Product Owner   | 定义用户故事时 — 验收标准、边缘案例           |
+| QA Engineer     | 设计测试策略时 — 关键路径、阈值               |
+| Project Manager | 范围界定时 — 截止日期、风险容忍度、资源       |
+| Tech Selector   | 技术栈未指定时 — 展示框架、数据库、语言及利弊 |
+| SEO Specialist  | 构建 Web 项目时 — 目标受众、内容类型、地区    |
 
 > **提示**：你可以始终在一开始就提供完整细节以跳过提问。Agent 仅在检测到歧义时才会提问。
 
@@ -478,6 +499,7 @@ qwen extensions install https://github.com/Omar-Obando/qwen-orchestrator
 ```
 
 扩展会自动：
+
 - ✅ 注册所有 24 个专业 Agent
 - ✅ 加载所有 82 项专业技能
 - ✅ 激活所有 6 个斜杠命令
@@ -523,11 +545,11 @@ npm run build
 
 ### 故障排除
 
-| 问题 | 解决方案 |
-|---|---|
-| 安装后"命令未找到" | 重启 Qwen Code CLI 以重新加载扩展 |
+| 问题                 | 解决方案                                                |
+| -------------------- | ------------------------------------------------------- |
+| 安装后"命令未找到"   | 重启 Qwen Code CLI 以重新加载扩展                       |
 | npm 命令"权限被拒绝" | Windows：以管理员运行终端。Mac/Linux：必要时使用 `sudo` |
-| 会话文件存储在哪？ | 项目中的 `.qwen-orchestrator/` 目录 |
+| 会话文件存储在哪？   | 项目中的 `.qwen-orchestrator/` 目录                     |
 
 ---
 
@@ -552,16 +574,16 @@ model: qwen-max
 
 ### 按角色推荐模型
 
-| Agent | 推荐模型 | 原因 |
-|---|---|---|
-| Commander | `qwen-max` 或 `qwen-plus` | 需要强推理能力进行编排 |
-| Planner | `qwen-max` 或 `qwen-plus` | 需要强分析能力进行架构设计 |
-| Frontend Developer | `qwen3-coder-plus` | 针对代码生成优化 |
-| Backend Developer | `qwen3-coder-plus` | 针对代码生成优化 |
-| Reviewer | `qwen-max` | 需要深度理解进行质量把关 |
-| QA Engineer | `qwen-plus` | 平衡的测试策略能力 |
-| Code Quality Guard | `qwen-plus` | 语法/lint 检查速度快 |
-| 其他所有 | 用户默认 | 无特殊需求 |
+| Agent              | 推荐模型                  | 原因                       |
+| ------------------ | ------------------------- | -------------------------- |
+| Commander          | `qwen-max` 或 `qwen-plus` | 需要强推理能力进行编排     |
+| Planner            | `qwen-max` 或 `qwen-plus` | 需要强分析能力进行架构设计 |
+| Frontend Developer | `qwen3-coder-plus`        | 针对代码生成优化           |
+| Backend Developer  | `qwen3-coder-plus`        | 针对代码生成优化           |
+| Reviewer           | `qwen-max`                | 需要深度理解进行质量把关   |
+| QA Engineer        | `qwen-plus`               | 平衡的测试策略能力         |
+| Code Quality Guard | `qwen-plus`               | 语法/lint 检查速度快       |
+| 其他所有           | 用户默认                  | 无特殊需求                 |
 
 ---
 
@@ -616,11 +638,11 @@ CronCreate({ cron: "0 6 * * 1-5", prompt: "运行安全审计", recurring: true 
 
 ### UI/UX 技能（推荐）
 
-| 技能 | 安装命令 | 提供内容 |
-|---|---|---|
-| **UI UX Pro Max** | `npx uipro-cli init` | 161 推理规则、67 UI 风格、设计系统生成器 |
-| **Designer Skills** | `/plugin marketplace add Owl-Listener/designer-skills` | 87 技能、8 个设计插件 |
-| **Taste Skill** | `npx skills add https://github.com/Leonxlnx/taste-skill` | 高级前端框架 |
+| 技能                | 安装命令                                                 | 提供内容                                 |
+| ------------------- | -------------------------------------------------------- | ---------------------------------------- |
+| **UI UX Pro Max**   | `npx uipro-cli init`                                     | 161 推理规则、67 UI 风格、设计系统生成器 |
+| **Designer Skills** | `/plugin marketplace add Owl-Listener/designer-skills`   | 87 技能、8 个设计插件                    |
+| **Taste Skill**     | `npx skills add https://github.com/Leonxlnx/taste-skill` | 高级前端框架                             |
 
 ---
 
@@ -628,16 +650,16 @@ CronCreate({ cron: "0 6 * * 1-5", prompt: "运行安全审计", recurring: true 
 
 编排器生成的每行代码都满足：
 
-| 标准 | 要求 |
-|---|---|
-| 复杂度 | 每个函数 ≤ 10 圈复杂度 |
-| 大小 | 每个函数 ≤ 40 行，≤ 4 个参数 |
-| 类型 | 严格类型，无 `any` |
-| 测试 | TDD 强制，80%+ 覆盖率 |
-| 安全 | OWASP Top 10 合规 |
-| SQL | 大写关键词、每行一列、缩进 JOIN、N+1 防护 |
-| 审查 | 合并前多维代码审查 |
-| 语言 | 不仅限 TypeScript — 适配项目技术栈 |
+| 标准   | 要求                                      |
+| ------ | ----------------------------------------- |
+| 复杂度 | 每个函数 ≤ 10 圈复杂度                    |
+| 大小   | 每个函数 ≤ 40 行，≤ 4 个参数              |
+| 类型   | 严格类型，无 `any`                        |
+| 测试   | TDD 强制，80%+ 覆盖率                     |
+| 安全   | OWASP Top 10 合规                         |
+| SQL    | 大写关键词、每行一列、缩进 JOIN、N+1 防护 |
+| 审查   | 合并前多维代码审查                        |
+| 语言   | 不仅限 TypeScript — 适配项目技术栈        |
 
 ---
 
@@ -675,12 +697,12 @@ qwen-orchestrator/
 
 ## 📚 文档
 
-| 文档 | 描述 |
-|---|---|
+| 文档                               | 描述               |
+| ---------------------------------- | ------------------ |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | 详细架构与设计决策 |
-| [QUICK-START.md](QUICK-START.md) | 快速入门指南 |
-| [INSTALLATION.md](INSTALLATION.md) | 完整安装说明 |
-| [English README](../README.md) | 完整英文文档 |
+| [QUICK-START.md](QUICK-START.md)   | 快速入门指南       |
+| [INSTALLATION.md](INSTALLATION.md) | 完整安装说明       |
+| [English README](../README.md)     | 完整英文文档       |
 
 ---
 

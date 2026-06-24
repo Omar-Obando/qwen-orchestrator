@@ -109,164 +109,178 @@ qwen extensions install https://github.com/Omar-Obando/qwen-orchestrator
 
 ## 🌟 主な機能
 
-| 機能 | 説明 |
-|---|---|
-| **24の専門エージェント** | Commander、Planner、フロントエンド/バックエンド開発者、Reviewer、QA、PM、DevOps、セキュリティ他 |
-| **82の専門スキル** | TDD、セキュリティ監査、アンチパターン検出、デザインシステム、SQL、Docker、Kubernetes他 |
-| **6つのスラッシュコマンド** | `/orchestrator`、`/orchestrate`、`/plan`、`/review`、`/test`、`/deploy` |
-| **構築前に質問** | エージェントがコードを書く前に`AskUserQuestion`で要件を明確化 |
-| **並列実行** | Commanderが複数エージェントに同時にタスクを委任 |
-| **永続メモリ** | MCP Memory Server経由のKnowledge Graphがセッション間で決定を保存 |
-| **モデルロックインなし** | Qwen、DeepSeek、OpenAI、Anthropic、任意のローカルモデルで動作 |
-| **マルチ言語** | TypeScript、PHP（Laravel）、Python（Django）、Dart（Flutter）、Rust、Go、Java、C# |
-| **ループ保護** | MonitorエージェントがLLM無限ループを自動検出・遮断 |
-| **品質ゲート** | Reviewerのみがタスクを承認可能 |
-| **セキュリティ第一** | セキュリティ監査スキル + ReviewerエージェントによるOWASP Top 10準拠 |
+| 機能                        | 説明                                                                                            |
+| --------------------------- | ----------------------------------------------------------------------------------------------- |
+| **24の専門エージェント**    | Commander、Planner、フロントエンド/バックエンド開発者、Reviewer、QA、PM、DevOps、セキュリティ他 |
+| **82の専門スキル**          | TDD、セキュリティ監査、アンチパターン検出、デザインシステム、SQL、Docker、Kubernetes他          |
+| **6つのスラッシュコマンド** | `/orchestrator`、`/orchestrate`、`/plan`、`/review`、`/test`、`/deploy`                         |
+| **構築前に質問**            | エージェントがコードを書く前に`AskUserQuestion`で要件を明確化                                   |
+| **並列実行**                | Commanderが複数エージェントに同時にタスクを委任                                                 |
+| **永続メモリ**              | MCP Memory Server経由のKnowledge Graphがセッション間で決定を保存                                |
+| **モデルロックインなし**    | Qwen、DeepSeek、OpenAI、Anthropic、任意のローカルモデルで動作                                   |
+| **マルチ言語**              | TypeScript、PHP（Laravel）、Python（Django）、Dart（Flutter）、Rust、Go、Java、C#               |
+| **ループ保護**              | MonitorエージェントがLLM無限ループを自動検出・遮断                                              |
+| **品質ゲート**              | Reviewerのみがタスクを承認可能                                                                  |
+| **セキュリティ第一**        | セキュリティ監査スキル + ReviewerエージェントによるOWASP Top 10準拠                             |
 
 ---
 
 ## 👥 エージェントチーム（24の専門エージェント）
 
-| # | エージェント | 役割 | スーパーパワー |
-|---|---|---|---|
-| 1 | **Commander** 🔴 | マスターオーケストレーター | 並列委任、 relentlessな実行 |
-| 2 | **Planner** 🔵 | 調査・アーキテクチャ | ファイルレベル計画、設計判断 |
-| 3 | **Frontend Developer** 🔵 | UI/UX実装 | コンポーネント、レスポンシブ、アクセシブル |
-| 4 | **Backend Developer** 🟢 | サーバーサイドロジック | API、認証、キャッシュ、DB操作 |
-| 5 | **Reviewer** 🟣 | 品質ゲートキーパー | タスク承認権限を持つ唯一のエージェント |
-| 6 | **QA Engineer** 🟠 | 品質保証 | テスト戦略、エッジケース発見 |
-| 7 | **Project Manager** 🔵 | デリバリー管理 | スコープ管理、リスク評価 |
-| 8 | **Doc Researcher** 🟣 | Context7ナレッジ | ライブドキュメント検索、反幻覚 |
-| 9 | **Tech Lead** 🟡 | 標準・ガイダンス | モジュール完全性、CRUD検証 |
-| 10 | **Database Architect** 🟢 | データレイヤー専門家 | スキーマ設計、マイグレーション安全性 |
-| 11 | **Product Owner** 🟡 | ビジネス価値 | ユーザーストーリー、受け入れ基準 |
-| 12 | **DevOps Engineer** 🔘 | インフラストラクチャ | CI/CD、Docker、デプロイ自動化 |
-| 13 | **Code Quality Guard** 🌹 | 品質センチネル | 構文チェック、lint、型チェック |
-| 14 | **Monitor** 🛡️ | ループガーディアン | LLMループの検出・遮断、ランタイム監視 |
-| 15 | **SEO Specialist** 🔵 | SEO・Webパフォーマンス | メタタグ、構造化データ、Core Web Vitals |
-| 16 | **Tech Selector** 🟣 | 技術アドバイザー | フレームワーク/DB選定と長所短所 |
-| 17 | **Cybersecurity Eng.** 🔴 | アプリケーションセキュリティ | OWASP、脅威モデリング、依存関係監査 |
-| 18 | **Performance Eng.** ⚡ | 速度・スケール | プロファイリング、クエリ最適化、負荷テスト |
-| 19 | **Release Manager** 🏷️ | リリース・バージョニング | SemVer、チェンジログ、ロールバック計画 |
-| 20 | **API Specialist** 🔗 | API・統合 | REST/GraphQL、バージョニング、サードパーティAPI |
-| 21 | **Mobile Engineer** 📱 | モバイルアプリ | Flutter、React Native、オフラインファースト |
-| 22 | **Localization Eng.** 🌐 | i18n/L10n | 多言語、RTL、文化的適応 |
-| 23 | **Documenter** 📄 | テクニカルライティング | README、APIドキュメント、ADR、ナレッジベース |
-| 24 | **Skill Creator** 🛠️ | スキルオーサリング | スキル作成、ドキュメント、テスト |
+| #   | エージェント              | 役割                         | スーパーパワー                                  |
+| --- | ------------------------- | ---------------------------- | ----------------------------------------------- |
+| 1   | **Commander** 🔴          | マスターオーケストレーター   | 並列委任、 relentlessな実行                     |
+| 2   | **Planner** 🔵            | 調査・アーキテクチャ         | ファイルレベル計画、設計判断                    |
+| 3   | **Frontend Developer** 🔵 | UI/UX実装                    | コンポーネント、レスポンシブ、アクセシブル      |
+| 4   | **Backend Developer** 🟢  | サーバーサイドロジック       | API、認証、キャッシュ、DB操作                   |
+| 5   | **Reviewer** 🟣           | 品質ゲートキーパー           | タスク承認権限を持つ唯一のエージェント          |
+| 6   | **QA Engineer** 🟠        | 品質保証                     | テスト戦略、エッジケース発見                    |
+| 7   | **Project Manager** 🔵    | デリバリー管理               | スコープ管理、リスク評価                        |
+| 8   | **Doc Researcher** 🟣     | Context7ナレッジ             | ライブドキュメント検索、反幻覚                  |
+| 9   | **Tech Lead** 🟡          | 標準・ガイダンス             | モジュール完全性、CRUD検証                      |
+| 10  | **Database Architect** 🟢 | データレイヤー専門家         | スキーマ設計、マイグレーション安全性            |
+| 11  | **Product Owner** 🟡      | ビジネス価値                 | ユーザーストーリー、受け入れ基準                |
+| 12  | **DevOps Engineer** 🔘    | インフラストラクチャ         | CI/CD、Docker、デプロイ自動化                   |
+| 13  | **Code Quality Guard** 🌹 | 品質センチネル               | 構文チェック、lint、型チェック                  |
+| 14  | **Monitor** 🛡️            | ループガーディアン           | LLMループの検出・遮断、ランタイム監視           |
+| 15  | **SEO Specialist** 🔵     | SEO・Webパフォーマンス       | メタタグ、構造化データ、Core Web Vitals         |
+| 16  | **Tech Selector** 🟣      | 技術アドバイザー             | フレームワーク/DB選定と長所短所                 |
+| 17  | **Cybersecurity Eng.** 🔴 | アプリケーションセキュリティ | OWASP、脅威モデリング、依存関係監査             |
+| 18  | **Performance Eng.** ⚡   | 速度・スケール               | プロファイリング、クエリ最適化、負荷テスト      |
+| 19  | **Release Manager** 🏷️    | リリース・バージョニング     | SemVer、チェンジログ、ロールバック計画          |
+| 20  | **API Specialist** 🔗     | API・統合                    | REST/GraphQL、バージョニング、サードパーティAPI |
+| 21  | **Mobile Engineer** 📱    | モバイルアプリ               | Flutter、React Native、オフラインファースト     |
+| 22  | **Localization Eng.** 🌐  | i18n/L10n                    | 多言語、RTL、文化的適応                         |
+| 23  | **Documenter** 📄         | テクニカルライティング       | README、APIドキュメント、ADR、ナレッジベース    |
+| 24  | **Skill Creator** 🛠️      | スキルオーサリング           | スキル作成、ドキュメント、テスト                |
 
 ---
 
 ## 🛠️ スキル（82の専門スキル）
 
 ### コンテナ化・オーケストレーション
-| スキル | 目的 |
-|---|---|
-| Docker Containerization | マルチステージビルド、セキュリティ強化、イメージ最適化、Docker Compose |
-| Kubernetes Orchestration | Deployments、HPA、Service Mesh、Ingress、GitOps |
+
+| スキル                   | 目的                                                                   |
+| ------------------------ | ---------------------------------------------------------------------- |
+| Docker Containerization  | マルチステージビルド、セキュリティ強化、イメージ最適化、Docker Compose |
+| Kubernetes Orchestration | Deployments、HPA、Service Mesh、Ingress、GitOps                        |
 
 ### Infrastructure as Code
-| スキル | 目的 |
-|---|---|
+
+| スキル        | 目的                                                              |
+| ------------- | ----------------------------------------------------------------- |
 | Terraform IaC | モジュール、状態管理、ワークスペース、Sentinelポリシー、Terratest |
 
 ### CI/CD自動化
-| スキル | 目的 |
-|---|---|
+
+| スキル               | 目的                                                         |
+| -------------------- | ------------------------------------------------------------ |
 | GitHub Actions CI/CD | ワークフロー、マトリックス、環境、キャッシュ、複合アクション |
 
 ### キャッシュ・パフォーマンス
-| スキル | 目的 |
-|---|---|
+
+| スキル        | 目的                                                                   |
+| ------------- | ---------------------------------------------------------------------- |
 | Redis Caching | データ構造、キャッシュパターン、セッション管理、Pub/Sub、Luaスクリプト |
 
 ### API設計
-| スキル | 目的 |
-|---|---|
+
+| スキル             | 目的                                                                    |
+| ------------------ | ----------------------------------------------------------------------- |
 | GraphQL API Design | スキーマ設計、リゾルバ、DataLoader、ページネーション、Apollo Federation |
 
 ### LLM・エージェント
-| スキル | 目的 |
-|---|---|
-| LangGraph | エージェントワークフロー、状態管理、マルチエージェントシステム |
-| LangChain | LLMチェーン、エージェント、ツール、メモリ、RAG |
-| Qwen Agent | Qwen特化エージェント開発と統合 |
-| LLM Integrations | マルチプロバイダーLLM統合 |
+
+| スキル           | 目的                                                           |
+| ---------------- | -------------------------------------------------------------- |
+| LangGraph        | エージェントワークフロー、状態管理、マルチエージェントシステム |
+| LangChain        | LLMチェーン、エージェント、ツール、メモリ、RAG                 |
+| Qwen Agent       | Qwen特化エージェント開発と統合                                 |
+| LLM Integrations | マルチプロバイダーLLM統合                                      |
 
 ### クラウドプラットフォーム
-| スキル | 目的 |
-|---|---|
+
+| スキル            | 目的                                                      |
+| ----------------- | --------------------------------------------------------- |
 | Vercel Deployment | サーバーレス関数、エッジコンピューティング、Next.js最適化 |
-| Cloudflare Pages | エッジ関数、グローバル分散、キャッシュ |
-| AWS Serverless | Lambda、API Gateway、SAM、イベント駆動アーキテクチャ |
+| Cloudflare Pages  | エッジ関数、グローバル分散、キャッシュ                    |
+| AWS Serverless    | Lambda、API Gateway、SAM、イベント駆動アーキテクチャ      |
 
 ### リーダーシップ・アーキテクチャ
-| スキル | 目的 |
-|---|---|
-| Strategic Leadership | チーム管理、意思決定、ステークホルダー調整 |
-| Requirements Engineering | ユースケース、ユーザーストーリー、受け入れ基準 |
+
+| スキル                     | 目的                                             |
+| -------------------------- | ------------------------------------------------ |
+| Strategic Leadership       | チーム管理、意思決定、ステークホルダー調整       |
+| Requirements Engineering   | ユースケース、ユーザーストーリー、受け入れ基準   |
 | Microservices Architecture | ドメイン駆動設計、サービス境界、イベント駆動通信 |
 
 ### セキュリティ・品質
-| スキル | 目的 |
-|---|---|
-| Security Code Review | OWASP Top 10、脆弱性パターン、セキュアコーディング |
-| Threat Modeling | STRIDE、DREAD、攻撃ツリー、脅威識別 |
-| Test Automation | フレームワーク設計、ページオブジェクトパターン、並列実行 |
-| Code Review | OWASP + SOLID + Clean Code体系的レビュー |
+
+| スキル               | 目的                                                     |
+| -------------------- | -------------------------------------------------------- |
+| Security Code Review | OWASP Top 10、脆弱性パターン、セキュアコーディング       |
+| Threat Modeling      | STRIDE、DREAD、攻撃ツリー、脅威識別                      |
+| Test Automation      | フレームワーク設計、ページオブジェクトパターン、並列実行 |
+| Code Review          | OWASP + SOLID + Clean Code体系的レビュー                 |
 
 ### データベース
-| スキル | 目的 |
-|---|---|
-| Database Design | スキーマ設計、リレーション、インデックス戦略 |
-| SQL Best Practices | クエリ最適化、インデックス、N+1防止 |
+
+| スキル             | 目的                                         |
+| ------------------ | -------------------------------------------- |
+| Database Design    | スキーマ設計、リレーション、インデックス戦略 |
+| SQL Best Practices | クエリ最適化、インデックス、N+1防止          |
 
 ### フロントエンド・モバイル
-| スキル | 目的 |
-|---|---|
-| Accessibility | WCAG 2.1 AA、セマンティックHTML、ARIA、キーボードナビゲーション |
-| Design System | カラーパレット、タイポグラフィ、スペーシング、コンポーネント設計 |
-| Website Redesign | URL/スクリーンショットベースの再設計、分析ワークフロー |
-| Flutter Web | レスポンシブレイアウト、適応型ウィジェット、状態管理 |
+
+| スキル           | 目的                                                             |
+| ---------------- | ---------------------------------------------------------------- |
+| Accessibility    | WCAG 2.1 AA、セマンティックHTML、ARIA、キーボードナビゲーション  |
+| Design System    | カラーパレット、タイポグラフィ、スペーシング、コンポーネント設計 |
+| Website Redesign | URL/スクリーンショットベースの再設計、分析ワークフロー           |
+| Flutter Web      | レスポンシブレイアウト、適応型ウィジェット、状態管理             |
 
 ### バックエンド・API
-| スキル | 目的 |
-|---|---|
+
+| スキル     | 目的                                                  |
+| ---------- | ----------------------------------------------------- |
 | API Design | RESTful標準、レスポンスエンベロープ、ページネーション |
-| Laravel | Eloquent ORM、Form Requests、キュー、APIパターン |
-| NestJS | モジュール、ガード、パイプ、インターセプター |
-| Supabase | RLSポリシー、Edge Functions、認証、自動生成API |
+| Laravel    | Eloquent ORM、Form Requests、キュー、APIパターン      |
+| NestJS     | モジュール、ガード、パイプ、インターセプター          |
+| Supabase   | RLSポリシー、Edge Functions、認証、自動生成API        |
 
 ### DevOps・インフラ
-| スキル | 目的 |
-|---|---|
+
+| スキル            | 目的                                         |
+| ----------------- | -------------------------------------------- |
 | Disaster Recovery | バックアップ戦略、復旧手順、フェイルオーバー |
-| Git Workflow | ブランチ戦略、コミット規約、PRテンプレート |
-| Deployment | CI/CD、Docker、リリース管理 |
+| Git Workflow      | ブランチ戦略、コミット規約、PRテンプレート   |
+| Deployment        | CI/CD、Docker、リリース管理                  |
 
 ### その他
-| スキル | 目的 |
-|---|---|
-| Anti-Hallucination | ソース検証、エビデンスベースの主張 |
-| Loop Detection | LLMループ検出、ツール呼び出しループ、脱出経路 |
-| TDD Workflow | テスト駆動開発（Red/Green/Refactor） |
-| Security Audit | OWASP Top 10脆弱性検出 |
-| Domain-Driven | DDDパターン、境界づけられたコンテキスト |
-| Performance | プロファイリング、最適化、ベンチマーク |
-| Monitoring | 可観測性、ログ、アラート |
-| Compliance | GDPR、HIPAA、SOC 2、PCI-DSS |
+
+| スキル             | 目的                                          |
+| ------------------ | --------------------------------------------- |
+| Anti-Hallucination | ソース検証、エビデンスベースの主張            |
+| Loop Detection     | LLMループ検出、ツール呼び出しループ、脱出経路 |
+| TDD Workflow       | テスト駆動開発（Red/Green/Refactor）          |
+| Security Audit     | OWASP Top 10脆弱性検出                        |
+| Domain-Driven      | DDDパターン、境界づけられたコンテキスト       |
+| Performance        | プロファイリング、最適化、ベンチマーク        |
+| Monitoring         | 可観測性、ログ、アラート                      |
+| Compliance         | GDPR、HIPAA、SOC 2、PCI-DSS                   |
 
 ---
 
 ## ⌨️ コマンド（6つのスラッシュコマンド）
 
-| コマンド | 説明 |
-|---|---|
+| コマンド                      | 説明                                                  |
+| ----------------------------- | ----------------------------------------------------- |
 | **`/orchestrator [目標]`** ⭐ | **メインエントリ** — フルチーム、明確化プロトコル付き |
-| `/orchestrate [ミッション]` | 直接実行 — 質問なし、即構築 |
-| `/plan [機能]` | 実装計画のみ — 調査 + アーキテクチャ |
-| `/review [対象]` | 包括的コードレビュー |
-| `/test [対象]` | テストスイートの実行と分析 |
-| `/deploy [対象]` | 事前/事後検証付きデプロイ |
+| `/orchestrate [ミッション]`   | 直接実行 — 質問なし、即構築                           |
+| `/plan [機能]`                | 実装計画のみ — 調査 + アーキテクチャ                  |
+| `/review [対象]`              | 包括的コードレビュー                                  |
+| `/test [対象]`                | テストスイートの実行と分析                            |
+| `/deploy [対象]`              | 事前/事後検証付きデプロイ                             |
 
 ---
 
@@ -378,8 +392,8 @@ npm run build
 
 ### トラブルシューティング
 
-| 問題 | 解決策 |
-|---|---|
+| 問題                                         | 解決策                                        |
+| -------------------------------------------- | --------------------------------------------- |
 | インストール後に「コマンドが見つかりません」 | Qwen Code CLIを再起動して拡張機能を再読み込み |
 
 ---
@@ -388,14 +402,14 @@ npm run build
 
 **デフォルトでは、すべてのエージェントがQwen Codeのデフォルトモデルを使用します。**
 
-| エージェント | 推奨モデル | 理由 |
-|---|---|---|
-| Commander | `qwen-max` / `qwen-plus` | 強力な推論が必要 |
-| Planner | `qwen-max` / `qwen-plus` | 強力な分析が必要 |
-| Frontend Developer | `qwen3-coder-plus` | コード生成に最適化 |
-| Backend Developer | `qwen3-coder-plus` | コード生成に最適化 |
-| Reviewer | `qwen-max` | 品質ゲートに深い理解が必要 |
-| その他 | ユーザーのデフォルト | 特別な要件なし |
+| エージェント       | 推奨モデル               | 理由                       |
+| ------------------ | ------------------------ | -------------------------- |
+| Commander          | `qwen-max` / `qwen-plus` | 強力な推論が必要           |
+| Planner            | `qwen-max` / `qwen-plus` | 強力な分析が必要           |
+| Frontend Developer | `qwen3-coder-plus`       | コード生成に最適化         |
+| Backend Developer  | `qwen3-coder-plus`       | コード生成に最適化         |
+| Reviewer           | `qwen-max`               | 品質ゲートに深い理解が必要 |
+| その他             | ユーザーのデフォルト     | 特別な要件なし             |
 
 ---
 
@@ -442,24 +456,24 @@ CronCreate({ cron: "0 6 * * 1-5", prompt: "セキュリティ監査を実行", r
 
 ### UI/UXスキル（推奨）
 
-| スキル | インストール |
-|---|---|
-| **UI UX Pro Max** | `npx uipro-cli init` |
-| **Designer Skills** | `/plugin marketplace add Owl-Listener/designer-skills` |
-| **Taste Skill** | `npx skills add https://github.com/Leonxlnx/taste-skill` |
+| スキル              | インストール                                             |
+| ------------------- | -------------------------------------------------------- |
+| **UI UX Pro Max**   | `npx uipro-cli init`                                     |
+| **Designer Skills** | `/plugin marketplace add Owl-Listener/designer-skills`   |
+| **Taste Skill**     | `npx skills add https://github.com/Leonxlnx/taste-skill` |
 
 ---
 
 ## ✅ 品質基準
 
-| 基準 | 要件 |
-|---|---|
-| 複雑度 | 関数あたり ≤ 10サイクロマティック複雑度 |
-| サイズ | 関数あたり ≤ 40行、≤ 4パラメータ |
-| 型 | 厳格な型、`any`不使用 |
-| テスト | TDD必須、80%+カバレッジ |
-| セキュリティ | OWASP Top 10準拠 |
-| SQL | 大文字キーワード、1行1カラム、インデントJOIN、N+1防止 |
+| 基準         | 要件                                                  |
+| ------------ | ----------------------------------------------------- |
+| 複雑度       | 関数あたり ≤ 10サイクロマティック複雑度               |
+| サイズ       | 関数あたり ≤ 40行、≤ 4パラメータ                      |
+| 型           | 厳格な型、`any`不使用                                 |
+| テスト       | TDD必須、80%+カバレッジ                               |
+| セキュリティ | OWASP Top 10準拠                                      |
+| SQL          | 大文字キーワード、1行1カラム、インデントJOIN、N+1防止 |
 
 ---
 

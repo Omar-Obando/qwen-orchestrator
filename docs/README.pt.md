@@ -86,157 +86,171 @@ O comando `/orchestrator` é o ponto de entrada principal. Ele ativa a equipe co
 
 ## 🌟 Principais Funcionalidades
 
-| Funcionalidade | Descrição |
-|---|---|
-| **24 Agentes Especializados** | Commander, Planner, Devs Frontend/Backend, Reviewer, QA, PM, DevOps, Segurança e mais |
+| Funcionalidade                   | Descrição                                                                                            |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **24 Agentes Especializados**    | Commander, Planner, Devs Frontend/Backend, Reviewer, QA, PM, DevOps, Segurança e mais                |
 | **82 Habilidades Profissionais** | TDD, auditoria de segurança, detecção de anti-padrões, design system, SQL, Docker, Kubernetes e mais |
-| **6 Comandos Slash** | `/orchestrator`, `/orchestrate`, `/plan`, `/review`, `/test`, `/deploy` |
-| **Pergunte Antes de Construir** | Agentes esclarecem requisitos antes de escrever código |
-| **Execução Paralela** | Commander delega tarefas a múltiplos agentes simultaneamente |
-| **Memória Persistente** | Knowledge Graph via MCP Memory Server armazena decisões entre sessões |
-| **Zero Bloqueio de Modelo** | Funciona com Qwen, DeepSeek, OpenAI, Anthropic ou qualquer modelo local |
-| **Multi-Linguagem** | TypeScript, PHP (Laravel), Python (Django), Dart (Flutter), Rust, Go, Java, C# |
-| **Proteção contra Loops** | Agente Monitor detecta e interrompe loops infinitos automaticamente |
-| **Portões de Qualidade** | Reviewer é o ÚNICO agente que pode aprovar tarefas |
+| **6 Comandos Slash**             | `/orchestrator`, `/orchestrate`, `/plan`, `/review`, `/test`, `/deploy`                              |
+| **Pergunte Antes de Construir**  | Agentes esclarecem requisitos antes de escrever código                                               |
+| **Execução Paralela**            | Commander delega tarefas a múltiplos agentes simultaneamente                                         |
+| **Memória Persistente**          | Knowledge Graph via MCP Memory Server armazena decisões entre sessões                                |
+| **Zero Bloqueio de Modelo**      | Funciona com Qwen, DeepSeek, OpenAI, Anthropic ou qualquer modelo local                              |
+| **Multi-Linguagem**              | TypeScript, PHP (Laravel), Python (Django), Dart (Flutter), Rust, Go, Java, C#                       |
+| **Proteção contra Loops**        | Agente Monitor detecta e interrompe loops infinitos automaticamente                                  |
+| **Portões de Qualidade**         | Reviewer é o ÚNICO agente que pode aprovar tarefas                                                   |
 
 ---
 
 ## 👥 Equipe de Agentes (24 Agentes Especializados)
 
-| # | Agente | Função | Superpoder |
-|---|---|---|---|
-| 1 | **Commander** 🔴 | Orquestrador Mestre | Delegação paralela, execução incansável |
-| 2 | **Planner** 🔵 | Pesquisa e Arquitetura | Planejamento em nível de arquivo, decisões de design |
-| 3 | **Frontend Developer** 🔵 | Implementação UI/UX | Componentes, responsivo, acessível, rápido |
-| 4 | **Backend Developer** 🟢 | Lógica do Servidor | APIs, autenticação, cache, operações de BD |
-| 5 | **Reviewer** 🟣 | Guardião de Qualidade | ÚNICO agente que pode aprovar tarefas |
-| 6 | **QA Engineer** 🟠 | Garantia de Qualidade | Estratégia de testes, descoberta de edge cases |
-| 7 | **Project Manager** 🔵 | Gestão de Entregas | Controle de escopo, avaliação de riscos |
-| 8 | **Doc Researcher** 🟣 | Conhecimento Context7 | Consulta de docs ao vivo, anti-alucinação |
-| 9 | **Tech Lead** 🟡 | Padrões e Orientação | Completude de módulos, verificação CRUD |
-| 10 | **Database Architect** 🟢 | Especialista em Dados | Design de esquema, segurança de migrações |
-| 11 | **Product Owner** 🟡 | Valor de Negócio | Histórias de usuário, critérios de aceitação |
-| 12 | **DevOps Engineer** 🔘 | Infraestrutura | CI/CD, Docker, automação de implantação |
-| 13 | **Code Quality Guard** 🌹 | Sentinela de Qualidade | Verificação de sintaxe, lint, typecheck |
-| 14 | **Monitor** 🛡️ | Guardião de Loops | Detectar/interromper loops LLM, watchdog |
-| 15 | **SEO Specialist** 🔵 | SEO e Performance Web | Meta tags, dados estruturados, Core Web Vitals |
-| 16 | **Tech Selector** 🟣 | Consultor Tecnológico | Seleção de framework/BD com prós e contras |
-| 17 | **Cybersecurity Eng.** 🔴 | Segurança de Aplicações | OWASP, modelagem de ameaças, auditoria de dependências |
-| 18 | **Performance Eng.** ⚡ | Velocidade e Escala | Profiling, otimização de consultas, testes de carga |
-| 19 | **Release Manager** 🏷️ | Releases e Versionamento | SemVer, changelogs, planejamento de rollback |
-| 20 | **API Specialist** 🔗 | APIs e Integração | REST/GraphQL, versionamento, APIs de terceiros |
-| 21 | **Mobile Engineer** 📱 | Apps Móveis | Flutter, React Native, offline-first |
-| 22 | **Localization Eng.** 🌐 | i18n/L10n | Multi-idioma, RTL, adaptação cultural |
-| 23 | **Documenter** 📄 | Redação Técnica | README, docs de API, ADRs, base de conhecimento |
-| 24 | **Skill Creator** 🛠️ | Criação de Habilidades | Autoria de habilidades, documentação, testes |
+| #   | Agente                    | Função                   | Superpoder                                             |
+| --- | ------------------------- | ------------------------ | ------------------------------------------------------ |
+| 1   | **Commander** 🔴          | Orquestrador Mestre      | Delegação paralela, execução incansável                |
+| 2   | **Planner** 🔵            | Pesquisa e Arquitetura   | Planejamento em nível de arquivo, decisões de design   |
+| 3   | **Frontend Developer** 🔵 | Implementação UI/UX      | Componentes, responsivo, acessível, rápido             |
+| 4   | **Backend Developer** 🟢  | Lógica do Servidor       | APIs, autenticação, cache, operações de BD             |
+| 5   | **Reviewer** 🟣           | Guardião de Qualidade    | ÚNICO agente que pode aprovar tarefas                  |
+| 6   | **QA Engineer** 🟠        | Garantia de Qualidade    | Estratégia de testes, descoberta de edge cases         |
+| 7   | **Project Manager** 🔵    | Gestão de Entregas       | Controle de escopo, avaliação de riscos                |
+| 8   | **Doc Researcher** 🟣     | Conhecimento Context7    | Consulta de docs ao vivo, anti-alucinação              |
+| 9   | **Tech Lead** 🟡          | Padrões e Orientação     | Completude de módulos, verificação CRUD                |
+| 10  | **Database Architect** 🟢 | Especialista em Dados    | Design de esquema, segurança de migrações              |
+| 11  | **Product Owner** 🟡      | Valor de Negócio         | Histórias de usuário, critérios de aceitação           |
+| 12  | **DevOps Engineer** 🔘    | Infraestrutura           | CI/CD, Docker, automação de implantação                |
+| 13  | **Code Quality Guard** 🌹 | Sentinela de Qualidade   | Verificação de sintaxe, lint, typecheck                |
+| 14  | **Monitor** 🛡️            | Guardião de Loops        | Detectar/interromper loops LLM, watchdog               |
+| 15  | **SEO Specialist** 🔵     | SEO e Performance Web    | Meta tags, dados estruturados, Core Web Vitals         |
+| 16  | **Tech Selector** 🟣      | Consultor Tecnológico    | Seleção de framework/BD com prós e contras             |
+| 17  | **Cybersecurity Eng.** 🔴 | Segurança de Aplicações  | OWASP, modelagem de ameaças, auditoria de dependências |
+| 18  | **Performance Eng.** ⚡   | Velocidade e Escala      | Profiling, otimização de consultas, testes de carga    |
+| 19  | **Release Manager** 🏷️    | Releases e Versionamento | SemVer, changelogs, planejamento de rollback           |
+| 20  | **API Specialist** 🔗     | APIs e Integração        | REST/GraphQL, versionamento, APIs de terceiros         |
+| 21  | **Mobile Engineer** 📱    | Apps Móveis              | Flutter, React Native, offline-first                   |
+| 22  | **Localization Eng.** 🌐  | i18n/L10n                | Multi-idioma, RTL, adaptação cultural                  |
+| 23  | **Documenter** 📄         | Redação Técnica          | README, docs de API, ADRs, base de conhecimento        |
+| 24  | **Skill Creator** 🛠️      | Criação de Habilidades   | Autoria de habilidades, documentação, testes           |
 
 ---
 
 ## 🛠️ Habilidades (82 Habilidades Profissionais)
 
 ### Containerização e Orquestração
-| Habilidade | Propósito |
-|---|---|
-| Docker Containerization | Builds multi-estágio, hardening de segurança, otimização de imagens |
-| Kubernetes Orchestration | Deployments, HPA, service mesh, ingress, GitOps |
+
+| Habilidade               | Propósito                                                           |
+| ------------------------ | ------------------------------------------------------------------- |
+| Docker Containerization  | Builds multi-estágio, hardening de segurança, otimização de imagens |
+| Kubernetes Orchestration | Deployments, HPA, service mesh, ingress, GitOps                     |
 
 ### Infraestrutura como Código
-| Habilidade | Propósito |
-|---|---|
+
+| Habilidade    | Propósito                                                 |
+| ------------- | --------------------------------------------------------- |
 | Terraform IaC | Módulos, gestão de estado, workspaces, políticas Sentinel |
 
 ### Automação CI/CD
-| Habilidade | Propósito |
-|---|---|
+
+| Habilidade           | Propósito                                                |
+| -------------------- | -------------------------------------------------------- |
 | GitHub Actions CI/CD | Workflows, matrizes, ambientes, cache, actions compostas |
 
 ### Cache e Performance
-| Habilidade | Propósito |
-|---|---|
+
+| Habilidade    | Propósito                                                |
+| ------------- | -------------------------------------------------------- |
 | Redis Caching | Estruturas de dados, padrões de cache, gestão de sessões |
 
 ### Design de APIs
-| Habilidade | Propósito |
-|---|---|
+
+| Habilidade         | Propósito                                                             |
+| ------------------ | --------------------------------------------------------------------- |
 | GraphQL API Design | Design de schema, resolvers, DataLoader, paginação, Apollo Federation |
 
 ### LLM e Agentes
-| Habilidade | Propósito |
-|---|---|
-| LangGraph | Workflows de agentes, gestão de estado, sistemas multi-agente |
-| LangChain | Cadeias LLM, agentes, ferramentas, memória, RAG |
+
+| Habilidade | Propósito                                                     |
+| ---------- | ------------------------------------------------------------- |
+| LangGraph  | Workflows de agentes, gestão de estado, sistemas multi-agente |
+| LangChain  | Cadeias LLM, agentes, ferramentas, memória, RAG               |
 
 ### Plataformas Cloud
-| Habilidade | Propósito |
-|---|---|
+
+| Habilidade        | Propósito                                              |
+| ----------------- | ------------------------------------------------------ |
 | Vercel Deployment | Funções serverless, edge computing, otimização Next.js |
-| Cloudflare Pages | Edge functions, distribuição global, cache |
-| AWS Serverless | Lambda, API Gateway, SAM, arquiteturas event-driven |
+| Cloudflare Pages  | Edge functions, distribuição global, cache             |
+| AWS Serverless    | Lambda, API Gateway, SAM, arquiteturas event-driven    |
 
 ### Liderança e Arquitetura
-| Habilidade | Propósito |
-|---|---|
-| Strategic Leadership | Gestão de equipes, tomada de decisão, alinhamento |
+
+| Habilidade                 | Propósito                                                          |
+| -------------------------- | ------------------------------------------------------------------ |
+| Strategic Leadership       | Gestão de equipes, tomada de decisão, alinhamento                  |
 | Microservices Architecture | Design domain-driven, limites de serviço, comunicação event-driven |
 
 ### Segurança e Qualidade
-| Habilidade | Propósito |
-|---|---|
+
+| Habilidade           | Propósito                                                    |
+| -------------------- | ------------------------------------------------------------ |
 | Security Code Review | OWASP Top 10, padrões de vulnerabilidade, codificação segura |
-| Threat Modeling | STRIDE, DREAD, árvores de ataque |
-| Code Review | Revisão sistemática OWASP + SOLID + Clean Code |
+| Threat Modeling      | STRIDE, DREAD, árvores de ataque                             |
+| Code Review          | Revisão sistemática OWASP + SOLID + Clean Code               |
 
 ### Banco de Dados
-| Habilidade | Propósito |
-|---|---|
-| Database Design | Design de schema, relacionamentos, estratégias de indexação |
-| SQL Best Practices | Otimização de consultas, indexação, prevenção N+1 |
+
+| Habilidade         | Propósito                                                   |
+| ------------------ | ----------------------------------------------------------- |
+| Database Design    | Design de schema, relacionamentos, estratégias de indexação |
+| SQL Best Practices | Otimização de consultas, indexação, prevenção N+1           |
 
 ### Frontend e Mobile
-| Habilidade | Propósito |
-|---|---|
-| Accessibility | WCAG 2.1 AA, HTML semântico, ARIA, navegação por teclado |
-| Design System | Paletas de cores, tipografia, espaçamento, componentes |
-| Website Redesign | Redesign baseado em URL/screenshot, fluxo de análise |
-| Flutter Web | Layouts responsivos, widgets adaptativos |
+
+| Habilidade       | Propósito                                                |
+| ---------------- | -------------------------------------------------------- |
+| Accessibility    | WCAG 2.1 AA, HTML semântico, ARIA, navegação por teclado |
+| Design System    | Paletas de cores, tipografia, espaçamento, componentes   |
+| Website Redesign | Redesign baseado em URL/screenshot, fluxo de análise     |
+| Flutter Web      | Layouts responsivos, widgets adaptativos                 |
 
 ### Backend e APIs
-| Habilidade | Propósito |
-|---|---|
-| API Design | Padrões RESTful, envelopes de resposta, paginação |
-| Laravel | Eloquent ORM, Form Requests, filas, padrões de API |
-| NestJS | Módulos, guards, pipes, interceptors |
-| Supabase | Políticas RLS, Edge Functions, autenticação, APIs auto-geradas |
+
+| Habilidade | Propósito                                                      |
+| ---------- | -------------------------------------------------------------- |
+| API Design | Padrões RESTful, envelopes de resposta, paginação              |
+| Laravel    | Eloquent ORM, Form Requests, filas, padrões de API             |
+| NestJS     | Módulos, guards, pipes, interceptors                           |
+| Supabase   | Políticas RLS, Edge Functions, autenticação, APIs auto-geradas |
 
 ### DevOps e Infraestrutura
-| Habilidade | Propósito |
-|---|---|
+
+| Habilidade        | Propósito                                                     |
+| ----------------- | ------------------------------------------------------------- |
 | Disaster Recovery | Estratégias de backup, procedimentos de restauração, failover |
-| Git Workflow | Estratégias de branching, convenções de commit, templates PR |
-| Deployment | CI/CD, Docker, gestão de releases |
+| Git Workflow      | Estratégias de branching, convenções de commit, templates PR  |
+| Deployment        | CI/CD, Docker, gestão de releases                             |
 
 ### Outras
-| Habilidade | Propósito |
-|---|---|
+
+| Habilidade         | Propósito                                                |
+| ------------------ | -------------------------------------------------------- |
 | Anti-Hallucination | Verificação de fontes, afirmações baseadas em evidências |
-| TDD Workflow | Desenvolvimento Orientado a Testes (Red/Green/Refactor) |
-| Security Audit | Detecção de vulnerabilidades OWASP Top 10 |
-| Domain-Driven | Padrões DDD, contextos delimitados, agregados |
-| Performance | Profiling, otimização, benchmarks |
-| Compliance | GDPR, HIPAA, SOC 2, PCI-DSS |
+| TDD Workflow       | Desenvolvimento Orientado a Testes (Red/Green/Refactor)  |
+| Security Audit     | Detecção de vulnerabilidades OWASP Top 10                |
+| Domain-Driven      | Padrões DDD, contextos delimitados, agregados            |
+| Performance        | Profiling, otimização, benchmarks                        |
+| Compliance         | GDPR, HIPAA, SOC 2, PCI-DSS                              |
 
 ---
 
 ## ⌨️ Comandos (6 Comandos Slash)
 
-| Comando | Descrição |
-|---|---|
-| **`/orchestrator [objetivo]`** ⭐ | **Entrada principal** — Equipe completa com protocolo de clareza |
-| `/orchestrate [missão]` | Execução direta — sem perguntas, apenas constrói |
-| `/plan [funcionalidade]` | Apenas criar plano de implementação — pesquisa + arquitetura |
-| `/review [alvo]` | Revisão abrangente de código — segurança, qualidade, padrões |
-| `/test [alvo]` | Executar e analisar suite de testes — cobertura, lacunas, edge cases |
-| `/deploy [alvo]` | Implantar com verificação pré/pós — CI/CD, plano de rollback |
+| Comando                           | Descrição                                                            |
+| --------------------------------- | -------------------------------------------------------------------- |
+| **`/orchestrator [objetivo]`** ⭐ | **Entrada principal** — Equipe completa com protocolo de clareza     |
+| `/orchestrate [missão]`           | Execução direta — sem perguntas, apenas constrói                     |
+| `/plan [funcionalidade]`          | Apenas criar plano de implementação — pesquisa + arquitetura         |
+| `/review [alvo]`                  | Revisão abrangente de código — segurança, qualidade, padrões         |
+| `/test [alvo]`                    | Executar e analisar suite de testes — cobertura, lacunas, edge cases |
+| `/deploy [alvo]`                  | Implantar com verificação pré/pós — CI/CD, plano de rollback         |
 
 ---
 
@@ -317,14 +331,14 @@ cd qwen-orchestrator && npm install && npm run build
 
 **Por padrão, todos os agentes usam seu modelo padrão do Qwen Code.**
 
-| Agente | Modelo Recomendado | Por quê |
-|---|---|---|
-| Commander | `qwen-max` / `qwen-plus` | Precisa de raciocínio forte para orquestração |
-| Planner | `qwen-max` / `qwen-plus` | Precisa de análise forte para arquitetura |
-| Frontend Developer | `qwen3-coder-plus` | Otimizado para geração de código |
-| Backend Developer | `qwen3-coder-plus` | Otimizado para geração de código |
-| Reviewer | `qwen-max` | Precisa de compreensão profunda para qualidade |
-| Demais | Padrão do usuário | Sem necessidades especiais |
+| Agente             | Modelo Recomendado       | Por quê                                        |
+| ------------------ | ------------------------ | ---------------------------------------------- |
+| Commander          | `qwen-max` / `qwen-plus` | Precisa de raciocínio forte para orquestração  |
+| Planner            | `qwen-max` / `qwen-plus` | Precisa de análise forte para arquitetura      |
+| Frontend Developer | `qwen3-coder-plus`       | Otimizado para geração de código               |
+| Backend Developer  | `qwen3-coder-plus`       | Otimizado para geração de código               |
+| Reviewer           | `qwen-max`               | Precisa de compreensão profunda para qualidade |
+| Demais             | Padrão do usuário        | Sem necessidades especiais                     |
 
 ---
 
@@ -349,24 +363,24 @@ Fornece um **Knowledge Graph** que persiste entre sessões. Configurado automati
 
 ### Habilidades UI/UX (Recomendado)
 
-| Habilidade | Instalação |
-|---|---|
-| **UI UX Pro Max** | `npx uipro-cli init` |
-| **Designer Skills** | `/plugin marketplace add Owl-Listener/designer-skills` |
-| **Taste Skill** | `npx skills add https://github.com/Leonxlnx/taste-skill` |
+| Habilidade          | Instalação                                               |
+| ------------------- | -------------------------------------------------------- |
+| **UI UX Pro Max**   | `npx uipro-cli init`                                     |
+| **Designer Skills** | `/plugin marketplace add Owl-Listener/designer-skills`   |
+| **Taste Skill**     | `npx skills add https://github.com/Leonxlnx/taste-skill` |
 
 ---
 
 ## ✅ Padrões de Qualidade
 
-| Padrão | Requisito |
-|---|---|
-| Complexidade | ≤ 10 ciclomática por função |
-| Tamanho | ≤ 40 linhas por função, ≤ 4 parâmetros |
-| Tipos | Tipos estritos, sem `any` |
-| Testes | TDD obrigatório, 80%+ cobertura |
-| Segurança | Conformidade OWASP Top 10 |
-| SQL | Keywords em maiúsculas, uma coluna por linha, JOINs indentados, prevenção N+1 |
+| Padrão       | Requisito                                                                     |
+| ------------ | ----------------------------------------------------------------------------- |
+| Complexidade | ≤ 10 ciclomática por função                                                   |
+| Tamanho      | ≤ 40 linhas por função, ≤ 4 parâmetros                                        |
+| Tipos        | Tipos estritos, sem `any`                                                     |
+| Testes       | TDD obrigatório, 80%+ cobertura                                               |
+| Segurança    | Conformidade OWASP Top 10                                                     |
+| SQL          | Keywords em maiúsculas, uma coluna por linha, JOINs indentados, prevenção N+1 |
 
 ---
 

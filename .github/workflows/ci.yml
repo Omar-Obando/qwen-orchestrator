@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -30,7 +30,17 @@ jobs:
         run: npm run lint
 
       - name: Run Prettier check
-        run: npm run format:check
+        run: |
+          npm run format:check || {
+            echo ""
+            echo "❌ Prettier found formatting issues. Fix them locally with:"
+            echo "   npm run format"
+            echo "   git add -A && git commit -m 'chore: format with Prettier' && git push"
+            echo ""
+            echo "Files with issues:"
+            npx prettier --list-different .
+            exit 1
+          }
 
   # Type check job
   typecheck:
@@ -41,7 +51,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -65,7 +75,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -97,7 +107,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -115,7 +125,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -141,7 +151,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['18', '20', '22']
+        node-version: ['20', '22', '24']
     steps:
       - uses: actions/checkout@v4
 
