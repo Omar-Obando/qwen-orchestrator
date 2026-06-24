@@ -24,9 +24,11 @@
  * @license MIT
  */
 
-import { execSync } from 'child_process';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import { execSync } from 'node:child_process';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import process from 'node:process';
+
 import { z } from 'zod';
 
 import { getSessionDir, readCurrentSessionId } from './session-manager.js';
@@ -195,7 +197,9 @@ function findOrCreateTask(
 function requireSession():
   | { sessionDir: string }
   | { error: ReturnType<typeof makeError> } {
-  // FIX 2026-06-21: pass projectPath
+  // FIX: pass projectPath so we look in the workspace-scoped current-session
+  // file, not the global one. Without this, watchdog tools fail with
+  // "No active session" even after a successful create_session call.
   const projectPath = process.cwd();
   const sessionId = readCurrentSessionId(projectPath);
   if (!sessionId) {

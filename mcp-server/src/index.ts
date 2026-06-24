@@ -9,6 +9,10 @@
  * @license MIT
  */
 
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
@@ -16,25 +20,31 @@ import { z } from 'zod';
 import { registerOrchestrationTools } from './orchestration-tools.js';
 import { registerSessionTools } from './session-tools.js';
 
-// FIX 2026-06-21: read version from manifest
-import { readFileSync, existsSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+// ---------------------------------------------------------------------------
+// Version helper — reads from qwen-extension.json at startup
+// ---------------------------------------------------------------------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 function getExtensionVersion(): string {
   try {
     const manifestPath = join(__dirname, '..', '..', 'qwen-extension.json');
     if (existsSync(manifestPath)) {
-      const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-      return manifest.version || '0.0.5';
+      const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
+        version?: string;
+      };
+      return manifest.version ?? '0.0.5';
     }
-  } catch (e) { console.error('Failed to read qwen-extension.json:', e); }
+  } catch (e) {
+    console.error('Failed to read qwen-extension.json:', e);
+  }
   return '0.0.5';
 }
+// Cache once at startup so we don't hit disk on every call
+const EXTENSION_VERSION = getExtensionVersion();
+
 const server = new McpServer({
   name: 'qwen-orchestrator',
-  version: getExtensionVersion(),
+  version: EXTENSION_VERSION,
 });
 
 // ---------------------------------------------------------------------------
@@ -52,7 +62,7 @@ server.registerTool(
   async ({ projectPath }) => {
     const status = {
       orchestrator: 'qwen-orchestrator',
-      version: getExtensionVersion(),
+      version: EXTENSION_VERSION,
       author: 'Omar-Obando',
       projectPath,
       agents: [
