@@ -1,6 +1,6 @@
 {
   "name": "qwen-orchestrator",
-  "version": "0.0.5",
+  "version": "0.0.5-fixed",
   "mcpServers": {
     "qwen-orchestrator": {
       "command": "node",

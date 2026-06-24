@@ -195,13 +195,15 @@ function findOrCreateTask(
 function requireSession():
   | { sessionDir: string }
   | { error: ReturnType<typeof makeError> } {
-  const sessionId = readCurrentSessionId();
+  // FIX 2026-06-21: pass projectPath
+  const projectPath = process.cwd();
+  const sessionId = readCurrentSessionId(projectPath);
   if (!sessionId) {
     return {
       error: makeError('No active session. Call create_session first.'),
     };
   }
-  const sessionDir = getSessionDir(sessionId);
+  const sessionDir = getSessionDir(sessionId, projectPath);
   if (!existsSync(sessionDir)) {
     return { error: makeError(`Session directory not found: ${sessionDir}`) };
   }

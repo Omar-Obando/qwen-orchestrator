@@ -16,9 +16,25 @@ import { z } from 'zod';
 import { registerOrchestrationTools } from './orchestration-tools.js';
 import { registerSessionTools } from './session-tools.js';
 
+// FIX 2026-06-21: read version from manifest
+import { readFileSync, existsSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+function getExtensionVersion(): string {
+  try {
+    const manifestPath = join(__dirname, '..', '..', 'qwen-extension.json');
+    if (existsSync(manifestPath)) {
+      const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+      return manifest.version || '0.0.5';
+    }
+  } catch (e) { console.error('Failed to read qwen-extension.json:', e); }
+  return '0.0.5';
+}
 const server = new McpServer({
   name: 'qwen-orchestrator',
-  version: '0.0.3',
+  version: getExtensionVersion(),
 });
 
 // ---------------------------------------------------------------------------
@@ -36,7 +52,7 @@ server.registerTool(
   async ({ projectPath }) => {
     const status = {
       orchestrator: 'qwen-orchestrator',
-      version: '0.0.3',
+      version: getExtensionVersion(),
       author: 'Omar-Obando',
       projectPath,
       agents: [

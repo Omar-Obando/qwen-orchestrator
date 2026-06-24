@@ -10,6 +10,8 @@
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import { writeFileSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
 
 // Helper function to get current working directory safely
 function getCurrentWorkingDirectory(): string {
@@ -68,6 +70,14 @@ export function registerSessionTools(server: McpServer) {
       // ALWAYS force a new session — archive the previous one automatically.
       // This prevents session reuse across different /orchestrator invocations.
       const state = await initializeSession(targetPath, mission, true);
+  // FIX 2026-06-21: write current-session file (was missing)
+  const currentSessionFile = join(getWorkspaceDir(targetPath), 'current-session');
+  try {
+    mkdirSync(dirname(currentSessionFile), { recursive: true });
+    writeFileSync(currentSessionFile, state.sessionId, 'utf8');
+  } catch (e) {
+    console.error('Failed to write current-session:', e);
+  }
 
       return {
         content: [
