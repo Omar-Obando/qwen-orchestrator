@@ -596,6 +596,27 @@ Then add to your Qwen Code MCP configuration:
 
 **By default, all agents use your Qwen Code default model.** There is no hardcoded model — zero lock-in.
 
+> ⚠️ **CRITICAL: Set Temperature to 0.1 (TP 0.1) on ALL models**
+>
+> For the orchestrator to follow instructions strictly and reliably, **every model** used by any agent **MUST be configured with Temperature 0.1 (TP 0.1)**. Higher temperatures introduce randomness that causes agents to deviate from their assigned roles, ignore constraints, hallucinate tools, or produce inconsistent output.
+>
+> **Why TP 0.1?**
+> - Ensures strict adherence to system prompts and agent instructions
+> - Eliminates creative drift that breaks multi-agent coordination
+> - Produces deterministic, reproducible results across sessions
+> - Prevents agents from inventing tools, files, or behaviors
+>
+> **How to configure:**
+> ```json
+> {
+>   "modelConfig": {
+>     "temperature": 0.1
+>   }
+> }
+> ```
+>
+> This applies to **every model** — Qwen, DeepSeek, OpenAI, Anthropic, local models, or any other provider. If your provider or model does not support temperature configuration, consider switching to one that does. **TP 0.1 is not optional — it is a hard requirement for reliable multi-agent orchestration.**
+
 ### Using the default model (recommended)
 
 Just install and use. Every agent picks up whatever model you have configured in Qwen Code.
