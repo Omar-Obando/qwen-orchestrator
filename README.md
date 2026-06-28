@@ -617,6 +617,32 @@ Then add to your Qwen Code MCP configuration:
 >
 > This applies to **every model** — Qwen, DeepSeek, OpenAI, Anthropic, local models, or any other provider. If your provider or model does not support temperature configuration, consider switching to one that does. **TP 0.1 is not optional — it is a hard requirement for reliable multi-agent orchestration.**
 
+> ⚠️ **CRITICAL: Enable YOLO Mode for Full Agent Autonomy**
+>
+> For agents to operate autonomously without requiring manual approval on every file edit, shell command, or tool invocation, **you MUST set Qwen Code CLI to YOLO mode**. Without it, every agent action will prompt for confirmation, making multi-agent orchestration impractical.
+>
+> **Why YOLO mode?**
+> - Agents execute tasks without interruption — no per-action confirmation dialogs
+> - Enables true parallel execution across multiple agents simultaneously
+> - Required for the Commander to delegate and forget without getting stuck on prompts
+> - Without it, a single agent task can require dozens of manual approvals
+>
+> **How to configure:**
+> ```bash
+> # Set YOLO mode in Qwen Code CLI
+> /yolo
+> ```
+>
+> **Alternative modes:**
+> | Mode       | Behavior                                                              | Recommended for        |
+> | ---------- | --------------------------------------------------------------------- | ---------------------- |
+> | **YOLO**   | Full autonomy — no confirmations. **Required for orchestrator.**      | Production use         |
+> | Auto-Edit  | Auto-approves file edits, confirms shell commands.                    | Development / testing  |
+> | Default    | Confirms every file edit and shell command.                           | Learning / evaluation  |
+> | Plan       | Read-only — no file writes allowed.                                   | Planning-only sessions |
+>
+> **YOLO mode is not optional for production orchestrator use.** Without it, you will be prompted to confirm every single tool call across all 24 agents, making the orchestrator unusable at scale.
+
 ### Using the default model (recommended)
 
 Just install and use. Every agent picks up whatever model you have configured in Qwen Code.
