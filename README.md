@@ -601,12 +601,14 @@ Then add to your Qwen Code MCP configuration:
 > For the orchestrator to follow instructions strictly and reliably, **every model** used by any agent **MUST be configured with Temperature 0.1 (TP 0.1)**. Higher temperatures introduce randomness that causes agents to deviate from their assigned roles, ignore constraints, hallucinate tools, or produce inconsistent output.
 >
 > **Why TP 0.1?**
+>
 > - Ensures strict adherence to system prompts and agent instructions
 > - Eliminates creative drift that breaks multi-agent coordination
 > - Produces deterministic, reproducible results across sessions
 > - Prevents agents from inventing tools, files, or behaviors
 >
 > **How to configure:**
+>
 > ```json
 > {
 >   "modelConfig": {
@@ -622,24 +624,26 @@ Then add to your Qwen Code MCP configuration:
 > For agents to operate autonomously without requiring manual approval on every file edit, shell command, or tool invocation, **you MUST set Qwen Code CLI to YOLO mode**. Without it, every agent action will prompt for confirmation, making multi-agent orchestration impractical.
 >
 > **Why YOLO mode?**
+>
 > - Agents execute tasks without interruption — no per-action confirmation dialogs
 > - Enables true parallel execution across multiple agents simultaneously
 > - Required for the Commander to delegate and forget without getting stuck on prompts
 > - Without it, a single agent task can require dozens of manual approvals
 >
 > **How to configure:**
+>
 > ```bash
 > # Set YOLO mode in Qwen Code CLI
 > /yolo
 > ```
 >
 > **Alternative modes:**
-> | Mode       | Behavior                                                              | Recommended for        |
+> | Mode | Behavior | Recommended for |
 > | ---------- | --------------------------------------------------------------------- | ---------------------- |
-> | **YOLO**   | Full autonomy — no confirmations. **Required for orchestrator.**      | Production use         |
-> | Auto-Edit  | Auto-approves file edits, confirms shell commands.                    | Development / testing  |
-> | Default    | Confirms every file edit and shell command.                           | Learning / evaluation  |
-> | Plan       | Read-only — no file writes allowed.                                   | Planning-only sessions |
+> | **YOLO** | Full autonomy — no confirmations. **Required for orchestrator.** | Production use |
+> | Auto-Edit | Auto-approves file edits, confirms shell commands. | Development / testing |
+> | Default | Confirms every file edit and shell command. | Learning / evaluation |
+> | Plan | Read-only — no file writes allowed. | Planning-only sessions |
 >
 > **YOLO mode is not optional for production orchestrator use.** Without it, you will be prompted to confirm every single tool call across all 24 agents, making the orchestrator unusable at scale.
 
